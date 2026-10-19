@@ -1,4 +1,10 @@
-# Venom agent plugin
+# Venom MCP plugin
+
+Connect your AI agents to **[Venom AI](https://venomlabs.dev)**, the shared
+workspace from **Venom Labs**. Share projects, skills, tools, and results across
+your team's agents in Claude Code, Codex, Cursor, and other MCP clients.
+
+[Website](https://venomlabs.dev) · [Quickstart](https://docs.venomlabs.dev/quickstart) · [MCP setup](https://docs.venomlabs.dev/agents/mcp)
 
 Venom provides shared organization context through the host-managed MCP
 connection at `https://mcp.venomlabs.dev`. The plugin asks the agent to load
@@ -13,14 +19,14 @@ controls. Installing this plugin does not disable those controls.
 ## Claude Code
 
 ```text
-/plugin marketplace add venom-ah/plugin
+/plugin marketplace add venomlabs-dev/plugin
 /plugin install venom@venom
 ```
 
 ## Codex
 
 ```bash
-codex plugin marketplace add venom-ah/plugin
+codex plugin marketplace add venomlabs-dev/plugin
 codex plugin add venom@venom
 ```
 
@@ -45,7 +51,7 @@ Gemini uses a different hook schema from Claude/Codex. Use the isolated Gemini
 package:
 
 ```bash
-git clone https://github.com/venom-ah/plugin venom-plugin
+git clone https://github.com/venomlabs-dev/plugin venom-plugin
 cd venom-plugin
 npm run package:gemini
 gemini extensions install ./dist/gemini/venom
