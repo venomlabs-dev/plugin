@@ -3,8 +3,8 @@
   "name": "venom",
   "description": "Venom — the shared brain for software teams and their agents.",
   "owner": {
-    "name": "Venom",
-    "url": "https://github.com/venom-ah"
+    "name": "Venom Labs",
+    "url": "https://venomlabs.dev"
   },
   "plugins": [
     {

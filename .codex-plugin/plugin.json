@@ -4,11 +4,12 @@
   "hooks": "./hooks/claude-codex-hooks.json",
   "description": "Shared organization context through Venom MCP and its session-start skill.",
   "author": {
-    "name": "Venom",
-    "url": "https://github.com/venom-ah"
+    "name": "Venom Labs",
+    "url": "https://venomlabs.dev"
   },
   "homepage": "https://venomlabs.dev",
-  "repository": "https://github.com/venom-ah/plugin",
+  "repository": "https://github.com/venomlabs-dev/plugin",
+  "license": "MIT",
   "keywords": [
     "venom",
     "brain",
