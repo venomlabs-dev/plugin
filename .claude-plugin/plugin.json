@@ -9,6 +9,17 @@
   "homepage": "https://venomlabs.dev",
   "repository": "https://github.com/venomlabs-dev/plugin",
   "license": "MIT",
+  "keywords": [
+    "venom",
+    "knowledge",
+    "context",
+    "memory",
+    "mcp",
+    "team",
+    "agents"
+  ],
   "privacyPolicyUrl": "https://venomlabs.dev/privacy",
+  "termsOfServiceUrl": "https://venomlabs.dev/terms",
+  "supportUrl": "https://venomlabs.dev/contact",
   "mcpServers": "./.mcp.json"
 }
