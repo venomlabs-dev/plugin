@@ -8,7 +8,7 @@ const os = require('node:os');
 const path = require('node:path');
 
 const ROOT = path.join(__dirname, '..');
-const HOOKS_PATH = 'hooks/codex-hooks.json';
+const HOOKS_PATH = 'hooks/claude-codex-hooks.json';
 const MCP_URL = 'https://mcp.venomlabs.dev';
 const read = (file) => fs.readFileSync(path.join(ROOT, file), 'utf8');
 const json = (file) => JSON.parse(read(file));
@@ -33,9 +33,7 @@ test('distribution manifests and marketplace retain host-managed MCP', () => {
   assert.equal(codex.hooks, `./${HOOKS_PATH}`);
   assert.ok(fs.existsSync(path.join(ROOT, codex.hooks)));
   assert.equal(claude.mcpServers, './.mcp.json');
-  // The Claude plugin directory accepts command hooks only from Verified
-  // organizations, so Claude relies on the MCP server's startup instructions.
-  assert.equal(claude.hooks, undefined);
+  assert.equal(claude.hooks, `./${HOOKS_PATH}`);
   assert.equal(fs.existsSync(path.join(ROOT, 'hooks/hooks.json')), false); // No duplicate auto-discovery.
   assert.equal(json('.mcp.json').mcpServers.venom.url, MCP_URL);
   assert.equal(gemini.mcpServers.venom.httpUrl, MCP_URL);
