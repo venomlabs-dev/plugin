@@ -23,6 +23,10 @@ controls. Installing this plugin does not disable those controls.
 /plugin install venom@venom
 ```
 
+Authorize Venom when prompted. The Claude plugin ships no hooks: Claude Code
+loads Venom's guidance from the MCP server's startup instructions and the
+organization's `session-start` skill.
+
 ## Codex
 
 ```bash
@@ -31,7 +35,7 @@ codex plugin add venom@venom
 ```
 
 Start a new task, authorize Venom, and review/trust the bundled hooks. Codex
-also needs lifecycle hooks enabled in its configuration. These hosts load guidance
+also needs lifecycle hooks enabled in its configuration. Codex loads guidance
 at session start/resume/context restoration and subagent start. There are no
 per-prompt, task-tool, or completion save reminders. Stale registrations for those
 events are also silent. Node.js 18+ runs the hook without network requests or

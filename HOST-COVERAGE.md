@@ -38,11 +38,13 @@ Current Kiro hooks have a different schema and surface-specific triggers.
 [Tool-name requirements](https://kiro.dev/docs/mcp/#tool-validation-errors),
 [current hook schema](https://kiro.dev/docs/hooks/).
 
-Claude and Codex explicitly register `hooks/claude-codex-hooks.json` in their
-manifests, following Ponytail. There is no root `hooks/hooks.json`, avoiding
-duplicate auto-discovery. Gemini's separate package generates that default file
-with its own events, path variable, and millisecond timeouts. All three use the
-same reminder script. No runtime dependency or authentication client is added.
+Codex explicitly registers `hooks/codex-hooks.json` in its manifest, following
+Ponytail. The Claude plugin registers no hooks: the Claude plugin directory
+accepts command hooks only from Verified organizations, so Claude Code relies on
+the MCP server's startup instructions. There is no root `hooks/hooks.json`,
+avoiding duplicate auto-discovery. Gemini's separate package generates that
+default file with its own events, path variable, and millisecond timeouts. Codex
+and Gemini use the same reminder script. No runtime dependency or authentication client is added.
 
 ## Selective persistence
 
