@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
-// Host-specific rule wrappers, generated from the one organization-neutral loader.
+// Host-specific rule wrappers, generated from the one canonical VENOM.md guidance.
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.join(__dirname, '..');
