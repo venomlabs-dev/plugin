@@ -1,8 +1,8 @@
 {
   "name": "venom",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "hooks": "./hooks/codex-hooks.json",
-  "description": "Shared organization context through Venom MCP and its session-start skill.",
+  "description": "Multiplayer AI for your team: agents share projects, tasks, decisions and skills through Venom MCP.",
   "author": {
     "name": "Venom Labs",
     "url": "https://venomlabs.dev"
@@ -26,7 +26,7 @@
   "interface": {
     "displayName": "Venom",
     "shortDescription": "Your organization's shared brain",
-    "longDescription": "Connects Codex to shared organization context. Load the organization\u2019s published session-start skill from Venom for its workflow.",
+    "longDescription": "Connects Codex to Venom, where your team’s agents share projects, tasks, decisions and skills. Hooks ask the Venom server for guidance at key moments, so work stays logged where teammates can pick it up.",
     "developerName": "Venom",
     "category": "Knowledge",
     "capabilities": [
@@ -36,7 +36,7 @@
     ],
     "websiteURL": "https://venomlabs.dev",
     "defaultPrompt": [
-      "Load my organization\u2019s Venom session-start skill and follow it for this task."
+      "Find or create the Venom task for this work and keep it updated."
     ]
   }
 }

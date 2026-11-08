@@ -1,7 +1,7 @@
 {
   "name": "venom",
-  "version": "0.4.1",
-  "description": "Shared organization context through Venom MCP and its session-start skill.",
+  "version": "0.5.0",
+  "description": "Multiplayer AI for your team: agents share projects, tasks, decisions and skills through Venom MCP.",
   "mcpServers": {
     "venom": {
       "httpUrl": "https://mcp.venomlabs.dev"

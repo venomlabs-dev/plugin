@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 'use strict';
 
-// Gemini auto-discovers hooks/hooks.json with its own schema.
-// Package separately from the explicitly registered Claude/Codex hooks.
+// Gemini auto-discovers hooks/hooks.json and supports only command hooks.
+// Package separately from the Claude/Codex mcp_tool hooks registered in their manifests.
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.join(__dirname, '..');
@@ -18,7 +18,7 @@ for (const event of ['SessionStart']) {
   hooks[event] = [{ hooks: [{
     type: 'command',
     name: `venom-${event}`,
-    command: `node "\${extensionPath}/hooks/venom-context.js" ${event} gemini`,
+    command: `node "\${extensionPath}/hooks/venom-context.js" ${event}`,
     timeout: 5000,
   }] }];
 }
