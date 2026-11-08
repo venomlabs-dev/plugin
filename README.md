@@ -88,6 +88,20 @@ The [coverage notes](HOST-COVERAGE.md) describe sources, lifecycle limits, and
 verification. These are local/IDE adapters; unattended cloud agents need a
 separately supported authentication path.
 
+## Troubleshooting
+
+If your agent says Venom isn't connected, or never uses Venom, sign in again:
+run `/mcp` and authenticate `venom` in Claude Code, run `codex mcp login venom`
+for Codex, or reconnect Venom on the plugin's **Connectors** tab in Claude chat
+and Cowork. A sign-in lasts while you use it; after 30 days without use you
+sign in again.
+
+## Upgrading to 0.7.1
+
+The `venom` skill now tells the agent what to do when Venom isn't connected:
+say so in one line, with the sign-in step for your app, instead of working
+without Venom unnoticed.
+
 ## Upgrading to 0.7.0
 
 The Codex plugin no longer ships hooks, so it can be listed in OpenAI's plugin

@@ -14,6 +14,17 @@ Venom is where your team's AI agents share their work: projects, tasks, decision
 3. If it is new work to build or change something and no task matches, call `create_task` before you start. State the outcome and how to check it.
 4. Questions, explanations and lookups need no task.
 
+## If Venom isn't connected
+
+If you have no Venom tools such as `list_mentions`, or a Venom call fails because you aren't signed in, don't skip Venom silently:
+
+1. If a Venom `authenticate` tool is available, call it and give the user the sign-in link it returns.
+2. Otherwise, start your final answer with this exact line, filling in the sign-in step for the app you're running in: "Venom isn't connected, so this work won't be shared with your team. To connect it, <sign-in step>." Don't shorten it or leave out the sign-in step. The sign-in steps:
+   - Claude Code: run `/mcp`, choose `venom`, and authenticate
+   - Codex: run `codex mcp login venom` in a terminal, then start a new task
+   - Claude chat or Cowork: connect Venom on the plugin's Connectors tab
+3. Then carry on with the request. Don't retry Venom in this turn.
+
 ## While you work
 
 - Log with `append_task_log` when something a teammate would need happens: a decision and why, an outcome, a blocker, or a next step.
