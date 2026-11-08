@@ -1,6 +1,6 @@
 {
   "name": "@venom-ah/plugin",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": true,
   "description": "Multiplayer AI for your team: agents share projects, tasks, decisions and skills through Venom MCP.",
   "repository": "github:venomlabs-dev/plugin",

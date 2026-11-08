@@ -1,6 +1,6 @@
 {
   "name": "venom",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "hooks": "./hooks/codex-hooks.json",
   "description": "Multiplayer AI for your team: agents share projects, tasks, decisions and skills through Venom MCP.",
   "author": {
