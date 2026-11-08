@@ -11,26 +11,36 @@ decisions and skills, so any agent or teammate can pick up where another left
 off. Agents reach it through the host-managed MCP connection at
 `https://mcp.venomlabs.dev`.
 
-The plugin contains connection settings, hooks, and host adapters. In Claude
-Code and Codex, hooks ask the Venom server for guidance at key moments, so the
-wording stays current without a plugin update. Other hosts use the short
-[VENOM.md](VENOM.md) guidance as a rules file. Connections remain
+The plugin contains connection settings, a `venom` skill, and host adapters.
+In Claude, the skill and the Venom server's own instructions and tool responses
+guide the agent. Codex also runs hooks that ask the Venom server for guidance at
+key moments. Other hosts use the short [VENOM.md](VENOM.md) guidance as a rules
+file. Connections remain
 authenticated and organization-scoped; the host manages OAuth and tool
 approval. Installing this plugin does not disable those controls.
 
-## Claude Code
+## What this plugin does
+
+Venom connects Claude to your team's Venom workspace through one remote MCP
+server, `https://mcp.venomlabs.dev`, which you sign in to with your Venom
+account. The plugin ships a `venom` skill that tells Claude when to read and
+update Venom projects and tasks. For Claude it registers no hooks and runs no
+code on your machine. Claude sends data to Venom only through the Venom tools it calls, and
+only to your organization's workspace.
+
+## Claude (chat, Cowork and Claude Code)
+
+Add Venom from the plugin directory on claude.ai, or in Claude Code:
 
 ```text
 /plugin marketplace add venomlabs-dev/plugin
 /plugin install venom@venom
 ```
 
-Authorize Venom when prompted. The plugin ships `mcp_tool` hooks that call the
-Venom server's `get_guidance` tool after compaction, before compaction, when a
-subagent starts, on each prompt, and after `git commit`, `git push`,
-`gh pr create`, and `gh pr merge`. No local program runs and Node.js is not
-needed. At launch, Claude Code gets Venom's guidance from the MCP server's
-instructions.
+Authorize Venom when prompted. In chat and Cowork, connect Venom on the
+plugin's **Connectors** tab. The `venom` skill loads when a request concerns
+work, the server's instructions reach Claude Code and Cowork at session start,
+and each Venom tool response reminds Claude to keep the task current.
 
 ## Codex
 
@@ -40,7 +50,8 @@ codex plugin add venom@venom
 ```
 
 Start a new task, authorize Venom, and trust the bundled hooks once via
-`/hooks`. The hooks are `mcp_tool` hooks that call the Venom server's
+`/hooks`. The hooks, declared in `.codex-plugin/hooks.json`, are `mcp_tool`
+hooks that call the Venom server's
 `get_guidance` tool after compaction, when a subagent starts, on each prompt,
 and after Bash commands (the server picks out commits, pushes, and pull
 requests). No local program runs and Node.js is not needed. If Venom is not
@@ -49,22 +60,17 @@ baseline.
 
 ## Gemini CLI
 
-Gemini uses a different hook schema from Claude/Codex. Use the isolated Gemini
-package:
+Install the extension folder from a clone of this repository:
 
 ```bash
 git clone https://github.com/venomlabs-dev/plugin venom-plugin
-cd venom-plugin
-npm run package:gemini
-gemini extensions install ./dist/gemini/venom
+gemini extensions install ./venom-plugin/platforms/gemini
 ```
 
-Restart Gemini and authorize Venom. Gemini supports only command hooks, so the
-extension loads `VENOM.md` as its context file and a local `SessionStart` hook
-injects the same text, with Gemini's own timeout units and path substitution.
-Node.js 18+ is needed for that hook. To update, pull this repository,
-rebuild the package, and run `gemini extensions update venom` (or reinstall the
-local package). Do not install the repository root as a Gemini extension.
+Restart Gemini and authorize Venom. The extension loads its `VENOM.md` as a
+context file in every session. To update, pull this repository and run
+`gemini extensions update venom`. Do not install the repository root as a
+Gemini extension.
 
 ## Other hosts
 
@@ -73,7 +79,7 @@ Add the small instruction file alongside existing rules.
 
 | Host | MCP configuration | Instruction installation |
 | --- | --- | --- |
-| Cursor | Merge [mcp.json](platforms/cursor/mcp.json) into `.cursor/mcp.json` or `~/.cursor/mcp.json` | Copy [venom.mdc](platforms/cursor/venom.mdc) into the project's `.cursor/rules/` |
+| Cursor | Merge [mcp.json](platforms/cursor/mcp.json) into `.cursor/mcp.json` or `~/.cursor/mcp.json` | Copy [venom.md](platforms/cursor/venom.md) into the project's `.cursor/rules/` and rename it `venom.mdc` |
 | Kiro IDE / CLI | Merge [mcp.json](platforms/kiro/mcp.json) into `.kiro/settings/mcp.json` | Copy [venom.md](platforms/kiro/venom.md) into `.kiro/steering/`; custom agents must include this resource |
 | OpenCode | Merge [opencode.json](platforms/opencode/opencode.json) into project `opencode.json` | Copy root [VENOM.md](VENOM.md) into the project root; preserve it in `instructions` alongside existing entries |
 | GitHub Copilot CLI | Merge [mcp-config.json](platforms/copilot/mcp-config.json) into `~/.copilot/mcp-config.json` | Append [copilot-instructions.md](platforms/copilot/copilot-instructions.md) to `.github/copilot-instructions.md` or `~/.copilot/copilot-instructions.md` |
@@ -87,25 +93,18 @@ The [coverage notes](HOST-COVERAGE.md) describe sources, lifecycle limits, and
 verification. These are local/IDE adapters; unattended cloud agents need a
 separately supported authentication path.
 
-## Upgrading to 0.5.0
+## Upgrading to 0.6.0
 
-Claude Code and Codex now get Venom guidance from the server through
-`mcp_tool` hooks; the local hook script and Node.js are no longer used there.
-Start a fresh session or restart the host so old hooks are unloaded, and in
-Codex trust the new hooks via `/hooks`. Venom no longer uses an organization
-startup skill, so remove any copied instructions that load one. Refresh
-manually copied rules files from this release, and Gemini users should rebuild
-and reinstall the extension package.
+The Claude plugin no longer ships hooks. Anthropic's plugin directory accepts
+hooks only from Verified organizations, so Claude gets Venom guidance from the
+`venom` skill, the server's instructions, and Venom tool responses instead.
+Codex keeps its hooks, now in `.codex-plugin/hooks.json`; trust them again via
+`/hooks`. Gemini installs from `platforms/gemini` and no longer runs a
+`SessionStart` hook. Refresh manually copied rules files from this release.
 
 ## Development
 
-```bash
-npm run sync:guidance  # regenerate host rule wrappers after editing VENOM.md
-npm test
-npm run package:gemini
-```
-
-Tests check the Claude and Codex `mcp_tool` hook structure, run the Gemini hook
-script and packaged command, and catch stale adapters. CI runs on Node 18/22 on
-Linux and Node 22 on Windows. Tests make no network requests and do not prove
-model compliance or live OAuth interoperability.
+The repository holds only Markdown and JSON, as the directory requires for
+organizations that aren't Verified. Edit [VENOM.md](VENOM.md), then update the
+copies under `platforms/` to match. The checks for this repository live in the
+Venom monorepo.
