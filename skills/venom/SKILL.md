@@ -1,6 +1,6 @@
 ---
 name: venom
-description: Use at the start of any request to build, change, fix, plan or continue work, and whenever the user mentions a project, task, teammate or earlier work. Connects the work to the team's Venom projects and tasks so other agents and teammates can pick it up.
+description: Use before your first reply in any conversation about your team's work (research, planning, questions about the code or project, building, fixing, reviewing) to check Venom mentions and find the Venom project and task the work belongs to. Skip only for small talk or general questions unrelated to the team's work.
 ---
 
 # Venom

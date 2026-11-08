@@ -1,7 +1,6 @@
 {
   "name": "venom",
-  "version": "0.6.0",
-  "hooks": "./.codex-plugin/hooks.json",
+  "version": "0.7.0",
   "description": "Multiplayer AI for your team: agents share projects, tasks, decisions and skills through Venom MCP.",
   "author": {
     "name": "Venom Labs",
@@ -12,11 +11,14 @@
   "license": "MIT",
   "keywords": [
     "venom",
-    "brain",
-    "knowledge",
-    "context",
+    "collaboration",
+    "team",
+    "agents",
+    "projects",
+    "tasks",
     "mcp"
   ],
+  "skills": "./skills/",
   "mcpServers": {
     "venom": {
       "type": "http",
@@ -25,18 +27,26 @@
   },
   "interface": {
     "displayName": "Venom",
-    "shortDescription": "Your organization's shared brain",
-    "longDescription": "Connects Codex to Venom, where your team’s agents share projects, tasks, decisions and skills. Hooks ask the Venom server for guidance at key moments, so work stays logged where teammates can pick it up.",
-    "developerName": "Venom",
-    "category": "Knowledge",
+    "shortDescription": "Multiplayer AI for your team",
+    "longDescription": "Venom is where your team's AI agents share their work: projects, tasks, decisions and skills. Any agent or teammate can pick up where another left off.\n\nThe plugin connects to your organization's Venom workspace through one remote MCP server, which you sign in to with your Venom account. A bundled venom skill tells the agent when to read and update Venom: it finds the project and task for the work, creates a task for new work, and logs decisions, outcomes and next steps before it replies.\n\nThe plugin runs no code on your machine. Data goes to Venom only through the Venom tools the agent calls, and only to your organization's workspace.",
+    "developerName": "Venom Labs",
+    "category": "Productivity",
     "capabilities": [
-      "MCP",
-      "Instructions",
-      "Lifecycle hooks"
+      "Read",
+      "Write"
     ],
     "websiteURL": "https://venomlabs.dev",
+    "supportURL": "https://venomlabs.dev/contact",
+    "privacyPolicyURL": "https://venomlabs.dev/privacy",
+    "termsOfServiceURL": "https://venomlabs.dev/terms",
     "defaultPrompt": [
-      "Find or create the Venom task for this work and keep it updated."
-    ]
+      "Find or create the Venom task for this work and keep it updated.",
+      "What has my team been working on in Venom this week?",
+      "Log what we decided today to the Venom task."
+    ],
+    "brandColor": "#246B53",
+    "brandColorDark": "#69B59C",
+    "logo": "./assets/icon.png",
+    "composerIcon": "./assets/icon.png"
   }
 }

@@ -12,9 +12,8 @@ off. Agents reach it through the host-managed MCP connection at
 `https://mcp.venomlabs.dev`.
 
 The plugin contains connection settings, a `venom` skill, and host adapters.
-In Claude, the skill and the Venom server's own instructions and tool responses
-guide the agent. Codex also runs hooks that ask the Venom server for guidance at
-key moments. Other hosts use the short [VENOM.md](VENOM.md) guidance as a rules
+In Claude and Codex, the skill and the Venom server's own instructions and tool
+responses guide the agent. Other hosts use the short [VENOM.md](VENOM.md) guidance as a rules
 file. Connections remain
 authenticated and organization-scoped; the host manages OAuth and tool
 approval. Installing this plugin does not disable those controls.
@@ -24,7 +23,7 @@ approval. Installing this plugin does not disable those controls.
 Venom connects Claude to your team's Venom workspace through one remote MCP
 server, `https://mcp.venomlabs.dev`, which you sign in to with your Venom
 account. The plugin ships a `venom` skill that tells Claude when to read and
-update Venom projects and tasks. For Claude it registers no hooks and runs no
+update Venom projects and tasks. It registers no hooks and runs no
 code on your machine. Claude sends data to Venom only through the Venom tools it calls, and
 only to your organization's workspace.
 
@@ -49,14 +48,10 @@ codex plugin marketplace add venomlabs-dev/plugin
 codex plugin add venom@venom
 ```
 
-Start a new task, authorize Venom, and trust the bundled hooks once via
-`/hooks`. The hooks, declared in `.codex-plugin/hooks.json`, are `mcp_tool`
-hooks that call the Venom server's
-`get_guidance` tool after compaction, when a subagent starts, on each prompt,
-and after Bash commands (the server picks out commits, pushes, and pull
-requests). No local program runs and Node.js is not needed. If Venom is not
-connected, the hooks are skipped and the MCP server's instructions remain the
-baseline.
+Start a new task and authorize Venom. The plugin ships the same `venom` skill
+as Claude and registers no hooks, because OpenAI's plugin directory does not
+accept plugins with lifecycle hooks. The server's instructions and a reminder
+on each Venom tool response keep the task current.
 
 ## Gemini CLI
 
@@ -92,6 +87,17 @@ Authorize each connection in its host. Use current supported host releases.
 The [coverage notes](HOST-COVERAGE.md) describe sources, lifecycle limits, and
 verification. These are local/IDE adapters; unattended cloud agents need a
 separately supported authentication path.
+
+## Upgrading to 0.7.0
+
+The Codex plugin no longer ships hooks, so it can be listed in OpenAI's plugin
+directory. Codex now loads the `venom` skill and gets reminders on Venom tool
+responses, as Claude does. You can remove the old Venom hooks from `/hooks`.
+
+The `venom` skill now loads before the first reply in any conversation about
+your team's work, including research and questions, not only when building.
+Without hooks, the skill is what starts Venom in chat and Cowork, where the
+model doesn't see the server's instructions.
 
 ## Upgrading to 0.6.0
 
