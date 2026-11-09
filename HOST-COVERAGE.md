@@ -39,6 +39,16 @@ The server's instructions reach Claude Code, Cowork and Codex, and every Venom t
 response starts with a one-line reminder matched to the tool. The server skips
 those reminders for clients whose hooks called `get_guidance` in the last day.
 
+## Venom Full
+
+Developers can add the `venom-full` plugin from this repository's marketplace;
+its files live in the separate venomlabs-dev/venom-full repository.
+It depends on `venom` and ships only `mcp_tool` hooks that call `get_guidance`
+on the `venom` plugin's server: after compaction, before compaction (Claude
+Code), at subagent start, on each prompt, and after commits, pushes and pull
+requests. It is not submitted to either directory. The official `venom` plugin
+in this repository still holds no hooks, and no hook file is in this repository.
+
 ## Verification and release gate
 
 The checks for this repository live in the Venom monorepo. They verify the

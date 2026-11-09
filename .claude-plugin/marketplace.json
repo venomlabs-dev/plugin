@@ -12,6 +12,15 @@
       "description": "Venom's organization brain and directory through MCP.",
       "source": "./",
       "category": "knowledge"
+    },
+    {
+      "name": "venom-full",
+      "description": "Adds Venom hooks for developers: guidance after compaction, at subagent start, on each prompt and after commits and PRs. Installs venom too.",
+      "source": {
+        "source": "github",
+        "repo": "venomlabs-dev/venom-full"
+      },
+      "category": "knowledge"
     }
   ]
 }

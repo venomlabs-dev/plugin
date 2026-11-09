@@ -53,6 +53,38 @@ as Claude and registers no hooks, because OpenAI's plugin directory does not
 accept plugins with lifecycle hooks. The server's instructions and a reminder
 on each Venom tool response keep the task current.
 
+## Venom Full (for developers)
+
+`venom-full` adds hooks to `venom`. Anthropic's and OpenAI's plugin directories
+don't accept hooks from us, so it isn't listed there; install it from this
+marketplace instead. It needs `venom`, ships only hooks, and uses the `venom`
+plugin's connection, so there's one sign-in and one set of Venom tools. Its
+files live in [venomlabs-dev/venom-full](https://github.com/venomlabs-dev/venom-full);
+the marketplace fetches them for you.
+
+Claude Code installs `venom` with it:
+
+```text
+/plugin marketplace add venomlabs-dev/plugin
+/plugin install venom-full@venom
+```
+
+Codex needs both plugins and lifecycle hooks turned on:
+
+```bash
+codex plugin marketplace add venomlabs-dev/plugin
+codex plugin add venom@venom
+codex plugin add venom-full@venom
+```
+
+Then trust the Venom hooks once in `/hooks`.
+
+The hooks are `mcp_tool` hooks that call the Venom server's `get_guidance`
+tool after compaction, before compaction (Claude Code), when a subagent starts,
+on each prompt, and after `git commit`, `git push`, `gh pr create` and
+`gh pr merge`. No local program runs. While the hooks are active, the server
+stops adding reminder lines to Venom tool responses.
+
 ## Gemini CLI
 
 Install the extension folder from a clone of this repository:
@@ -95,6 +127,11 @@ run `/mcp` and authenticate `venom` in Claude Code, run `codex mcp login venom`
 for Codex, or reconnect Venom on the plugin's **Connectors** tab in Claude chat
 and Cowork. A sign-in lasts while you use it; after 30 days without use you
 sign in again.
+
+## Upgrading to 0.8.0
+
+The marketplace now also lists `venom-full`, hooks for developers: see
+[Venom Full](#venom-full-for-developers). The `venom` plugin is unchanged.
 
 ## Upgrading to 0.7.1
 
