@@ -128,6 +128,11 @@ for Codex, or reconnect Venom on the plugin's **Connectors** tab in Claude chat
 and Cowork. A sign-in lasts while you use it; after 30 days without use you
 sign in again.
 
+## Upgrading to 0.8.1
+
+The Codex manifest now carries the review test cases and release notes for
+OpenAI's plugin directory. Nothing changes for users.
+
 ## Upgrading to 0.8.0
 
 The marketplace now also lists `venom-full`, hooks for developers: see
