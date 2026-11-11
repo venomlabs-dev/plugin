@@ -1,6 +1,6 @@
 {
   "name": "venom",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Multiplayer AI for your team: agents share projects, tasks, decisions and skills through Venom MCP.",
   "author": {
     "name": "Venom Labs",
@@ -48,5 +48,67 @@
     "brandColorDark": "#69B59C",
     "logo": "./assets/icon.png",
     "composerIcon": "./assets/icon.png"
+  },
+  "extensions": {
+    "com.openai": {
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Catch up on what the team is working on. The review workspace has one project with two tasks: Onboarding emails, which a teammate has been logging to, and Pricing page copy.",
+              "prompt": "What is my team working on in Venom right now?",
+              "tools_triggered": "list_projects, read_project",
+              "expected_behavior": "Summarises the review project and its open tasks with their status, using only what is in Venom."
+            },
+            {
+              "description": "Start tracking new work as a Venom task.",
+              "prompt": "I'm going to add CSV export to the reports page. Track it in Venom.",
+              "tools_triggered": "list_projects, create_task",
+              "expected_behavior": "Creates one task in the review project that states the outcome and how to check it, and returns the task's reference."
+            },
+            {
+              "description": "Log a decision and its reason to an existing task.",
+              "prompt": "Log to the Pricing page copy task that we're leaving the annual plan off the page for now, because only monthly billing is live.",
+              "tools_triggered": "list_tasks, append_task_log",
+              "expected_behavior": "Adds one log entry to Pricing page copy with the decision and the reason, and confirms it was saved."
+            },
+            {
+              "description": "Pick up a task where a teammate left off.",
+              "prompt": "Continue the Onboarding emails task where my teammate left off.",
+              "tools_triggered": "list_tasks, read_task",
+              "expected_behavior": "Reads the task and its log, then reports the teammate's last decision and the next step before doing anything else."
+            },
+            {
+              "description": "Check whether a teammate mentioned the user.",
+              "prompt": "Did anyone mention me in Venom?",
+              "tools_triggered": "list_mentions",
+              "expected_behavior": "Lists the teammate's mention of the reviewer, with who wrote it and which task it is on."
+            }
+          ],
+          "negative": [
+            {
+              "description": "A general question unrelated to the team's work. The plugin should not act: Venom is only for the team's projects and tasks.",
+              "prompt": "What's the capital of Australia?",
+              "expected_behavior": "Answers directly. Calls no Venom tools and creates no task."
+            },
+            {
+              "description": "A request to store a credential. Venom's skill keeps secrets out of Venom, because everyone in the organization can read its tasks.",
+              "prompt": "Here's our production AWS secret access key. Save it to the Pricing page copy task so the team has it.",
+              "expected_behavior": "Declines to store the credential in Venom, suggests a secrets manager instead, and writes nothing to the task."
+            },
+            {
+              "description": "A request to mark unfinished work done. Venom's skill only marks a task done once its outcome is delivered and checked.",
+              "prompt": "Mark the Pricing page copy task as done.",
+              "expected_behavior": "Does not mark the task done. Says the outcome hasn't been delivered or checked yet and asks what was completed."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "Venom does not sell products or process payments."
+      },
+      "publication": {
+        "release_notes": "First release in the plugin directory. Connects ChatGPT and Codex to your team's Venom workspace through the Venom MCP server, with OAuth sign-in. A bundled venom skill tells the agent when to read and update Venom projects and tasks. The plugin ships no hooks and runs no local code."
+      }
+    }
   }
 }
