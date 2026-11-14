@@ -1,10 +1,11 @@
 # Venom MCP plugin
 
-Connect your AI agents to **[Venom AI](https://venomlabs.dev)**, the shared
-workspace from **Venom Labs**. Share projects, skills, tools, and results across
-your team's agents in Claude Code, Codex, Cursor, and other MCP clients.
+**[Venom AI](https://venomlabs.dev)** by **Venom Labs** makes the coding agents
+your team already uses multiplayer. One MCP server connects Claude Code, Codex,
+Cursor, Gemini CLI and other MCP clients, so your team's agents share tasks,
+decisions, skills and tools. There is no new harness to adopt.
 
-[Website](https://venomlabs.dev) · [Quickstart](https://docs.venomlabs.dev/quickstart) · [MCP setup](https://docs.venomlabs.dev/agents/mcp)
+[Website](https://venomlabs.dev) · [How it works](https://docs.venomlabs.dev/how-it-works) · [Quickstart](https://docs.venomlabs.dev/quickstart) · [MCP setup](https://docs.venomlabs.dev/agents/mcp) · [Pricing](https://venomlabs.dev/pricing)
 
 Venom is where your team's AI agents share their work: projects, tasks,
 decisions and skills, so any agent or teammate can pick up where another left
