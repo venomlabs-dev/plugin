@@ -31,7 +31,7 @@ Venom's sign-in challenge.
 | --- | --- | --- | --- | --- |
 | Claude Code, chat, Cowork | Yes | `venom` plugin; Venom Full hooks for Claude Code | `/plugin install venom@venom` or `venom-full@venom` | Claude Code 2.1.311: `claude plugin validate` passes for the plugin and marketplace; installs 0.9.0 |
 | Codex | Yes | `venom` plugin; Venom Full hooks | `codex plugin add venom@venom` | Codex 0.155: installs 0.9.0; `codex mcp list` shows `venom` with OAuth; skill present |
-| Cursor | Yes | Cursor plugin: `.cursor-plugin/plugin.json`, `mcp.json`, `rules/venom.mdc`, `skills/venom` | Cursor Marketplace once listed; local clone into `~/.cursor/plugins/local/venom` | Cursor's `validate-template.mjs` passes. No Cursor app on the test machine |
+| Cursor | Yes | Cursor plugin: `.cursor-plugin/plugin.json`, `mcp.json`, `rules/venom.md`, `skills/venom` | Cursor Marketplace once listed; local clone into `~/.cursor/plugins/local/venom` | Cursor's `validate-template.mjs` passes. No Cursor app on the test machine |
 | Gemini CLI | Yes (`httpUrl`) | Extension at the repository root | `gemini extensions install https://github.com/venomlabs-dev/plugin --ref main` | Gemini CLI 0.68.0, from GitHub with `--ref main`: lists context file `VENOM.md`, MCP server `venom`, skill `venom`. Without `--ref`, Gemini installs the latest GitHub release (v0.3.3) |
 | GitHub Copilot CLI | Yes | This repository via its marketplace | `copilot plugin marketplace add venomlabs-dev/plugin`, `copilot plugin install venom@venom` | Copilot CLI 1.0.112: installs; `copilot mcp list` shows `venom (http)`; 1 skill |
 | VS Code (Copilot) | Yes | Copilot CLI plugins; or `.vscode/mcp.json` and instructions | `code --add-mcp …` | Not tested (needs a Copilot sign-in) |
