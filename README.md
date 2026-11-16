@@ -124,10 +124,12 @@ connect `venom`. To add only the MCP server, merge
 ## Gemini CLI
 
 ```bash
-gemini extensions install https://github.com/venomlabs-dev/plugin
+gemini extensions install https://github.com/venomlabs-dev/plugin --ref main
 ```
 
-Restart Gemini and authorize Venom (`/mcp auth venom`). The extension adds the
+`--ref main` installs from the repository: without it, Gemini installs the
+latest GitHub release, which is still an old 0.3.x build. Restart Gemini and
+authorize Venom (`/mcp auth venom`). The extension adds the
 Venom MCP server, loads [VENOM.md](VENOM.md) as a context file in every
 session, and adds the `venom` skill. Update with `gemini extensions update venom`.
 
@@ -265,7 +267,7 @@ sign in again.
 - Cursor, Copilot CLI, Qwen Code, Factory Droid and Junie can install this
   repository as a plugin, and Kiro has a Venom Power.
 - The Gemini extension moved to the repository root. Reinstall it with
-  `gemini extensions install https://github.com/venomlabs-dev/plugin`.
+  `gemini extensions install https://github.com/venomlabs-dev/plugin --ref main`.
 - [VENOM.md](VENOM.md) and the copied rules now match the Venom server's
   current instructions. Refresh manually copied rules files from this release.
 - The `venom` skill gives the sign-in step for more apps.
