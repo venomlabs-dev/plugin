@@ -23,6 +23,11 @@ If you have no Venom tools such as `list_mentions`, or a Venom call fails becaus
    - Claude Code: run `/mcp`, choose `venom`, and authenticate
    - Codex: run `codex mcp login venom` in a terminal, then start a new task
    - Claude chat or Cowork: connect Venom on the plugin's Connectors tab
+   - Cursor: open Cursor Settings, then MCP, and connect `venom`
+   - Gemini CLI: run `/mcp auth venom`
+   - OpenCode: run `opencode mcp auth venom` in a terminal
+   - GitHub Copilot CLI: run `/mcp` and authenticate `venom`
+   - Any other app: open its MCP settings and sign in to the `venom` server
 3. Then carry on with the request. Don't retry Venom in this turn.
 
 ## While you work

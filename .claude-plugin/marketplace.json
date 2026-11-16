@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "venom",
-  "description": "Venom — the shared brain for software teams and their agents.",
+  "description": "Venom: multiplayer AI for the coding agents your team already uses.",
   "owner": {
     "name": "Venom Labs",
     "url": "https://venomlabs.dev"
@@ -9,9 +9,9 @@
   "plugins": [
     {
       "name": "venom",
-      "description": "Venom's organization brain and directory through MCP.",
+      "description": "Your team's agents share projects, tasks, decisions and skills through the Venom MCP server.",
       "source": "./",
-      "category": "knowledge"
+      "category": "productivity"
     },
     {
       "name": "venom-full",
@@ -20,7 +20,7 @@
         "source": "github",
         "repo": "venomlabs-dev/venom-full"
       },
-      "category": "knowledge"
+      "category": "productivity"
     }
   ]
 }
