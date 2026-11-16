@@ -1,0 +1,12 @@
+{
+  "mcp": {
+    "venom": {
+      "type": "remote",
+      "url": "https://mcp.venomlabs.dev",
+      "enabled": true
+    }
+  },
+  "instructions": [
+    "VENOM.md"
+  ]
+}

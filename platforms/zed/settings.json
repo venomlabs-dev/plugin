@@ -1,0 +1,7 @@
+{
+  "context_servers": {
+    "venom": {
+      "url": "https://mcp.venomlabs.dev"
+    }
+  }
+}
