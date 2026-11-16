@@ -159,7 +159,8 @@ guides the agent at compaction, in subagents and after commits and pull
 requests. It lives in [venom-full](https://github.com/venomlabs-dev/venom-full#opencode):
 
 ```bash
-opencode plugin add github:venomlabs-dev/venom-full
+opencode plugin add github:venomlabs-dev/venom-full   # OpenCode 2.x
+opencode plugin -g github:venomlabs-dev/venom-full    # OpenCode 1.x
 opencode mcp auth venom
 ```
 
