@@ -52,15 +52,14 @@ Venom's sign-in challenge.
 
 ## Stores
 
-| Store | Status | Who submits |
-| --- | --- | --- |
-| Claude plugin directory | In review | Venom Labs owner |
-| OpenAI plugin directory (ChatGPT, Codex) | ZIP ready (`venom-openai-0.9.0.zip`) | Alex |
-| Cursor Marketplace | Package ready (`.cursor-plugin/plugin.json`) | Alex, at cursor.com/marketplace/publish |
-| Muse (Meta) | Form answers ready | Alex |
-| Official MCP Registry | Listed as `io.github.venomlabs-dev/venom` | Done |
-| Gemini CLI extension gallery | Ready: root `gemini-extension.json` | Alex adds the `gemini-cli-extension` topic to this repository |
-| awesome-copilot, Cline MCP Marketplace, Kilo marketplace, Factory plugins, Docker MCP Catalog | Texts ready | Alex |
+| Store | Status |
+| --- | --- |
+| Claude plugin directory | Submitted |
+| OpenAI plugin directory (ChatGPT, Codex) | Package ready |
+| Cursor Marketplace | Package ready (`.cursor-plugin/plugin.json`) |
+| Muse (Meta) | Not listed yet |
+| Official MCP Registry | Listed as `io.github.venomlabs-dev/venom` |
+| Gemini CLI extension gallery | Package ready (root `gemini-extension.json`) |
 
 ## Release gate
 

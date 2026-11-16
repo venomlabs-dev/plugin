@@ -176,20 +176,24 @@ amp plugins add https://raw.githubusercontent.com/venomlabs-dev/venom-full/main/
 
 The [Amp plugin](https://github.com/venomlabs-dev/venom-full#amp) calls the
 Venom server's guidance on each prompt, after milestones and at the end of a
-turn, as Venom Full does in Claude Code. Without it, append [VENOM.md](VENOM.md)
-to your `AGENTS.md`.
+turn, as Venom Full does in Claude Code. If `amp plugins add` doesn't take the
+URL, save `venom.ts` in `~/.config/amp/plugins/`. Without the plugin, append
+[VENOM.md](VENOM.md) to your `AGENTS.md`. These commands follow Amp's docs and
+haven't been run in Amp yet.
 
 ## Apps that read Claude plugins
 
-These apps install this repository as it is. Each gets the Venom MCP server
-and the `venom` skill.
+These apps read this repository's Claude plugin and marketplace, so they can
+install it as it is, with the Venom MCP server and the `venom` skill. Qwen Code
+was tested; for the others, the commands follow each app's docs and haven't
+been run yet. If one doesn't work, use the app's row in [Other apps](#other-apps).
 
-| App | Install |
-| --- | --- |
-| Qwen Code | `qwen extensions install venomlabs-dev/plugin`, then pick `venom` |
-| Factory Droid | `droid plugin marketplace add venomlabs-dev/plugin`, then `droid plugin install venom@venom --scope user` |
-| JetBrains Junie | `/extensions marketplace add venomlabs-dev/plugin`, then `/extensions install venom` |
-| Devin CLI and Devin Desktop | Install this repository as a Devin plugin, or use the [Devin config](#other-apps) |
+| App | Install | Tested |
+| --- | --- | --- |
+| Qwen Code | `qwen extensions install venomlabs-dev/plugin`, then pick `venom` | Yes, 0.27.4 |
+| Factory Droid | `droid plugin marketplace add venomlabs-dev/plugin`, then `droid plugin install venom@venom --scope user` | No |
+| JetBrains Junie | `/extensions marketplace add venomlabs-dev/plugin`, then `/extensions install venom` | No |
+| Devin CLI and Devin Desktop | Install this repository as a Devin plugin, or use the [Devin config](#other-apps) | No |
 
 Pick `venom`, not `venom-full`: Venom Full's hooks run only in Claude Code
 and Codex.
@@ -197,7 +201,8 @@ and Codex.
 ## Kiro
 
 [platforms/kiro/power](platforms/kiro/power) is a Kiro Power with the Venom MCP
-server and the `venom` skill. In Kiro, open **Powers → Add Custom Power →
+server and the `venom` skill, in Kiro's current Power format (`plugin.json`,
+`mcp.json`, `skills/`). It hasn't been tried in Kiro yet. In Kiro, open **Powers → Add Custom Power →
 Import power from a folder** and pick that folder from a clone of this
 repository. For always-on guidance, copy [venom.md](platforms/kiro/venom.md)
 into `.kiro/steering/`; custom agents must include it as a resource. Without the
