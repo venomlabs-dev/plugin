@@ -262,6 +262,11 @@ and Cowork. In Cursor, open **Cursor Settings → MCP**; in Gemini CLI, run
 run `/mcp`. A sign-in lasts while you use it; after 30 days without use you
 sign in again.
 
+## Upgrading to 0.9.1
+
+Venom's icon is the black tile everywhere: Claude, Codex, Cursor and the
+Gemini release. The Cursor rule is `rules/venom.md`. Nothing else changes.
+
 ## Upgrading to 0.9.0
 
 - Cursor, Copilot CLI, Qwen Code, Factory Droid and Junie can install this
