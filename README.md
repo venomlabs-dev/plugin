@@ -318,5 +318,6 @@ Codex keeps its hooks, now in `.codex-plugin/hooks.json`; trust them again via
 The repository holds only Markdown, JSON and images, as the directory requires
 for organizations that aren't Verified. Edit [VENOM.md](VENOM.md), then update
 the copies in `rules/` and `platforms/` to match; edit
-[skills/venom/SKILL.md](skills/venom/SKILL.md), then update the Kiro Power's
-copy. The checks for this repository live in the Venom monorepo.
+[skills/venom/SKILL.md](skills/venom/SKILL.md), then update its copy in
+`platforms/agent-plugin/skills/venom/SKILL.md`. The checks for this repository
+live in the Venom monorepo.
