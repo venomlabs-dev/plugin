@@ -138,7 +138,7 @@ it first with `gemini extensions uninstall venom`.
 
 ## GitHub Copilot (CLI and VS Code)
 
-Copilot CLI reads this repository's marketplace:
+Copilot CLI reads this repository's marketplace. [platforms/agent-plugin](platforms/agent-plugin) is the same plugin in the Agent Plugins format that awesome-copilot lists:
 
 ```bash
 copilot plugin marketplace add venomlabs-dev/plugin
@@ -203,7 +203,7 @@ and Codex.
 
 ## Kiro
 
-[platforms/kiro/power](platforms/kiro/power) is a Kiro Power with the Venom MCP
+[platforms/agent-plugin](platforms/agent-plugin) is a Kiro Power with the Venom MCP
 server and the `venom` skill, in Kiro's current Power format (`plugin.json`,
 `mcp.json`, `skills/`). It hasn't been tried in Kiro yet. In Kiro, open **Powers → Add Custom Power →
 Import power from a folder** and pick that folder from a clone of this

@@ -29,11 +29,11 @@ Venom's sign-in challenge.
 
 | App | Remote MCP + OAuth | Venom package | Install | Tested |
 | --- | --- | --- | --- | --- |
-| Claude Code, chat, Cowork | Yes | `venom` plugin; Venom Full hooks for Claude Code | `/plugin install venom@venom` or `venom-full@venom` | Claude Code 2.1.311: `claude plugin validate` passes for the plugin and marketplace; installs 0.9.0 |
-| Codex | Yes | `venom` plugin; Venom Full hooks | `codex plugin add venom@venom` | Codex 0.155: installs 0.9.0; `codex mcp list` shows `venom` with OAuth; skill present |
+| Claude Code, chat, Cowork | Yes | `venom` plugin; Venom Full hooks for Claude Code | `/plugin install venom@venom` or `venom-full@venom` | Claude Code 2.1.311: `claude plugin validate` passes for the plugin and marketplace; installed 0.9.0 |
+| Codex | Yes | `venom` plugin; Venom Full hooks | `codex plugin add venom@venom` | Codex 0.155: installed 0.9.0; `codex mcp list` shows `venom` with OAuth; skill present |
 | Cursor | Yes | Cursor plugin: `.cursor-plugin/plugin.json`, `mcp.json`, `rules/venom.md`, `skills/venom` | Cursor Marketplace once listed; local clone into `~/.cursor/plugins/local/venom` | Cursor's `validate-template.mjs` passes. No Cursor app on the test machine |
 | Gemini CLI | Yes (`httpUrl`) | Extension at the repository root | `gemini extensions install https://github.com/venomlabs-dev/plugin --ref main` | Gemini CLI 0.68.0, from GitHub with `--ref main`: lists context file `VENOM.md`, MCP server `venom`, skill `venom`. Without `--ref`, Gemini installs the latest GitHub release (v0.3.3) |
-| GitHub Copilot CLI | Yes | This repository via its marketplace | `copilot plugin marketplace add venomlabs-dev/plugin`, `copilot plugin install venom@venom` | Copilot CLI 1.0.112: installs; `copilot mcp list` shows `venom (http)`; 1 skill |
+| GitHub Copilot CLI | Yes | This repository via its marketplace, or `platforms/agent-plugin` (Agent Plugins format) | `copilot plugin marketplace add venomlabs-dev/plugin`, `copilot plugin install venom@venom` | Copilot CLI 1.0.112: installs; `copilot mcp list` shows `venom (http)`; 1 skill |
 | VS Code (Copilot) | Yes | Copilot CLI plugins; or `.vscode/mcp.json` and instructions | `code --add-mcp …` | Not tested (needs a Copilot sign-in) |
 | OpenCode | Yes | OpenCode plugin in venom-full | `opencode plugin add github:venomlabs-dev/venom-full` | OpenCode 1.19.5 and 2.3.0, installed from `github:venomlabs-dev/venom-full`: plugin active, `venom` skill listed, `venom` server reaches Venom and waits for sign-in. Compaction, subagent and milestone hooks are unit-tested only (they need a model) |
 | Amp | Yes | Amp plugin in venom-full, calling `get_guidance` | `amp mcp add`, `amp skill add`, `amp plugins add` | Typechecked against `@ampcode/plugin` and unit-tested; not run (needs an Amp account) |
@@ -41,7 +41,7 @@ Venom's sign-in challenge.
 | Factory Droid | Yes | This repository via its marketplace | `droid plugin marketplace add venomlabs-dev/plugin` | Not tested |
 | JetBrains Junie | Yes | This repository via its marketplace | `/extensions marketplace add venomlabs-dev/plugin` | Not tested |
 | Devin CLI / Desktop | Yes | This repository as a plugin, or config + `AGENTS.md` | `.devin/mcp_config.json` | Not tested (needs a Devin sign-in) |
-| Kiro | Yes | Kiro Power in `platforms/kiro/power`, plus steering | Powers → Import power from a folder | Not tested (needs a Kiro sign-in) |
+| Kiro | Yes | Kiro Power in `platforms/agent-plugin`, plus steering | Powers → Import power from a folder | Not tested (needs a Kiro sign-in) |
 | Windsurf / Devin Desktop (Cascade) | Yes | Config + `trigger: always_on` rule | `mcp_config.json` | Not tested |
 | Cline | CLI documents OAuth | Config + `.clinerules` | MCP settings | Not tested |
 | Kilo Code | Yes | Config with `instructions` | `kilo.jsonc` | Not tested |
