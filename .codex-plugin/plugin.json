@@ -1,6 +1,6 @@
 {
   "name": "venom",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Multiplayer AI for your team: agents share projects, tasks, decisions and skills through Venom MCP.",
   "author": {
     "name": "Venom Labs",
@@ -102,7 +102,7 @@
         "commerce_description": "Venom does not sell products or process payments."
       },
       "publication": {
-        "release_notes": "Venom 0.9.0, the first release in the plugin directory. Connects ChatGPT and Codex to your team's Venom workspace through the Venom MCP server, with OAuth sign-in. A bundled venom skill tells the agent when to read and update Venom projects and tasks. The plugin ships no hooks and runs no local code."
+        "release_notes": "Venom 0.9.1, the first release in the plugin directory. Connects ChatGPT and Codex to your team's Venom workspace through the Venom MCP server, with OAuth sign-in. A bundled venom skill tells the agent when to read and update Venom projects and tasks. The plugin ships no hooks and runs no local code."
       }
     }
   }

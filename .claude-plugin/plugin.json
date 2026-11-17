@@ -1,6 +1,6 @@
 {
   "name": "venom",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Multiplayer AI for your team: agents share projects, tasks, decisions and skills through Venom MCP.",
   "author": {
     "name": "Venom Labs",
@@ -22,5 +22,6 @@
   "privacyPolicyUrl": "https://venomlabs.dev/privacy",
   "termsOfServiceUrl": "https://venomlabs.dev/terms",
   "supportUrl": "https://venomlabs.dev/contact",
+  "icon": "./.claude-plugin/icon.png",
   "mcpServers": "./.mcp.json"
 }

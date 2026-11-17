@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "venom",
-  "version": "0.9.0",
-  "description": "Multiplayer AI for your team: Kiro and your teammates' agents share projects, tasks, decisions and skills through Venom MCP.",
+  "version": "0.9.1",
+  "description": "Multiplayer AI for your team: your agent and your teammates' agents share projects, tasks, decisions and skills through Venom MCP.",
   "author": {
     "name": "Venom Labs",
     "email": "support@venomlabs.dev",

@@ -138,7 +138,7 @@ it first with `gemini extensions uninstall venom`.
 
 ## GitHub Copilot (CLI and VS Code)
 
-Copilot CLI reads this repository's marketplace:
+Copilot CLI reads this repository's marketplace. [platforms/agent-plugin](platforms/agent-plugin) is the same plugin in the Agent Plugins format that awesome-copilot lists:
 
 ```bash
 copilot plugin marketplace add venomlabs-dev/plugin
@@ -203,7 +203,7 @@ and Codex.
 
 ## Kiro
 
-[platforms/kiro/power](platforms/kiro/power) is a Kiro Power with the Venom MCP
+[platforms/agent-plugin](platforms/agent-plugin) is a Kiro Power with the Venom MCP
 server and the `venom` skill, in Kiro's current Power format (`plugin.json`,
 `mcp.json`, `skills/`). It hasn't been tried in Kiro yet. In Kiro, open **Powers → Add Custom Power →
 Import power from a folder** and pick that folder from a clone of this
@@ -262,6 +262,11 @@ and Cowork. In Cursor, open **Cursor Settings → MCP**; in Gemini CLI, run
 run `/mcp`. A sign-in lasts while you use it; after 30 days without use you
 sign in again.
 
+## Upgrading to 0.9.1
+
+Venom's icon is the black tile everywhere: Claude, Codex, Cursor and the
+Gemini release. The Cursor rule is `rules/venom.md`. Nothing else changes.
+
 ## Upgrading to 0.9.0
 
 - Cursor, Copilot CLI, Qwen Code, Factory Droid and Junie can install this
@@ -313,5 +318,6 @@ Codex keeps its hooks, now in `.codex-plugin/hooks.json`; trust them again via
 The repository holds only Markdown, JSON and images, as the directory requires
 for organizations that aren't Verified. Edit [VENOM.md](VENOM.md), then update
 the copies in `rules/` and `platforms/` to match; edit
-[skills/venom/SKILL.md](skills/venom/SKILL.md), then update the Kiro Power's
-copy. The checks for this repository live in the Venom monorepo.
+[skills/venom/SKILL.md](skills/venom/SKILL.md), then update its copy in
+`platforms/agent-plugin/skills/venom/SKILL.md`. The checks for this repository
+live in the Venom monorepo.
