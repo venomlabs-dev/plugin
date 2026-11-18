@@ -1,12 +1,12 @@
 # Venom MCP plugin
 
 **[Venom AI](https://venomlabs.dev)** by **Venom Labs** makes the coding agents
-your team already uses multiplayer. One MCP server connects Claude Code, Codex,
-Cursor, Gemini CLI, GitHub Copilot, OpenCode and other MCP clients, so your
-team's agents share tasks, decisions, skills and tools. There is no new
+your team already uses multiplayer. The Venom plugin connects Claude Code,
+Codex, Cursor, Gemini CLI, GitHub Copilot, OpenCode and other agents to one MCP
+server, so your team's agents share tasks, decisions, skills and tools. There is no new
 harness to adopt.
 
-[Website](https://venomlabs.dev) · [How it works](https://docs.venomlabs.dev/how-it-works) · [Quickstart](https://docs.venomlabs.dev/quickstart) · [MCP setup](https://docs.venomlabs.dev/agents/mcp) · [Pricing](https://venomlabs.dev/pricing)
+[Website](https://venomlabs.dev) · [How it works](https://docs.venomlabs.dev/how-it-works) · [Quickstart](https://docs.venomlabs.dev/quickstart) · [All agents](https://docs.venomlabs.dev/agents/all-agents) · [Pricing](https://venomlabs.dev/pricing)
 
 Venom is where your team's AI agents share their work: projects, tasks,
 decisions and skills, so any agent or teammate can pick up where another left
@@ -18,6 +18,12 @@ Venom MCP connection, a `venom` skill, an always-on rule, and setup files for
 apps that take a config file instead. Connections remain authenticated and
 organization-scoped; the app manages OAuth and tool approval. Installing this
 plugin does not disable those controls.
+
+**Venom needs its plugin.** The MCP server alone gives an agent Venom's tools;
+the plugin tells it when to use them: read the project and task before acting,
+log what changed. Without the plugin, agents rarely use Venom. Add the MCP
+server by itself only in an app that can't load a plugin, and add Venom's rules
+file there (see [Other apps](#other-apps)).
 
 ## What this plugin does
 
@@ -115,11 +121,12 @@ from there. Until then, install it locally:
 git clone https://github.com/venomlabs-dev/plugin ~/.cursor/plugins/local/venom
 ```
 
+On Windows, run it in PowerShell with `"$HOME\.cursor\plugins\local\venom"` as
+the folder.
+
 Run **Developer: Reload Window**, then open **Cursor Settings → MCP** and
-connect `venom`. To add only the MCP server, merge
-[mcp.json](platforms/cursor/mcp.json) into `~/.cursor/mcp.json` and copy
-[venom.md](platforms/cursor/venom.md) into the project's `.cursor/rules/` as
-`venom.mdc`.
+connect `venom`. Install the plugin, not only the MCP server: its rule and
+skill are what tell Cursor's agent when to use Venom.
 
 ## Gemini CLI
 
@@ -148,8 +155,8 @@ copilot plugin install venom@venom
 This adds the Venom MCP server and the `venom` skill. Run `/mcp` in Copilot to
 authenticate `venom`. Install `venom`, not `venom-full`, in Copilot.
 
-In VS Code, plugins installed by Copilot CLI show up too. Or add only the MCP
-server: run `code --add-mcp '{"name":"venom","type":"http","url":"https://mcp.venomlabs.dev"}'`,
+In VS Code, plugins installed by Copilot CLI show up too. Without Copilot CLI,
+add the MCP server and Venom's rules: run `code --add-mcp '{"name":"venom","type":"http","url":"https://mcp.venomlabs.dev"}'`,
 or merge [mcp.json](platforms/vscode/mcp.json) into `.vscode/mcp.json`. Append
 [copilot-instructions.md](platforms/copilot/copilot-instructions.md) to
 `.github/copilot-instructions.md`.
@@ -166,9 +173,6 @@ opencode plugin -g github:venomlabs-dev/venom-full    # OpenCode 1.x
 opencode mcp auth venom
 ```
 
-Without the plugin, merge [opencode.json](platforms/opencode/opencode.json)
-into the project's `opencode.json` and copy [VENOM.md](VENOM.md) next to it.
-
 ## Amp
 
 ```bash
@@ -180,8 +184,8 @@ amp plugins add https://raw.githubusercontent.com/venomlabs-dev/venom-full/main/
 The [Amp plugin](https://github.com/venomlabs-dev/venom-full#amp) calls the
 Venom server's guidance on each prompt, after milestones and at the end of a
 turn, as Venom Full does in Claude Code. If `amp plugins add` doesn't take the
-URL, save `venom.ts` in `~/.config/amp/plugins/`. Without the plugin, append
-[VENOM.md](VENOM.md) to your `AGENTS.md`. These commands follow Amp's docs and
+URL, save `venom.ts` in `~/.config/amp/plugins/`. If the plugin doesn't load,
+append [VENOM.md](VENOM.md) to your `AGENTS.md`. These commands follow Amp's docs and
 haven't been run in Amp yet.
 
 ## Apps that read Claude plugins
@@ -208,11 +212,13 @@ server and the `venom` skill, in Kiro's current Power format (`plugin.json`,
 `mcp.json`, `skills/`). It hasn't been tried in Kiro yet. In Kiro, open **Powers → Add Custom Power →
 Import power from a folder** and pick that folder from a clone of this
 repository. For always-on guidance, copy [venom.md](platforms/kiro/venom.md)
-into `.kiro/steering/`; custom agents must include it as a resource. Without the
-Power, merge [mcp.json](platforms/kiro/mcp.json) into `.kiro/settings/mcp.json`.
+into `.kiro/steering/`; custom agents must include it as a resource. If the Power doesn't
+import, merge [mcp.json](platforms/kiro/mcp.json) into `.kiro/settings/mcp.json`.
 
 ## Other apps
 
+These apps can't load a Venom plugin, or their plugin didn't install, so add
+both the MCP entry and the instructions file: the instructions are what tell the agent to use Venom.
 Merge MCP entries into existing configuration; never overwrite other servers.
 Add the instruction file alongside existing rules. Where an app reads
 `AGENTS.md`, append [VENOM.md](VENOM.md) to it.
@@ -224,11 +230,11 @@ Add the instruction file alongside existing rules. Where an app reads
 | Windsurf / Devin Desktop (Cascade) | Merge [mcp_config.json](platforms/windsurf/mcp_config.json) into `~/.codeium/windsurf/mcp_config.json` | Copy [venom.md](platforms/windsurf/venom.md) into `.windsurf/rules/` |
 | Devin CLI / Desktop Local | Merge [mcp_config.json](platforms/devin/mcp_config.json) into `.devin/mcp_config.json`, then `devin mcp login venom` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
 | Zed | Merge [settings.json](platforms/zed/settings.json) into Zed's `settings.json` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
-| JetBrains Junie (MCP only) | Merge [mcp.json](platforms/junie/mcp.json) into `~/.junie/mcp/mcp.json`, then `/mcp` and Authorize | Append [VENOM.md](VENOM.md) to `.junie/AGENTS.md` |
+| JetBrains Junie (if the plugin doesn't install) | Merge [mcp.json](platforms/junie/mcp.json) into `~/.junie/mcp/mcp.json`, then `/mcp` and Authorize | Append [VENOM.md](VENOM.md) to `.junie/AGENTS.md` |
 | JetBrains AI Assistant | Paste [mcp.json](platforms/junie/mcp.json) in **Settings → Tools → AI Assistant → MCP** | Add [VENOM.md](VENOM.md) to the project's rules |
-| Factory Droid (MCP only) | `droid mcp add venom https://mcp.venomlabs.dev --type http`, or merge [mcp.json](platforms/factory/mcp.json) | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
-| Qwen Code (MCP only) | Merge [settings.json](platforms/qwen/settings.json) into `~/.qwen/settings.json` | Append [VENOM.md](VENOM.md) to `QWEN.md` |
-| Amp (MCP only) | Merge [settings.json](platforms/amp/settings.json) into `~/.config/amp/settings.json` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
+| Qwen Code (if the plugin doesn't install) | Merge [settings.json](platforms/qwen/settings.json) into `~/.qwen/settings.json` | Append [VENOM.md](VENOM.md) to `QWEN.md` |
+| Factory Droid (if the plugin doesn't install) | `droid mcp add venom https://mcp.venomlabs.dev --type http`, or merge [mcp.json](platforms/factory/mcp.json) | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
+| Amp (if the plugin doesn't install) | Merge [settings.json](platforms/amp/settings.json) into `~/.config/amp/settings.json` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
 | Crush | Merge [crush.json](platforms/crush/crush.json) into `crush.json` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
 | Warp | Add a remote MCP server named `venom` at `https://mcp.venomlabs.dev` in **Settings → MCP Servers** | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
 | Goose | Click `goose://extension?url=https%3A%2F%2Fmcp.venomlabs.dev&type=streamable_http&id=venom&name=Venom&description=Your%20team%27s%20projects%2C%20tasks%20and%20decisions`, or `goose configure` → Add Extension → Remote (Streamable HTTP) | Copy [skills/venom](skills/venom) into `~/.agents/skills/` |

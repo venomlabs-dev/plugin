@@ -3,6 +3,12 @@
 Venom is a remote MCP server with OAuth. There is nothing to run locally and
 no API key.
 
+Venom needs its plugin. If your app can load one, install it instead of these
+steps: see the [README](README.md#pick-your-app). Cline can't, so it needs both
+the server (step 1) and Venom's rule (step 3): the server gives the agent
+Venom's tools, and the rule tells it when to use them. Without the rule, agents
+rarely use Venom.
+
 1. Add this server to your MCP settings, merged with the servers already
    there. In Cline, keep `"type": "streamableHttp"`, or Cline uses legacy SSE:
 
