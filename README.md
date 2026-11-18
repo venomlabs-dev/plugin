@@ -210,6 +210,10 @@ doesn't work, use the app's row in [Other apps](#other-apps).
 | Augment (Auggie) | `auggie install git:github.com/venomlabs-dev/plugin`, then `auggie mcp add venom -t http -u https://mcp.venomlabs.dev` | Yes, 1.2.2 |
 | Goose | `goose plugin install https://github.com/venomlabs-dev/plugin` adds the skill; add the server with the Goose link in [Other apps](#other-apps) | Partly, 1.60.1: skill listed; the server was added by hand and is listed, the link wasn't tried |
 
+For hooks in these apps (session start and milestone reminders), add the
+app's package from [venom-full](https://github.com/venomlabs-dev/venom-full#other-agents)
+next to `venom`; its folder README has the steps.
+
 Droid names this marketplace `plugin`, after the repository, so the plugin is
 `venom@plugin` there. Grok Build skips the marketplace's `venom` entry, so
 install the repository directly as above. Muse Code and OpenClaw don't install
