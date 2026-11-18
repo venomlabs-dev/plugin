@@ -45,9 +45,9 @@ only to your organization's workspace.
 | GitHub Copilot CLI and VS Code | Venom plugin | [GitHub Copilot](#github-copilot-cli-and-vs-code) |
 | OpenCode | Venom plugin for OpenCode | [OpenCode](#opencode) |
 | Amp | MCP, skill and the Venom plugin for Amp | [Amp](#amp) |
-| Qwen Code, Factory Droid, JetBrains Junie | This repository as a plugin | [Apps that read Claude plugins](#apps-that-read-claude-plugins) |
+| Antigravity CLI, Grok Build, Qwen Code, Factory Droid, JetBrains Junie, Mistral Vibe, Pi, OpenClaw, Muse Code, Auggie, Goose, Cline, Hermes | This repository as a plugin, or its `venom` skill | [Apps that read Claude plugins](#apps-that-read-claude-plugins) |
 | Kiro | Venom Power and steering | [Kiro](#kiro) |
-| Cline, Kilo Code, Windsurf, Devin, Zed, Warp, Goose, Crush, Continue and others | MCP config and a rules file | [Other apps](#other-apps) |
+| Kilo Code, Windsurf, Devin, Zed, Warp, Crush, Continue and others | MCP config and a rules file | [Other apps](#other-apps) |
 
 T3 Code runs Claude Code, Codex, OpenCode and Cursor with their own
 configuration, so install Venom for those and T3 Code uses it.
@@ -190,17 +190,32 @@ haven't been run in Amp yet.
 
 ## Apps that read Claude plugins
 
-These apps read this repository's Claude plugin and marketplace, so they can
-install it as it is, with the Venom MCP server and the `venom` skill. Qwen Code
-was tested; for the others, the commands follow each app's docs and haven't
-been run yet. If one doesn't work, use the app's row in [Other apps](#other-apps).
+These apps install this repository, or its `venom` skill, as their own plugin
+format. "Checked" means installed on macOS in a clean config on 18 Nov 2026 and
+the app's own listing showed Venom's server and skill (sign-in needs a person,
+so it wasn't part of the check). If one doesn't work, use the app's row in
+[Other apps](#other-apps).
 
-| App | Install | Tested |
+| App | Install | Checked |
 | --- | --- | --- |
+| Antigravity CLI | `git clone https://github.com/venomlabs-dev/plugin ~/.venom-plugin`, then `agy plugin install ~/.venom-plugin`; sign in to Venom with `/plugin` | Yes, 1.5.11: skill, rule and server |
+| Grok Build | `grok plugin install venomlabs-dev/plugin --trust`; sign in with `/mcps`, select `venom`, press `i`. Grok Build also picks up Venom from Claude Code | Yes, 1.0.89 |
 | Qwen Code | `qwen extensions install venomlabs-dev/plugin`, then pick `venom` | Yes, 0.27.4 |
-| Factory Droid | `droid plugin marketplace add venomlabs-dev/plugin`, then `droid plugin install venom@venom --scope user` | No |
-| JetBrains Junie | `/extensions marketplace add venomlabs-dev/plugin`, then `/extensions install venom` | No |
-| Devin CLI and Devin Desktop | Install this repository as a Devin plugin, or use the [Devin config](#other-apps) | No |
+| Factory Droid | `droid plugin marketplace add venomlabs-dev/plugin`, `droid plugin install venom@plugin --scope user`, then `droid mcp add venom https://mcp.venomlabs.dev --type http` | Yes, 1.14.0 |
+| JetBrains Junie | `/extensions marketplace add venomlabs-dev/plugin`, then `/extensions install venom` | No: Junie CLI 26.9.7 didn't start on the test machine |
+| Mistral Vibe | `git clone https://github.com/venomlabs-dev/plugin ~/.vibe/plugins/venom`, then `vibe mcp add venom --url https://mcp.venomlabs.dev --transport streamable-http` | Yes, 3.1.3 |
+| Pi | `pi install git:github.com/venomlabs-dev/plugin`, then `pi mcp add venom --url https://mcp.venomlabs.dev` | Yes, 1.5.2 |
+| OpenClaw | `git clone https://github.com/venomlabs-dev/plugin ~/.venom-plugin`, then `openclaw plugins install ~/.venom-plugin --accept-capabilities` | Yes, 2026.11.5 |
+| Muse Code | `git clone https://github.com/venomlabs-dev/plugin ~/.venom-plugin`, `muse plugins install ~/.venom-plugin/platforms/agent-plugin`, then approve the Venom server when Muse asks | Yes, 1.4.23 |
+| Augment (Auggie) | `auggie install git:github.com/venomlabs-dev/plugin`, then `auggie mcp add venom -t http -u https://mcp.venomlabs.dev` | Yes, 1.2.2 |
+| Goose | `goose plugin install https://github.com/venomlabs-dev/plugin` adds the skill; add the server with the Goose link in [Other apps](#other-apps) | Yes, 1.60.1 |
+| Cline CLI | `cline skill add venomlabs-dev/plugin --skill venom -y`, `cline mcp add venom --transport streamable-http --yes https://mcp.venomlabs.dev`, and [venom.md](platforms/cline/venom.md) in `.clinerules/` | Yes, 3.0.74 |
+| Hermes Agent | `hermes skills install https://raw.githubusercontent.com/venomlabs-dev/plugin/main/skills/venom/SKILL.md`, then add `venom` with `url: https://mcp.venomlabs.dev` and `auth: oauth` under `mcp_servers` in `~/.hermes/config.yaml` | Yes, 0.23.2 |
+| Devin CLI and Devin Desktop | Install this repository as a Devin plugin (needs a Devin login), or use the [Devin config](#other-apps) | Config only, 3000.14 |
+
+Droid and Grok Build name this marketplace `plugin`, after the repository, so
+the plugin is `venom@plugin` there. Muse Code, OpenClaw and Hermes don't
+install the repository root from GitHub; use the commands above.
 
 Pick `venom`, not `venom-full`: Venom Full's hooks run only in Claude Code
 and Codex.
@@ -225,7 +240,7 @@ Add the instruction file alongside existing rules. Where an app reads
 
 | App | MCP configuration | Instructions |
 | --- | --- | --- |
-| Cline | Merge [mcp.json](platforms/cline/mcp.json) through Cline's MCP settings | Copy [venom.md](platforms/cline/venom.md) into `.clinerules/` and enable it |
+| Cline (VS Code extension) | Merge [mcp.json](platforms/cline/mcp.json) through Cline's MCP settings | Copy [venom.md](platforms/cline/venom.md) into `.clinerules/` and enable it |
 | Kilo Code | Merge [kilo.json](platforms/kilo/kilo.json) into `kilo.jsonc` | Copy [VENOM.md](VENOM.md) next to it (listed in `instructions`) |
 | Windsurf / Devin Desktop (Cascade) | Merge [mcp_config.json](platforms/windsurf/mcp_config.json) into `~/.codeium/windsurf/mcp_config.json` | Copy [venom.md](platforms/windsurf/venom.md) into `.windsurf/rules/` |
 | Devin CLI / Desktop Local | Merge [mcp_config.json](platforms/devin/mcp_config.json) into `.devin/mcp_config.json`, then `devin mcp login venom` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
@@ -237,16 +252,14 @@ Add the instruction file alongside existing rules. Where an app reads
 | Amp (if the plugin doesn't install) | Merge [settings.json](platforms/amp/settings.json) into `~/.config/amp/settings.json` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
 | Crush | Merge [crush.json](platforms/crush/crush.json) into `crush.json` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
 | Warp | Add a remote MCP server named `venom` at `https://mcp.venomlabs.dev` in **Settings → MCP Servers** | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
-| Goose | Click `goose://extension?url=https%3A%2F%2Fmcp.venomlabs.dev&type=streamable_http&id=venom&name=Venom&description=Your%20team%27s%20projects%2C%20tasks%20and%20decisions`, or `goose configure` → Add Extension → Remote (Streamable HTTP) | Copy [skills/venom](skills/venom) into `~/.agents/skills/` |
-| Continue | Add `.continue/mcpServers/venom.yaml` (below) | Copy [VENOM.md](VENOM.md) into `.continue/rules/` |
-| Augment, Trae, Antigravity and any other MCP client | Add a remote MCP server (Streamable HTTP) named `venom` at `https://mcp.venomlabs.dev`, with OAuth and no API key | Add [VENOM.md](VENOM.md) to the app's rules file |
+| Goose | Click `goose://extension?url=https%3A%2F%2Fmcp.venomlabs.dev&type=streamable_http&id=venom&name=Venom&description=Your%20team%27s%20projects%2C%20tasks%20and%20decisions`, or `goose configure` → Add Extension → Remote (Streamable HTTP) | `goose plugin install https://github.com/venomlabs-dev/plugin`, or copy [skills/venom](skills/venom) into `~/.agents/skills/` |
+| Continue | Add the `mcpServers` entry (below) to your Continue `config.yaml` | Copy [VENOM.md](VENOM.md) into `.continue/rules/` |
+| Kimi Code, Trae and any other MCP client | Add a remote MCP server (Streamable HTTP) named `venom` at `https://mcp.venomlabs.dev`, with OAuth and no API key | Add [VENOM.md](VENOM.md) to the app's rules file |
 
-Continue's file:
+Continue's `mcpServers` entry, in the `config.yaml` the CLI loads (Continue CLI
+1.5.47 didn't read a separate `.continue/mcpServers/venom.yaml`):
 
 ```yaml
-name: Venom
-version: 0.0.1
-schema: v1
 mcpServers:
   - name: venom
     type: streamable-http

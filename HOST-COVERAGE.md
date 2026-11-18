@@ -1,4 +1,4 @@
-# Host coverage — 17 November 2026 (0.9.2)
+# Host coverage — 18 November 2026 (0.9.2)
 
 Every app below connects to the same Venom MCP server,
 `https://mcp.venomlabs.dev`, with OAuth and no API key. The guidance that tells
@@ -22,33 +22,47 @@ refuses lifecycle hooks. Hooks and code live in
 
 ## Matrix
 
-"Tested" means installed on macOS in an isolated config on 16 Nov 2026, with
-the result shown. OAuth sign-in itself needs a person in a browser, so "MCP
-registered" means the app lists the `venom` server and, where it connects, gets
-Venom's sign-in challenge.
+"Checked" means installed on macOS in an isolated config (16 Nov or 18 Nov
+2026), with the result shown. OAuth sign-in needs a person in a browser, so
+"server registered" means the app lists the `venom` server and, where it
+connects, gets Venom's sign-in challenge. Levels follow the docs: plugin +
+hooks, plugin + some hooks, plugin, MCP only.
 
-| App | Remote MCP + OAuth | Venom package | Install | Tested |
-| --- | --- | --- | --- | --- |
-| Claude Code, chat, Cowork | Yes | `venom` plugin; Venom Full hooks for Claude Code | `/plugin install venom@venom` or `venom-full@venom` | Claude Code 2.1.311: `claude plugin validate` passes for the plugin and marketplace; installed 0.9.0 |
-| Codex | Yes | `venom` plugin; Venom Full hooks | `codex plugin add venom@venom` | Codex 0.155: installed 0.9.0; `codex mcp list` shows `venom` with OAuth; skill present |
-| Cursor | Yes | Cursor plugin: `.cursor-plugin/plugin.json`, `mcp.json`, `rules/venom.md`, `skills/venom` | Cursor Marketplace once listed; local clone into `~/.cursor/plugins/local/venom` | Cursor's `validate-template.mjs` passes. No Cursor app on the test machine |
-| Gemini CLI | Yes (`httpUrl`) | Extension at the repository root | `gemini extensions install https://github.com/venomlabs-dev/plugin --ref main` | Gemini CLI 0.68.0, from GitHub with `--ref main`: lists context file `VENOM.md`, MCP server `venom`, skill `venom`. Without `--ref`, Gemini installs the latest GitHub release (v0.3.3) |
-| GitHub Copilot CLI | Yes | This repository via its marketplace, or `platforms/agent-plugin` (Agent Plugins format) | `copilot plugin marketplace add venomlabs-dev/plugin`, `copilot plugin install venom@venom` | Copilot CLI 1.0.112: installs; `copilot mcp list` shows `venom (http)`; 1 skill |
-| VS Code (Copilot) | Yes | Copilot CLI plugins; or `.vscode/mcp.json` and instructions | `code --add-mcp …` | Not tested (needs a Copilot sign-in) |
-| OpenCode | Yes | OpenCode plugin in venom-full | `opencode plugin add github:venomlabs-dev/venom-full` | OpenCode 1.19.5 and 2.3.0, installed from `github:venomlabs-dev/venom-full`: plugin active, `venom` skill listed, `venom` server reaches Venom and waits for sign-in. Compaction, subagent and milestone hooks are unit-tested only (they need a model) |
-| Amp | Yes | Amp plugin in venom-full, calling `get_guidance` | `amp mcp add`, `amp skill add`, `amp plugins add` | Typechecked against `@ampcode/plugin` and unit-tested; not run (needs an Amp account) |
-| Qwen Code | Yes (`httpUrl`) | This repository (converted on install) | `qwen extensions install venomlabs-dev/plugin` | Qwen Code 0.27.4: offers `venom` and `venom-full` from the marketplace; `venom` installs with context, skill and MCP |
-| Factory Droid | Yes | This repository via its marketplace | `droid plugin marketplace add venomlabs-dev/plugin` | Not tested |
-| JetBrains Junie | Yes | This repository via its marketplace | `/extensions marketplace add venomlabs-dev/plugin` | Not tested |
-| Devin CLI / Desktop | Yes | This repository as a plugin, or config + `AGENTS.md` | `.devin/mcp_config.json` | Not tested (needs a Devin sign-in) |
-| Kiro | Yes | Kiro Power in `platforms/agent-plugin`, plus steering | Powers → Import power from a folder | Not tested (needs a Kiro sign-in) |
-| Windsurf / Devin Desktop (Cascade) | Yes | Config + `trigger: always_on` rule | `mcp_config.json` | Not tested |
-| Cline | CLI documents OAuth | Config + `.clinerules` | MCP settings | Not tested |
-| Kilo Code | Yes | Config with `instructions` | `kilo.jsonc` | Not tested |
-| Zed | Yes | Config + `AGENTS.md` | `context_servers` in settings | Not tested. Zed's MCP extensions run local commands only, and Zed is moving to the MCP Registry, where Venom is listed |
-| Warp, Goose, Crush, Continue, Augment, Trae, Antigravity, JetBrains AI Assistant | Varies | Config + rules file | See the README | Not tested |
-| T3 Code | Uses the apps it runs | None needed | Install Venom for Claude Code, Codex, OpenCode or Cursor | Not applicable |
-| Roo Code | — | None | — | Not supported: the extension shut down on 15 May 2026 |
+| App | Level | Install | Checked |
+| --- | --- | --- | --- |
+| Claude Code | Plugin + hooks | `/plugin install venom-full@venom` | 2.1.311: `claude plugin validate` passes; installs 0.9.0. Used signed in every day |
+| Codex | Plugin + hooks | `codex plugin add venom@venom`, plus Venom Full | 0.155: installs; `codex mcp list` shows `venom` with OAuth; skill present. Used signed in every day |
+| Amp | Plugin + hooks | `amp mcp add`, `amp skill add`, `amp plugins add` | Plugin typechecked and unit-tested. 18 Nov: every Amp command except `mcp add` needs an Amp login, so not run |
+| OpenCode | Plugin + some hooks | `opencode plugin add github:venomlabs-dev/venom-full` | 1.19.5 and 2.3.0: plugin active, skill listed, server waits for sign-in. Hooks unit-tested only |
+| Cursor | Plugin | Cursor Marketplace once listed; local clone into `~/.cursor/plugins/local/venom` | `validate-template.mjs` passes. Cursor CLI 2026.11.17: `~/.cursor/mcp.json` gives `venom: requires_authentication`; the CLI ignored a local plugin folder and needs a login for its marketplace. Cursor app not tried |
+| GitHub Copilot CLI | Plugin | `copilot plugin marketplace add venomlabs-dev/plugin`, `copilot plugin install venom@venom` | 1.0.112: installs; `copilot mcp list` shows `venom (http)`; 1 skill |
+| VS Code (Copilot) | Plugin | Copilot CLI plugins, or `.vscode/mcp.json` and instructions | Not tried (needs a Copilot sign-in) |
+| Gemini CLI | Plugin | `gemini extensions install https://github.com/venomlabs-dev/plugin --ref main` | 0.68.0: context file `VENOM.md`, server `venom`, skill `venom`. Without `--ref`, Gemini installs release v0.3.3 |
+| Antigravity CLI | Plugin | clone, then `agy plugin install <clone>` | 1.5.11: `agy plugin list` shows 1 skill, 1 rule, 1 MCP server; a signed-in session lists the `venom` skill. `agy plugin install` takes a local folder only. The plugin's server signs in through `/plugin` |
+| Grok Build | Plugin | `grok plugin install venomlabs-dev/plugin --trust` | 1.0.89: `grok inspect` shows skill `venom` and server `venom` (http). Also picks up `venom` and `venom-full` installed in Claude Code. `venom@plugin` from the marketplace fails: Grok skips a marketplace entry whose source is the repository root. Venom Full's `mcp_tool` hooks don't run: Grok runs `command` and `http` hooks, and its `SessionStart` and `UserPromptSubmit` can't add context |
+| Qwen Code | Plugin | `qwen extensions install venomlabs-dev/plugin` | 0.27.4: `venom` installs with context, skill and MCP |
+| Factory Droid | Plugin | marketplace add, `droid plugin install venom@plugin --scope user`, `droid mcp add venom https://mcp.venomlabs.dev --type http` | 1.14.0: skill and rules install; Droid rejects the plugin's root `mcp.json` (no `type`), so add the server with `droid mcp add`. Venom Full's `mcp_tool` hooks are rejected |
+| Kiro | Plugin | Powers → Import power from a folder, or `kiro-cli powers install <clone>/platforms/agent-plugin` | Kiro CLI 3.4.0: the Power installs (server and skill); `mcp list` needs a Kiro login. The Power carries no steering file |
+| JetBrains Junie | Plugin | `/extensions marketplace add venomlabs-dev/plugin` | Junie CLI 26.9.7 (npm): every command hung on the test machine, so not checked |
+| Mistral Vibe | Plugin | clone into `~/.vibe/plugins/venom`, `vibe mcp add venom --url https://mcp.venomlabs.dev --transport streamable-http` | 3.1.3: Vibe's plugin loader reads the skill; the plugin's server isn't imported, so add it with `vibe mcp add` |
+| Pi | Plugin | `pi install git:github.com/venomlabs-dev/plugin`, `pi mcp add venom --url https://mcp.venomlabs.dev` | 1.5.2: `/skill:venom` present; `pi mcp list` shows `venom: needs sign-in`. `VENOM.md` isn't loaded |
+| OpenClaw | Plugin | clone, then `openclaw plugins install <clone> --accept-capabilities` | 2026.11.5: plugin enabled (Codex bundle) with skill and server. The marketplace install fails on `venom-full`'s GitHub source; a `git:` install fails without `package.json` |
+| Muse Code | Plugin | `muse plugins install <clone>/platforms/agent-plugin` | 1.4.23: skill installs; the server waits for `muse plugins approve`. The repository root is refused because its `.mcp.json` server is HTTP |
+| Augment (Auggie) | Plugin | `auggie install git:github.com/venomlabs-dev/plugin`, `auggie mcp add venom -t http -u https://mcp.venomlabs.dev` | 1.2.2: server listed, skill installed (the install brings the skill only) |
+| Goose | Plugin | `goose plugin install https://github.com/venomlabs-dev/plugin`, plus the extension link | 1.60.1: skill listed; the install brings no server |
+| Cline | Plugin (CLI) | `cline skill add`, `cline mcp add`, `.clinerules/venom.md` | Cline CLI 3.0.74: server, rule and skill in `cline config`. The VS Code extension not tried |
+| Hermes Agent | Plugin | skill from its raw URL, server in `config.yaml` | 0.23.2: skill enabled; `hermes mcp test venom` reaches OAuth. `hermes plugins install` refuses the repository (its scan flags README text) |
+| Devin CLI / Desktop | MCP only | `.devin/mcp_config.json` + `AGENTS.md` | Devin CLI 3000.14: `devin mcp list` shows `venom`; `AGENTS.md` is an always-on rule. Plugin install needs a Devin login, not tried |
+| Kilo Code | MCP only | `kilo.jsonc` with `instructions` | Kilo CLI 7.8.27: server needs authentication, `VENOM.md` in instructions, skill listed. `kilo plugin github:venomlabs-dev/venom-full` installs, but its bundled skill is blocked and the plugin wasn't seen running |
+| Crush | MCP only | `crush.json` + `AGENTS.md` | 0.101.0: skill loads; the server answers "Unauthorized" with no sign-in prompt seen |
+| Continue | MCP only | `mcpServers` in `config.yaml` | CLI 1.5.47: reaches the server when the entry is in the config it loads; a separate `.continue/mcpServers/venom.yaml` wasn't read |
+| Kimi Code | MCP only | `mcp.json` + `AGENTS.md` | 2.6.3 (code.kimi.com installer): needs a Kimi login. The PyPI `kimi-cli` is unmaintained. Kimi plugins need `kimi.plugin.json`, which this repository doesn't have |
+| Windsurf / Devin Desktop (Cascade) | MCP only | `mcp_config.json` + rule | Not tried (desktop app) |
+| Zed | MCP only | `context_servers` + `AGENTS.md` | Not tried (desktop app). Zed's MCP extensions run local commands only |
+| Warp, JetBrains AI Assistant, Trae | MCP only | Settings + rules file | Not tried (desktop apps) |
+| Grok Bot | MCP only | Custom remote connector | Not tried. Grok Bot plugins come from the Cursor Marketplace, so it gets the Cursor plugin once that listing is live |
+| T3 Code | Uses the apps it runs | None needed | Not applicable |
+| Roo Code | — | — | Not supported: the extension shut down on 15 May 2026 |
 
 ## Stores
 
@@ -56,7 +70,7 @@ Venom's sign-in challenge.
 | --- | --- |
 | Claude plugin directory | Submitted |
 | OpenAI plugin directory (ChatGPT, Codex) | Package ready |
-| Cursor Marketplace | Package ready (`.cursor-plugin/plugin.json`) |
+| Cursor Marketplace | Publisher application in review (`.cursor-plugin/plugin.json`); not listed on 18 Nov. Grok Bot installs from this marketplace too |
 | Muse (Meta) | Not listed yet |
 | Official MCP Registry | Listed as `io.github.venomlabs-dev/venom` |
 | Gemini CLI extension gallery | Package ready (root `gemini-extension.json`) |
