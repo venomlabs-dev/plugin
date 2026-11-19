@@ -1,4 +1,4 @@
-# Host coverage — 18 November 2026 (0.9.2, hooks: venom-full 0.10.0)
+# Host coverage — 19 November 2026 (0.9.2, hooks: venom-full 0.11.0)
 
 Every app below connects to the same Venom MCP server,
 `https://mcp.venomlabs.dev`, with OAuth and no API key. The guidance that tells
@@ -10,7 +10,11 @@ the agent to find and log work in Venom comes from up to five places:
 3. **Tool descriptions and tool-response reminders.** Every app gets them, but
    only while the agent calls Venom.
 4. **A plugin that adds text at events.** The OpenCode plugin carries the same
-   texts as `get_guidance` for compaction, subagents and milestones.
+   texts as `get_guidance` for compaction, subagents and milestones, and so do
+   venom-full's hooks packages for the other agents. Signed in once per machine
+   (`sh <package>/hooks/venom-hook.sh login`, since venom-full 0.11.0), they
+   also start each session with your projects and unread mentions from the
+   server.
 5. **A skill or always-on rules file.** This is [VENOM.md](VENOM.md), the
    `venom` skill, or a copy of either in the app's rules format.
 
@@ -73,12 +77,12 @@ in their own format from a folder of
 adds Venom's guidance at session start, a reminder after commits, pushes, PRs,
 merges, releases, deploys and publishes, the compaction and subagent texts
 where the app has those moments, and one end-of-turn question where it allows
-one. They don't sign in, so no projects or mentions list.
+one. Signed in once per machine (`sh <package>/hooks/venom-hook.sh login`, venom-full 0.11.0), they also start each session with your projects and unread mentions.
 
 | App | Package | Seen reaching the model |
 | --- | --- | --- |
 | Antigravity CLI | `antigravity/` | Yes, 1.5.11: session start and milestone text |
-| Grok Build | `grok/` | Yes, 1.0.89: milestone text |
+| Grok Build | `grok/` | Yes, 1.0.89: milestone text; signed in (0.11.0, 19 Nov), your projects and unread mentions |
 | Kilo Code | `opencode/` (the OpenCode plugin) | Yes, 7.8.27: milestone text (earlier, milestones-only version) |
 | GitHub Copilot CLI | `copilot/` | On a local test model, 1.0.114: session start, subagent, milestones, end-of-turn question |
 | Qwen Code | `qwen/` | On a local test model, 0.28.0: session start, milestones, end-of-turn question |
