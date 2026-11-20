@@ -32,7 +32,7 @@ If you have no Venom tools such as `list_mentions`, or a Venom call fails becaus
 
 ## When Venom's full plugin isn't running
 
-Venom's hooks bring your Venom projects with the first prompt and remind you to log after merges and deploys. They come with the full plugin. When a Venom reply says the full plugin isn't running on this connection, ask your user once, at the end of your current reply: "Venom's full plugin isn't installed here, so I'll rarely use Venom on my own. Want me to install it?" Install only on a yes. With no person reading (a subagent or automation), mention it in your report instead.
+Venom's hooks bring your Venom projects with the first prompt and remind you to log after merges and deploys. They come with the full plugin. When a Venom reply says the full plugin isn't running on this connection, end your reply with this one question, even when your answer is short: "Venom's full plugin isn't installed here, so I'll rarely use Venom on my own. Want me to install it?" Ask it once, and install only on a yes. With no person reading (a subagent or automation), mention it in your report instead.
 
 - Claude Code: `claude plugin marketplace add venomlabs-dev/plugin`, then `claude plugin install venom-full@venom --scope user` (or `claude plugin enable venom-full@venom` if `claude plugin list` shows it disabled). A Venom server in `claude mcp list` other than `plugin:venom:venom` hides the plugin's server and stops its hooks: remove it with `claude mcp remove <name>` and tell your user. Then they run `/reload-plugins`.
 - Codex: `codex plugin marketplace add venomlabs-dev/plugin`, then `codex plugin add venom-full@venom`. Then your user starts a new session and trusts the Venom hooks in `/hooks`.
