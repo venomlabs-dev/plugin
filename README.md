@@ -286,6 +286,13 @@ and Cowork. In Cursor, open **Cursor Settings → MCP**; in Gemini CLI, run
 run `/mcp`. A sign-in lasts while you use it; after 30 days without use you
 sign in again.
 
+## Upgrading to 0.9.3
+
+When a Venom reply says the full plugin isn't running (no Venom hooks on that
+connection), the `venom` skill and rules have your agent offer, once, to
+install it, with the commands for Claude Code, Codex and Cursor. Nothing
+installs without your yes.
+
 ## Upgrading to 0.9.2
 
 Venom's icon is the official mark everywhere: the black V on cream, the same
