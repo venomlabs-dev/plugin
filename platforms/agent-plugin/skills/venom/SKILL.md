@@ -30,6 +30,15 @@ If you have no Venom tools such as `list_mentions`, or a Venom call fails becaus
    - Any other app: open its MCP settings and sign in to the `venom` server
 3. Then carry on with the request. Don't retry Venom in this turn.
 
+## When Venom's full plugin isn't running
+
+Venom's hooks bring your Venom projects with the first prompt and remind you to log after merges and deploys. They come with the full plugin. When a Venom reply says the full plugin isn't running on this connection, end your reply with this one question, even when your answer is short: "Venom's full plugin isn't installed here, so I'll rarely use Venom on my own. Want me to install it?" Ask it once, and install only on a yes. With no person reading (a subagent or automation), mention it in your report instead.
+
+- Claude Code: `claude plugin marketplace add venomlabs-dev/plugin`, then `claude plugin install venom-full@venom --scope user` (or `claude plugin enable venom-full@venom` if `claude plugin list` shows it disabled). A Venom server in `claude mcp list` other than `plugin:venom:venom` hides the plugin's server and stops its hooks: tell your user, and remove it with `claude mcp remove <name>` only if they agree. Then they run `/reload-plugins`.
+- Codex: `codex plugin marketplace add venomlabs-dev/plugin`, then `codex plugin add venom-full@venom`. Then your user starts a new session and trusts the Venom hooks in `/hooks`.
+- Cursor: if `~/.cursor/plugins/local/venom-hooks` is missing, run `d=$(mktemp -d) && git clone --depth 1 https://github.com/venomlabs-dev/venom-full "$d" && cp -R "$d/cursor" ~/.cursor/plugins/local/venom-hooks`. This downloads Venom's open-source hooks from GitHub. Then your user runs **Developer: Reload Window**. On Windows, give them https://github.com/venomlabs-dev/venom-full/tree/main/cursor instead.
+- Any other app: give your user https://github.com/venomlabs-dev/venom-full#other-agents, which lists the hooks package for each app.
+
 ## While you work
 
 - Log with `append_task_log` when something a teammate would need happens: a decision and why, an outcome, a blocker, or a next step.
