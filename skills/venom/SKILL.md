@@ -27,6 +27,7 @@ If you have no Venom tools such as `list_mentions`, or a Venom call fails becaus
    - Gemini CLI: run `/mcp auth venom`
    - OpenCode: run `opencode mcp auth venom` in a terminal
    - GitHub Copilot CLI: run `/mcp` and authenticate `venom`
+   - Mistral Vibe: run `/mcp status`, then `/mcp login` with the server whose name ends in `_venom`
    - Any other app: open its MCP settings and sign in to the `venom` server
 3. Then carry on with the request. Don't retry Venom in this turn.
 
@@ -37,6 +38,7 @@ Venom's hooks bring your Venom projects with the first prompt and remind you to 
 - Claude Code: `claude plugin marketplace add venomlabs-dev/plugin`, then `claude plugin install venom-full@venom --scope user` (or `claude plugin enable venom-full@venom` if `claude plugin list` shows it disabled). A Venom server in `claude mcp list` other than `plugin:venom:venom` hides the plugin's server and stops its hooks: tell your user, and remove it with `claude mcp remove <name>` only if they agree. Then they run `/reload-plugins`.
 - Codex: `codex plugin marketplace add venomlabs-dev/plugin`, then `codex plugin add venom-full@venom`. Then your user starts a new session and trusts the Venom hooks in `/hooks`.
 - Cursor: if `~/.cursor/plugins/local/venom-hooks` is missing, run `d=$(mktemp -d) && git clone --depth 1 https://github.com/venomlabs-dev/venom-full "$d" && cp -R "$d/cursor" ~/.cursor/plugins/local/venom-hooks`. This downloads Venom's open-source hooks from GitHub. Then your user runs **Developer: Reload Window**. On Windows, give them https://github.com/venomlabs-dev/venom-full/tree/main/cursor instead.
+- Mistral Vibe: if `~/.vibe/plugins/venom-hooks` is missing, run `d=$(mktemp -d) && git clone --depth 1 https://github.com/venomlabs-dev/venom-full "$d" && mkdir -p ~/.vibe/plugins && rm -rf ~/.vibe/plugins/venom-hooks && cp -R "$d/vibe" ~/.vibe/plugins/venom-hooks && rm -rf "$d"`, then `sh ~/.vibe/plugins/venom-hooks/hooks/venom-hook.sh login` in the background and give your user the link it prints. Then they start a new chat.
 - Any other app: give your user https://github.com/venomlabs-dev/venom-full#other-agents, which lists the hooks package for each app.
 
 ## While you work

@@ -49,7 +49,7 @@ hooks, plugin + some hooks, plugin, MCP only.
 | Factory Droid | Plugin + some hooks | marketplace add, `droid plugin install venom@plugin --scope user`, `droid mcp add venom https://mcp.venomlabs.dev --type http` | 1.14.0, partly: skill and rules install into the plugin cache but `droid plugin list` doesn't show them; Droid rejects the plugin's root `mcp.json` (no `type`); the server from `droid mcp add` is listed as needing authentication. Venom Full's `mcp_tool` hooks are rejected |
 | Kiro | Plugin + some hooks | Powers → Import power from a folder, or `kiro-cli powers install <clone>/platforms/agent-plugin` | Kiro CLI 3.4.0: the Power installs (server and skill); `mcp list` needs a Kiro login. The Power carries no steering file |
 | JetBrains Junie | Plugin + some hooks | `/extensions marketplace add venomlabs-dev/plugin` | Junie CLI 26.9.7 (npm): every command hung on the test machine, so not checked |
-| Mistral Vibe | Plugin + some hooks | clone into `~/.vibe/plugins/venom`, `vibe mcp add venom --url https://mcp.venomlabs.dev --transport streamable-http` | 3.1.3: Vibe's plugin loader reads the skill; the plugin's server isn't imported, so add it with `vibe mcp add` |
+| Mistral Vibe | Plugin + some hooks | clone into `~/.vibe/plugins/venom`, copy venom-full's `vibe` folder to `~/.vibe/plugins/venom-hooks`; sign in with `/mcp login` and the server whose name ends in `_venom` | Vibe app 3.1.3, signed in (21 Nov): the plugin's server loads as `plugin_<id>_venom` (the id differs per machine) and needs a sign-in Vibe doesn't start by itself; we signed in with `vibe mcp add <that name> --url https://mcp.venomlabs.dev/ --transport streamable-http` (Vibe CLI 3.1.4). The skill, the tools and the session-start hook's projects and mentions all reached a real chat. A server added as `venom` would be a second one |
 | Pi | Plugin + some hooks | `pi install git:github.com/venomlabs-dev/plugin`, `pi mcp add venom --url https://mcp.venomlabs.dev` | 1.5.2: `/skill:venom` present; `pi mcp list` shows `venom: needs sign-in`. `VENOM.md` isn't loaded |
 | OpenClaw | Plugin + some hooks | clone, then `openclaw plugins install <clone> --accept-capabilities` | 2026.11.5: plugin enabled (Codex bundle) with skill and server. The marketplace install fails on `venom-full`'s GitHub source; a `git:` install fails without `package.json` |
 | Muse Code | Plugin + some hooks | `muse plugins install <clone>/platforms/agent-plugin`, `muse mcp add venom --url https://mcp.venomlabs.dev --user` | 1.4.23: skill installs; the server from `muse mcp add` is listed (logged out); the plugin's own server waits for `muse plugins approve`. The repository root is refused because its `.mcp.json` server is HTTP |
@@ -89,7 +89,8 @@ one. Signed in once per machine (`sh <package>/hooks/venom-hook.sh login`, venom
 | Pi | `pi/` | On a local test model, 1.5.2: session start, milestone, end-of-turn question |
 | Kimi Code | `kimi/` | On a local test model, 2.6.3: session start |
 | Crush | `crush/` | On a local test model, 0.101.0: session start, milestone |
-| Cursor, Gemini CLI, Factory Droid, Devin CLI and Desktop, Junie, Kiro, Auggie, Mistral Vibe, Muse Code, OpenClaw, Hermes, Cline, VS Code | their folder | Not yet: built to each app's docs and unit-tested; Vibe and Auggie load the package |
+| Mistral Vibe | `vibe/` | Live in the Vibe app 3.1.3, signed in: session start with projects and mentions |
+| Cursor, Gemini CLI, Factory Droid, Devin CLI and Desktop, Junie, Kiro, Auggie, Muse Code, OpenClaw, Hermes, Cline, VS Code | their folder | Not yet: built to each app's docs and unit-tested; Auggie loads the package |
 
 ## Stores
 
