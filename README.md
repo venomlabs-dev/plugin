@@ -203,7 +203,7 @@ doesn't work, use the app's row in [Other apps](#other-apps).
 | Qwen Code | `qwen extensions install venomlabs-dev/plugin`, then pick `venom` | Yes, 0.27.4 |
 | Factory Droid | `droid plugin marketplace add venomlabs-dev/plugin`, `droid plugin install venom@plugin --scope user`, then `droid mcp add venom https://mcp.venomlabs.dev --type http` | Partly, 1.14.0: the server from `droid mcp add` is listed; the skill and rules install but Droid's listing doesn't show them |
 | JetBrains Junie | `/extensions marketplace add venomlabs-dev/plugin`, then `/extensions install venom` | No: Junie CLI 26.9.7 didn't start on the test machine |
-| Mistral Vibe | `git clone https://github.com/venomlabs-dev/plugin ~/.vibe/plugins/venom`, then `vibe mcp add venom --url https://mcp.venomlabs.dev --transport streamable-http` (it starts Venom's sign-in) | Partly, 3.1.3: the loader reads the skill and the server is in `config.toml`; Vibe has no listing command |
+| Mistral Vibe | `git clone https://github.com/venomlabs-dev/plugin ~/.vibe/plugins/venom`, plus the [Vibe hooks](https://github.com/venomlabs-dev/venom-full/tree/main/vibe) in `~/.vibe/plugins/venom-hooks`. Then, in a new chat, `/mcp status` and `/mcp login` with the server whose name ends in `_venom`: Vibe names the plugin's server `plugin_<id>_venom` and doesn't start its sign-in by itself. Don't add a server named `venom`, which would be a second Venom server | Yes, Vibe app 3.1.3: skill, server and hooks in a real chat. The sign-in was done with `vibe mcp add <that name> --url https://mcp.venomlabs.dev/ --transport streamable-http` (Vibe CLI 3.1.4); `/mcp login` is Vibe's own command for the same step, not tried yet |
 | Pi | `pi install git:github.com/venomlabs-dev/plugin`, then `pi mcp add venom --url https://mcp.venomlabs.dev` | Yes, 1.5.2 |
 | OpenClaw | `git clone https://github.com/venomlabs-dev/plugin ~/.venom-plugin`, then `openclaw plugins install ~/.venom-plugin --accept-capabilities` | Yes, 2026.11.5: skill and server from the plugin |
 | Muse Code | `git clone https://github.com/venomlabs-dev/plugin ~/.venom-plugin`, `muse plugins install ~/.venom-plugin/platforms/agent-plugin`, then `muse mcp add venom --url https://mcp.venomlabs.dev --user` | Yes, 1.4.23: skill and server listed |
@@ -283,8 +283,15 @@ run `/mcp` and authenticate `venom` in Claude Code, run `codex mcp login venom`
 for Codex, or reconnect Venom on the plugin's **Connectors** tab in Claude chat
 and Cowork. In Cursor, open **Cursor Settings → MCP**; in Gemini CLI, run
 `/mcp auth venom`; in OpenCode, run `opencode mcp auth venom`; in Copilot CLI,
-run `/mcp`. A sign-in lasts while you use it; after 30 days without use you
+run `/mcp`; in Mistral Vibe, run `/mcp status`, then `/mcp login` with the
+server whose name ends in `_venom`. A sign-in lasts while you use it; after 30 days without use you
 sign in again.
+
+## Upgrading to 0.9.4
+
+In Mistral Vibe, the `venom` skill now gives the right sign-in step (`/mcp
+status`, then `/mcp login` with the server whose name ends in `_venom`) and
+the commands for Venom's Vibe hooks when the full plugin isn't running.
 
 ## Upgrading to 0.9.3
 
