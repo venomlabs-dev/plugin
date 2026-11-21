@@ -40,12 +40,12 @@ only to your organization's workspace.
 | --- | --- | --- |
 | Claude Code, Claude chat, Cowork | `venom` plugin, plus Venom Full hooks for Claude Code | [Claude](#claude-chat-cowork-and-claude-code) |
 | Codex | `venom` plugin, plus Venom Full hooks | [Codex](#codex) |
-| Cursor | Venom plugin: MCP, rule and skill | [Cursor](#cursor) |
-| Gemini CLI | Venom extension | [Gemini CLI](#gemini-cli) |
-| GitHub Copilot CLI and VS Code | Venom plugin | [GitHub Copilot](#github-copilot-cli-and-vs-code) |
+| Cursor | Venom Full: the Venom plugin (MCP, rule and skill) plus Venom's hooks for Cursor | [Cursor](#cursor) |
+| Gemini CLI | Venom Full: the Venom extension plus Venom's hooks extension | [Gemini CLI](#gemini-cli) |
+| GitHub Copilot CLI and VS Code | Venom Full: the Venom plugin plus Venom's hooks for Copilot | [GitHub Copilot](#github-copilot-cli-and-vs-code) |
 | OpenCode | Venom plugin for OpenCode | [OpenCode](#opencode) |
 | Amp | MCP, skill and the Venom plugin for Amp | [Amp](#amp) |
-| Antigravity CLI, Grok Build, Qwen Code, Factory Droid, JetBrains Junie, Mistral Vibe, Pi, OpenClaw, Muse Code, Auggie, Goose | This repository as a plugin | [Apps that read Claude plugins](#apps-that-read-claude-plugins) |
+| Antigravity CLI, Grok Build, Qwen Code, Factory Droid, JetBrains Junie, Mistral Vibe, Pi, OpenClaw, Muse Code, Auggie, Goose | This repository as a plugin, plus the app's Venom Full hooks where it has them | [Apps that read Claude plugins](#apps-that-read-claude-plugins) |
 | Kiro | Venom Power and steering | [Kiro](#kiro) |
 | Cline, Hermes, Kilo Code, Windsurf, Devin, Zed, Warp, Crush, Continue and others | MCP config and a rules file or skill | [Other apps](#other-apps) |
 
@@ -124,9 +124,20 @@ git clone https://github.com/venomlabs-dev/plugin ~/.cursor/plugins/local/venom
 On Windows, run it in PowerShell with `"$HOME\.cursor\plugins\local\venom"` as
 the folder.
 
-Run **Developer: Reload Window**, then open **Cursor Settings → MCP** and
-connect `venom`. Install the plugin, not only the MCP server: its rule and
-skill are what tell Cursor's agent when to use Venom.
+Then add Venom's hooks for Cursor, which make this Venom Full: projects and
+mentions at the start of each session, and a reminder to log after merges and
+deploys.
+
+```bash
+git clone --depth 1 https://github.com/venomlabs-dev/venom-full ~/.venom-full
+cp -R ~/.venom-full/cursor ~/.cursor/plugins/local/venom-hooks
+```
+
+Run **Developer: Reload Window**, then open **Cursor Settings → MCP** and connect
+`venom`. Once Venom is connected, sign the hooks in with
+`sh ~/.venom-full/shared/venom-hook.sh login`: open the link it prints and
+approve it. Install Venom Full, not only the MCP server: the rule and skill
+tell Cursor's agent when to use Venom, and the hooks keep it doing so.
 
 ## Gemini CLI
 
@@ -139,6 +150,16 @@ latest GitHub release, which is still an old 0.3.x build. Restart Gemini and
 authorize Venom (`/mcp auth venom`). The extension adds the
 Venom MCP server, loads [VENOM.md](VENOM.md) as a context file in every
 session, and adds the `venom` skill. Update with `gemini extensions update venom`.
+
+Then add Venom's hooks extension, which makes this Venom Full:
+
+```bash
+git clone --depth 1 https://github.com/venomlabs-dev/venom-full ~/.venom-full
+gemini extensions install ~/.venom-full/gemini
+sh ~/.venom-full/shared/venom-hook.sh login
+```
+
+The last line signs the hooks in: open the link it prints and approve it.
 
 If you installed an earlier version from the `platforms/gemini` folder, remove
 it first with `gemini extensions uninstall venom`.
@@ -153,7 +174,14 @@ copilot plugin install venom@venom
 ```
 
 This adds the Venom MCP server and the `venom` skill. Run `/mcp` in Copilot to
-authenticate `venom`. Install `venom`, not `venom-full`, in Copilot.
+authenticate `venom`. Then add Venom's hooks for Copilot, which make this Venom
+Full (install these, not the `venom-full` plugin, in Copilot):
+
+```bash
+git clone --depth 1 https://github.com/venomlabs-dev/venom-full ~/.venom-full
+copilot plugin install ~/.venom-full/copilot
+sh ~/.venom-full/shared/venom-hook.sh login
+```
 
 In VS Code, plugins installed by Copilot CLI show up too. Without Copilot CLI,
 add the MCP server and Venom's rules: run `code --add-mcp '{"name":"venom","type":"http","url":"https://mcp.venomlabs.dev"}'`,
@@ -286,6 +314,13 @@ and Cowork. In Cursor, open **Cursor Settings → MCP**; in Gemini CLI, run
 run `/mcp`; in Mistral Vibe, run `/mcp status`, then `/mcp login` with the
 server whose name ends in `_venom`. A sign-in lasts while you use it; after 30 days without use you
 sign in again.
+
+## Upgrading to 0.9.5
+
+Venom Full is the setup that works fully, so the `venom` skill and rules now
+ask for it by name: "Want me to install Venom Full?" Each app gets its own
+install steps, including Copilot and Gemini CLI, from one clone of
+venom-full at `~/.venom-full`. Nothing installs without your yes.
 
 ## Upgrading to 0.9.4
 

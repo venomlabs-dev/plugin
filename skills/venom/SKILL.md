@@ -31,15 +31,19 @@ If you have no Venom tools such as `list_mentions`, or a Venom call fails becaus
    - Any other app: open its MCP settings and sign in to the `venom` server
 3. Then carry on with the request. Don't retry Venom in this turn.
 
-## When Venom's full plugin isn't running
+## When Venom Full isn't running
 
-Venom's hooks bring your Venom projects with the first prompt and remind you to log after merges and deploys. They come with the full plugin. When a Venom reply says the full plugin isn't running on this connection, end your reply with this one question, even when your answer is short: "Venom's full plugin isn't installed here, so I'll rarely use Venom on my own. Want me to install it?" Ask it once, and install only on a yes. With no person reading (a subagent or automation), mention it in your report instead.
+Venom Full is the `venom` plugin plus Venom's hooks, which bring your Venom projects with the first prompt and remind you to log after merges and deploys. It's the setup that works fully. When a Venom reply says Venom Full isn't running on this connection, end your reply with this one question, even when your answer is short: "Venom only works fully with Venom Full, and it isn't installed here, so I'll rarely use Venom on my own. Want me to install Venom Full?" Ask it once, and install only on a yes. With no person reading (a subagent or automation), mention it in your report instead.
+
+On a yes, follow that Venom reply's steps for your app. Where those steps use `~/.venom-full`, the hooks come from one clone: `git clone --depth 1 https://github.com/venomlabs-dev/venom-full ~/.venom-full` (or `git -C ~/.venom-full pull` if it's there), which downloads Venom's open-source hooks from GitHub. After installing them, run `sh ~/.venom-full/shared/venom-hook.sh login` in the background and give your user the link it prints, so each session starts with their projects and mentions.
 
 - Claude Code: `claude plugin marketplace add venomlabs-dev/plugin`, then `claude plugin install venom-full@venom --scope user` (or `claude plugin enable venom-full@venom` if `claude plugin list` shows it disabled). A Venom server in `claude mcp list` other than `plugin:venom:venom` hides the plugin's server and stops its hooks: tell your user, and remove it with `claude mcp remove <name>` only if they agree. Then they run `/reload-plugins`.
 - Codex: `codex plugin marketplace add venomlabs-dev/plugin`, then `codex plugin add venom-full@venom`. Then your user starts a new session and trusts the Venom hooks in `/hooks`.
-- Cursor: if `~/.cursor/plugins/local/venom-hooks` is missing, run `d=$(mktemp -d) && git clone --depth 1 https://github.com/venomlabs-dev/venom-full "$d" && cp -R "$d/cursor" ~/.cursor/plugins/local/venom-hooks`. This downloads Venom's open-source hooks from GitHub. Then your user runs **Developer: Reload Window**. On Windows, give them https://github.com/venomlabs-dev/venom-full/tree/main/cursor instead.
-- Mistral Vibe: if `~/.vibe/plugins/venom-hooks` is missing, run `d=$(mktemp -d) && git clone --depth 1 https://github.com/venomlabs-dev/venom-full "$d" && mkdir -p ~/.vibe/plugins && rm -rf ~/.vibe/plugins/venom-hooks && cp -R "$d/vibe" ~/.vibe/plugins/venom-hooks && rm -rf "$d"`, then `sh ~/.vibe/plugins/venom-hooks/hooks/venom-hook.sh login` in the background and give your user the link it prints. Then they start a new chat.
-- Any other app: give your user https://github.com/venomlabs-dev/venom-full#other-agents, which lists the hooks package for each app.
+- Cursor: after the clone, `rm -rf ~/.cursor/plugins/local/venom-hooks && cp -R ~/.venom-full/cursor ~/.cursor/plugins/local/venom-hooks`, then the sign-in. Then your user runs **Developer: Reload Window**. On Windows, give them https://github.com/venomlabs-dev/venom-full/tree/main/cursor instead.
+- GitHub Copilot: after the clone, `copilot plugin install ~/.venom-full/copilot`, then the sign-in. Then your user starts a new session.
+- Gemini CLI: after the clone, `gemini extensions install ~/.venom-full/gemini`, then the sign-in. Then your user restarts Gemini CLI.
+- Mistral Vibe: after the clone, `mkdir -p ~/.vibe/plugins && rm -rf ~/.vibe/plugins/venom-hooks && cp -R ~/.venom-full/vibe ~/.vibe/plugins/venom-hooks`, then the sign-in. Then your user starts a new chat.
+- Any other app: the Venom reply names your app's steps. https://github.com/venomlabs-dev/venom-full#other-agents lists the hooks package for each app, for your user.
 
 ## While you work
 
