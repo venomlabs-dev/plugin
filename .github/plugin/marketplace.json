@@ -1,0 +1,32 @@
+{
+  "name": "venom",
+  "owner": {
+    "name": "Venom Labs",
+    "email": "support@venomlabs.dev"
+  },
+  "metadata": {
+    "description": "Venom for GitHub Copilot: venom-full is the whole of Venom in one plugin; venom is the server and skill only."
+  },
+  "plugins": [
+    {
+      "name": "venom-full",
+      "source": {
+        "source": "github",
+        "repo": "venomlabs-dev/venom-full",
+        "path": "copilot"
+      },
+      "description": "Venom Full for Copilot: the Venom MCP server, the venom skill, and hooks that bring your Venom projects at session start and remind Copilot to log after merges and deploys.",
+      "homepage": "https://venomlabs.dev",
+      "license": "MIT",
+      "category": "productivity"
+    },
+    {
+      "name": "venom",
+      "source": "./",
+      "description": "The Venom MCP server and the venom skill, without hooks. Install venom-full instead for the full setup.",
+      "homepage": "https://venomlabs.dev",
+      "license": "MIT",
+      "category": "productivity"
+    }
+  ]
+}
