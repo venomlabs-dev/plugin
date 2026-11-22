@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "venom": {
+      "url": "https://mcp.venomlabs.dev",
+      "tokenScope": "user",
+      "description": "Venom: your team's shared projects, tasks, decisions and skills"
+    }
+  }
+}

@@ -45,9 +45,10 @@ only to your organization's workspace.
 | GitHub Copilot CLI and VS Code | Venom Full: the Venom plugin plus Venom's hooks for Copilot | [GitHub Copilot](#github-copilot-cli-and-vs-code) |
 | OpenCode | Venom plugin for OpenCode | [OpenCode](#opencode) |
 | Amp | MCP, skill and the Venom plugin for Amp | [Amp](#amp) |
+| Devin CLI, Devin Desktop and Devin cloud sessions | One plugin install: MCP, rule, skill and Venom's hooks for Devin | [Devin](#devin-cli-desktop-and-cloud) |
 | Antigravity CLI, Grok Build, Qwen Code, Factory Droid, JetBrains Junie, Mistral Vibe, Pi, OpenClaw, Muse Code, Auggie, Goose | This repository as a plugin, plus the app's Venom Full hooks where it has them | [Apps that read Claude plugins](#apps-that-read-claude-plugins) |
-| Kiro | Venom Power and steering | [Kiro](#kiro) |
-| Cline, Hermes, Kilo Code, Windsurf, Devin, Zed, Warp, Crush, Continue and others | MCP config and a rules file or skill | [Other apps](#other-apps) |
+| Kiro, OpenHands and other Agent Plugins apps | The Agent Plugins package in `platforms/agent-plugin` | [Kiro](#kiro), [Agent Plugins](#agent-plugins-apps) |
+| Cline, Hermes, Kilo Code, Windsurf (classic Cascade), Zed, Warp, Crush, Continue and others | MCP config and a rules file or skill | [Other apps](#other-apps) |
 
 T3 Code runs Claude Code, Codex, OpenCode and Cursor with their own
 configuration, so install Venom for those and T3 Code uses it.
@@ -216,6 +217,35 @@ URL, save `venom.ts` in `~/.config/amp/plugins/`. If the plugin doesn't load,
 append [VENOM.md](VENOM.md) to your `AGENTS.md`. These commands follow Amp's docs and
 haven't been run in Amp yet.
 
+## Devin (CLI, Desktop and cloud)
+
+```bash
+devin plugins install venomlabs-dev/plugin
+```
+
+One install brings everything Devin can take: the Venom MCP server, the
+`venom` skill, an always-on Venom rule, and Venom's hooks for Devin, which
+Devin installs with it from
+[venom-full](https://github.com/venomlabs-dev/venom-full/tree/main/devin).
+Devin keeps the plugin in your Devin account, so it also loads in Devin
+Desktop (the Devin Local agent) and in Devin cloud sessions. Add `--local` to
+install it on this machine only.
+
+Sign in to Venom with `devin mcp login venom`, or when Devin asks on first use.
+Then sign the hooks in once per machine, so each session starts with your
+Venom projects and unread mentions:
+
+```bash
+git clone --depth 1 https://github.com/venomlabs-dev/venom-full ~/.venom-full
+sh ~/.venom-full/shared/venom-hook.sh login
+```
+
+Installing plugins needs a Devin sign-in (`devin auth login`). Windsurf's
+classic Cascade agent doesn't load plugins; see [Other apps](#other-apps).
+New in 0.9.6: the manifest was checked against Devin CLI 3000.14's plugin
+parser, and a signed-in install is still to be run. If it doesn't install, use
+Devin's row in [Other apps](#other-apps).
+
 ## Apps that read Claude plugins
 
 These apps install this repository as their own plugin format. "Checked" means
@@ -229,7 +259,7 @@ doesn't work, use the app's row in [Other apps](#other-apps).
 | Antigravity CLI | `git clone https://github.com/venomlabs-dev/plugin ~/.venom-plugin`, then `agy plugin install ~/.venom-plugin`; sign in to Venom with `/plugin` | Yes, 1.5.11: skill, rule and server |
 | Grok Build | `grok plugin install venomlabs-dev/plugin --trust`; sign in with `/mcps`, select `venom`, press `i`. Grok Build also picks up Venom from Claude Code | Yes, 1.0.89 |
 | Qwen Code | `qwen extensions install venomlabs-dev/plugin`, then pick `venom` | Yes, 0.27.4 |
-| Factory Droid | `droid plugin marketplace add venomlabs-dev/plugin`, `droid plugin install venom@plugin --scope user`, then `droid mcp add venom https://mcp.venomlabs.dev --type http` | Partly, 1.14.0: the server from `droid mcp add` is listed; the skill and rules install but Droid's listing doesn't show them |
+| Factory Droid | `droid plugin marketplace add venomlabs-dev/plugin`, then `droid plugin install venom@plugin --scope user`. If `/mcp` doesn't list `venom` afterwards, add it with `droid mcp add venom https://mcp.venomlabs.dev --type http` | Partly, 1.14.0: Droid rejected the plugin's server, so `droid mcp add` was needed. 0.9.6 fixes that the way Factory's docs describe (Droid reads `.mcp.json` when `mcp.json` declares the Agent Plugins schema); not re-run, because Droid's CLI uses the macOS keychain |
 | JetBrains Junie | `/extensions marketplace add venomlabs-dev/plugin`, then `/extensions install venom` | No: Junie CLI 26.9.7 didn't start on the test machine |
 | Mistral Vibe | `git clone https://github.com/venomlabs-dev/plugin ~/.vibe/plugins/venom`, plus the [Vibe hooks](https://github.com/venomlabs-dev/venom-full/tree/main/vibe) in `~/.vibe/plugins/venom-hooks`. Then, in a new chat, `/mcp status` and `/mcp login` with the server whose name ends in `_venom`: Vibe names the plugin's server `plugin_<id>_venom` and doesn't start its sign-in by itself. Don't add a server named `venom`, which would be a second Venom server | Yes, Vibe app 3.1.3: skill, server and hooks in a real chat. The sign-in was done with `vibe mcp add <that name> --url https://mcp.venomlabs.dev/ --transport streamable-http` (Vibe CLI 3.1.4); `/mcp login` is Vibe's own command for the same step, not tried yet |
 | Pi | `pi install git:github.com/venomlabs-dev/plugin`, then `pi mcp add venom --url https://mcp.venomlabs.dev` | Yes, 1.5.2 |
@@ -261,6 +291,25 @@ repository. For always-on guidance, copy [venom.md](platforms/kiro/venom.md)
 into `.kiro/steering/`; custom agents must include it as a resource. If the Power doesn't
 import, merge [mcp.json](platforms/kiro/mcp.json) into `.kiro/settings/mcp.json`.
 
+## Agent Plugins apps
+
+[platforms/agent-plugin](platforms/agent-plugin) is Venom as an
+[Agent Plugins](https://agent-plugins.org) 1.0 package (`plugin.json`,
+`mcp.json`, `skills/`), for apps that load that format (VS Code, GitHub
+Copilot, Kiro, OpenHands and others). Install that folder with the app's own
+plugin command to get the Venom MCP server and the `venom` skill, then add the
+app's always-on rules and hooks from its own section when it has one. It isn't
+at the repository root because Codex would then read it instead of
+`.codex-plugin/plugin.json`.
+
+OpenHands, from its docs (not run yet):
+
+```bash
+openhands mcp add venom --transport http --auth oauth https://mcp.venomlabs.dev
+```
+
+Then append [VENOM.md](VENOM.md) to the repository's `AGENTS.md`.
+
 ## Other apps
 
 These apps can't load a Venom plugin, or their plugin didn't install, so add
@@ -275,8 +324,8 @@ Add the instruction file alongside existing rules. Where an app reads
 | Cline (VS Code extension) | Merge [mcp.json](platforms/cline/mcp.json) through Cline's MCP settings | Copy [venom.md](platforms/cline/venom.md) into `.clinerules/` and enable it |
 | Hermes Agent | Add `venom` with `url: https://mcp.venomlabs.dev` and `auth: oauth` under `mcp_servers` in `~/.hermes/config.yaml` (checked, 0.23.2) | `hermes skills install https://raw.githubusercontent.com/venomlabs-dev/plugin/main/skills/venom/SKILL.md`. Hermes refuses this repository as a plugin |
 | Kilo Code | Merge [kilo.json](platforms/kilo/kilo.json) into `kilo.jsonc` | Copy [VENOM.md](VENOM.md) next to it (listed in `instructions`) |
-| Windsurf / Devin Desktop (Cascade) | Merge [mcp_config.json](platforms/windsurf/mcp_config.json) into `~/.codeium/windsurf/mcp_config.json` | Copy [venom.md](platforms/windsurf/venom.md) into `.windsurf/rules/` |
-| Devin CLI / Desktop Local | Merge [mcp_config.json](platforms/devin/mcp_config.json) into `.devin/mcp_config.json`, then `devin mcp login venom` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
+| Windsurf (classic Cascade agent) | Merge [mcp_config.json](platforms/windsurf/mcp_config.json) into `~/.codeium/windsurf/mcp_config.json` | Copy [venom.md](platforms/windsurf/venom.md) into `.windsurf/rules/` |
+| Devin CLI / Desktop Local (if the plugin doesn't install) | Merge [mcp_config.json](platforms/devin/mcp_config.json) into `.devin/mcp_config.json`, then `devin mcp login venom` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
 | Zed | Merge [settings.json](platforms/zed/settings.json) into Zed's `settings.json` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
 | JetBrains Junie (if the plugin doesn't install) | Merge [mcp.json](platforms/junie/mcp.json) into `~/.junie/mcp/mcp.json`, then `/mcp` and Authorize | Append [VENOM.md](VENOM.md) to `.junie/AGENTS.md` |
 | JetBrains AI Assistant | Paste [mcp.json](platforms/junie/mcp.json) in **Settings → Tools → AI Assistant → MCP** | Add [VENOM.md](VENOM.md) to the project's rules |
@@ -284,7 +333,7 @@ Add the instruction file alongside existing rules. Where an app reads
 | Factory Droid (if the plugin doesn't install) | `droid mcp add venom https://mcp.venomlabs.dev --type http`, or merge [mcp.json](platforms/factory/mcp.json) | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
 | Amp (if the plugin doesn't install) | Merge [settings.json](platforms/amp/settings.json) into `~/.config/amp/settings.json` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
 | Crush | Merge [crush.json](platforms/crush/crush.json) into `crush.json` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
-| Warp | Add a remote MCP server named `venom` at `https://mcp.venomlabs.dev` in **Settings → MCP Servers** | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
+| Warp | Add a remote MCP server named `venom` at `https://mcp.venomlabs.dev` in **Settings → MCP Servers** | Append [VENOM.md](VENOM.md) to `AGENTS.md`, and copy [skills/venom](skills/venom) into `.agents/skills/` so Warp loads the skill |
 | Goose | Click `goose://extension?url=https%3A%2F%2Fmcp.venomlabs.dev&type=streamable_http&id=venom&name=Venom&description=Your%20team%27s%20projects%2C%20tasks%20and%20decisions`, or `goose configure` → Add Extension → Remote (Streamable HTTP) | `goose plugin install https://github.com/venomlabs-dev/plugin`, or copy [skills/venom](skills/venom) into `~/.agents/skills/` |
 | Continue | Add the `mcpServers` entry (below) to your Continue `config.yaml` | Copy [VENOM.md](VENOM.md) into `.continue/rules/` |
 | Kimi Code, Trae and any other MCP client | Add a remote MCP server (Streamable HTTP) named `venom` at `https://mcp.venomlabs.dev`, with OAuth and no API key | Add [VENOM.md](VENOM.md) to the app's rules file |
@@ -314,6 +363,18 @@ and Cowork. In Cursor, open **Cursor Settings → MCP**; in Gemini CLI, run
 run `/mcp`; in Mistral Vibe, run `/mcp status`, then `/mcp login` with the
 server whose name ends in `_venom`. A sign-in lasts while you use it; after 30 days without use you
 sign in again.
+
+## Upgrading to 0.9.6
+
+- Devin gets a real plugin: `devin plugins install venomlabs-dev/plugin` brings
+  the server, skill, always-on rule and Venom's hooks for Devin in one step, in
+  Devin CLI, Devin Desktop and Devin cloud sessions.
+- Factory Droid gets its server from the plugin: the root `mcp.json` now
+  declares the Agent Plugins schema, so Droid reads `.mcp.json` instead of
+  rejecting `mcp.json`. Cursor's plugin reads its server from
+  `platforms/cursor/mcp.json`, with the same contents as before.
+- The rule in `rules/` carries `trigger: always_on`, so Devin loads it in
+  every session.
 
 ## Upgrading to 0.9.5
 

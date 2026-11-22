@@ -1,7 +1,7 @@
 {
   "name": "venom",
   "displayName": "Venom",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "description": "Multiplayer AI for your team: Cursor and your teammates' agents share projects, tasks, decisions and skills through Venom MCP.",
   "author": {
     "name": "Venom Labs",
@@ -24,5 +24,5 @@
   "logo": "assets/icon.png",
   "rules": "rules/",
   "skills": "skills/",
-  "mcpServers": "mcp.json"
+  "mcpServers": "platforms/cursor/mcp.json"
 }
