@@ -42,7 +42,7 @@ only to your organization's workspace.
 | Codex | `venom` plugin, plus Venom Full hooks | [Codex](#codex) |
 | Cursor | Venom Full: the Venom plugin (MCP, rule and skill) plus Venom's hooks for Cursor | [Cursor](#cursor) |
 | Gemini CLI | Venom Full: the Venom extension plus Venom's hooks extension | [Gemini CLI](#gemini-cli) |
-| GitHub Copilot CLI and VS Code | Venom Full: the Venom plugin plus Venom's hooks for Copilot | [GitHub Copilot](#github-copilot-cli-and-vs-code) |
+| GitHub Copilot CLI and VS Code | Venom Full for Copilot: one plugin with the server, skill and hooks | [GitHub Copilot](#github-copilot-cli-and-vs-code) |
 | OpenCode | Venom plugin for OpenCode | [OpenCode](#opencode) |
 | Amp | MCP, skill and the Venom plugin for Amp | [Amp](#amp) |
 | Devin CLI, Devin Desktop and Devin cloud sessions | One plugin install: MCP, rule, skill and Venom's hooks for Devin | [Devin](#devin-cli-desktop-and-cloud) |
@@ -167,27 +167,38 @@ it first with `gemini extensions uninstall venom`.
 
 ## GitHub Copilot (CLI and VS Code)
 
-Copilot CLI reads this repository's marketplace. [platforms/agent-plugin](platforms/agent-plugin) is the same plugin in the Agent Plugins format that awesome-copilot lists:
+Venom Full for Copilot is one plugin: the Venom MCP server, the `venom` skill
+and Venom's hooks, which bring your Venom projects and mentions at session
+start and remind Copilot to log after merges and deploys.
 
 ```bash
 copilot plugin marketplace add venomlabs-dev/plugin
-copilot plugin install venom@venom
+copilot plugin install venom-full@venom
 ```
 
-This adds the Venom MCP server and the `venom` skill. Run `/mcp` in Copilot to
-authenticate `venom`. Then add Venom's hooks for Copilot, which make this Venom
-Full (install these, not the `venom-full` plugin, in Copilot):
+Run `/mcp` in Copilot to authenticate `venom`. Then sign the hooks in once per
+machine, so each session starts with your projects and mentions:
 
 ```bash
 git clone --depth 1 https://github.com/venomlabs-dev/venom-full ~/.venom-full
-copilot plugin install ~/.venom-full/copilot
 sh ~/.venom-full/shared/venom-hook.sh login
 ```
 
-In VS Code, plugins installed by Copilot CLI show up too. Without Copilot CLI,
-add the MCP server and Venom's rules: run `code --add-mcp '{"name":"venom","type":"http","url":"https://mcp.venomlabs.dev"}'`,
-or merge [mcp.json](platforms/vscode/mcp.json) into `.vscode/mcp.json`. Append
-[copilot-instructions.md](platforms/copilot/copilot-instructions.md) to
+The plugin's files live in
+[venom-full/copilot](https://github.com/venomlabs-dev/venom-full/tree/main/copilot);
+this repository's Copilot marketplace (`.github/plugin/marketplace.json`)
+points at them; if you added this marketplace before 0.9.7, run
+`copilot plugin marketplace update venom` first. `venom@venom` is the server
+and skill without hooks. If you
+installed Venom's hooks as `venom-hooks` before 0.9.7, run
+`copilot plugin uninstall venom-hooks` first so they don't run twice.
+
+VS Code agent mode loads plugins installed by Copilot CLI. Without Copilot
+CLI, run **Chat: Install Plugin from Source** with a local clone's
+`venom-full/copilot` folder, or add the MCP server and Venom's rules: run
+`code --add-mcp '{"name":"venom","type":"http","url":"https://mcp.venomlabs.dev"}'`,
+or merge [mcp.json](platforms/vscode/mcp.json) into `.vscode/mcp.json`, and
+append [copilot-instructions.md](platforms/copilot/copilot-instructions.md) to
 `.github/copilot-instructions.md`.
 
 ## OpenCode
@@ -363,6 +374,15 @@ and Cowork. In Cursor, open **Cursor Settings → MCP**; in Gemini CLI, run
 run `/mcp`; in Mistral Vibe, run `/mcp status`, then `/mcp login` with the
 server whose name ends in `_venom`. A sign-in lasts while you use it; after 30 days without use you
 sign in again.
+
+## Upgrading to 0.9.7
+
+- GitHub Copilot gets Venom Full in one plugin: `copilot plugin install
+  venom-full@venom` brings the server, the skill and the hooks. This
+  repository's `.github/plugin/marketplace.json` is Copilot's marketplace and
+  points `venom-full` at venom-full's `copilot` folder. If you had
+  `venom-hooks`, uninstall it.
+- The skill's Copilot install line uses that marketplace.
 
 ## Upgrading to 0.9.6
 

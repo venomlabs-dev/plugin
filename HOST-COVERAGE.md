@@ -1,4 +1,4 @@
-# Host coverage — 22 November 2026 (0.9.6, hooks: venom-full 0.12.0)
+# Host coverage — 22 November 2026 (0.9.7, hooks: venom-full 0.13.0)
 
 Every app below connects to the same Venom MCP server,
 `https://mcp.venomlabs.dev`, with OAuth and no API key. The guidance that tells
@@ -40,7 +40,7 @@ hooks, plugin + some hooks, plugin, MCP only.
 | Amp | Plugin + hooks | `amp mcp add`, `amp skill add`, `amp plugins add` | Plugin typechecked and unit-tested. 18 Nov: every Amp command except `mcp add` needs an Amp login, so not run |
 | OpenCode | Plugin + some hooks | `opencode plugin add github:venomlabs-dev/venom-full` | 1.19.5 and 2.3.0: plugin active, skill listed, server waits for sign-in. Hooks unit-tested only |
 | Cursor | Plugin + some hooks | Cursor Marketplace once listed; local clone into `~/.cursor/plugins/local/venom` | `validate-template.mjs` passes. Cursor CLI 2026.11.17: `~/.cursor/mcp.json` gives `venom: requires_authentication`; the CLI ignored a local plugin folder and needs a login for its marketplace. Cursor app not tried |
-| GitHub Copilot CLI | Plugin + some hooks | `copilot plugin marketplace add venomlabs-dev/plugin`, `copilot plugin install venom@venom` | 1.0.112: installs; `copilot mcp list` shows `venom (http)`; 1 skill |
+| GitHub Copilot CLI | Plugin + some hooks, in one install | `copilot plugin marketplace add venomlabs-dev/plugin`, `copilot plugin install venom-full@venom` (venom-full's `copilot/` folder: server, skill and hooks) | 1.0.114 in venom-full's CI on Linux, against a stand-in model with no GitHub sign-in: installs (1 skill), `copilot mcp list` shows `venom (http)` under Plugin servers, the session-start text and the skill reach the model, and a real `git commit` brings the milestone text. The published marketplace route is checked on each merge to venom-full main |
 | VS Code (Copilot) | Plugin + some hooks | Copilot CLI plugins, or `.vscode/mcp.json` and instructions | Not tried (needs a Copilot sign-in) |
 | Gemini CLI | Plugin + some hooks | `gemini extensions install https://github.com/venomlabs-dev/plugin --ref main` | 0.68.0: context file `VENOM.md`, server `venom`, skill `venom`. Without `--ref`, Gemini installs release v0.3.3 |
 | Antigravity CLI | Plugin + some hooks | clone, then `agy plugin install <clone>` | 1.5.11: `agy plugin list` shows 1 skill, 1 rule, 1 MCP server; a signed-in session lists the `venom` skill. `agy plugin install` takes a local folder only. The plugin's server signs in through `/plugin` |
