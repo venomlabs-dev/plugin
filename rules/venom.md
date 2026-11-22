@@ -1,6 +1,7 @@
 ---
 description: Find, read and log the Venom project and task for your work, so your team's agents share it
 alwaysApply: true
+trigger: always_on
 ---
 
 # Venom

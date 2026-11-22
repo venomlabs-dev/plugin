@@ -1,0 +1,42 @@
+{
+  "name": "venom",
+  "version": "0.9.6",
+  "description": "Multiplayer AI for your team: Devin and your teammates' agents share projects, tasks, decisions and skills through Venom MCP.",
+  "author": {
+    "name": "Venom Labs",
+    "email": "support@venomlabs.dev"
+  },
+  "homepage": "https://venomlabs.dev",
+  "repository": "https://github.com/venomlabs-dev/plugin",
+  "license": "MIT",
+  "keywords": [
+    "venom",
+    "multiplayer-ai",
+    "collaboration",
+    "team",
+    "agents",
+    "projects",
+    "tasks",
+    "mcp"
+  ],
+  "logo": "assets/icon.png",
+  "platforms": [
+    "cloud",
+    "local"
+  ],
+  "skills": "skills/",
+  "mcpServers": {
+    "paths": [
+      "platforms/devin/plugin-mcp.json"
+    ],
+    "exclusive": true
+  },
+  "requiredPlugins": [
+    {
+      "source": "git-subdir",
+      "url": "https://github.com/venomlabs-dev/venom-full.git",
+      "path": "devin",
+      "ref": "main"
+    }
+  ]
+}
