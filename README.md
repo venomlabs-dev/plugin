@@ -405,6 +405,12 @@ run `/mcp`; in Mistral Vibe, run `/mcp status`, then `/mcp login` with the
 server whose name ends in `_venom`. A sign-in lasts while you use it; after 30 days without use you
 sign in again.
 
+## Upgrading to 0.9.11
+
+- OpenAI plugin directory only: the review test cases now match the reviewer's
+  demo organization (Northwind Demo), and the release notes name this version.
+  Nothing changes for installed plugins.
+
 ## Upgrading to 0.9.10
 
 - The skill's sign-in steps cover Goose (the Venom extension link) and
