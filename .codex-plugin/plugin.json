@@ -53,7 +53,7 @@
               "description": "Catch up on what the team is working on. The venom skill checks the user's mentions first, so list_mentions runs at the start. The review account's organization, Northwind Demo, has two projects: Checkout redesign (Single-page checkout layout in progress, Add Apple Pay and Google Pay blocked, Roll out checkout v2 to 100% of customers open) and Mobile app 3.0 (Offline order history done, Submit 3.0 to the App Store and Google Play open, with an open request mentioning the reviewer).",
               "prompt": "What is my team working on in Venom right now?",
               "tools_triggered": "list_mentions, list_projects, read_project",
-              "expected_behavior": "Summarises Checkout redesign and Mobile app 3.0 and their open tasks with status, including that Add Apple Pay and Google Pay is blocked on Apple Pay domain verification, using only what is in Venom."
+              "expected_behavior": "Summarises Checkout redesign and Mobile app 3.0 and their open tasks with each task's current status, using only what is in Venom. Tasks created by earlier test runs may also appear."
             },
             {
               "description": "Start tracking new work as a Venom task. The venom skill checks the user's mentions first, so list_mentions runs at the start.",
@@ -63,21 +63,21 @@
             },
             {
               "description": "Log a decision and its reason to an existing task. The venom skill checks the user's mentions first, so list_mentions runs at the start.",
-              "prompt": "Log to the Apple Pay task that the staging domain is now verified, so Apple Pay is no longer blocked.",
+              "prompt": "Log to the Apple Pay task that we'll ship Google Pay on its own if Apple Pay's domain verification isn't done by Friday.",
               "tools_triggered": "list_mentions, list_projects, read_project, append_task_log",
-              "expected_behavior": "Adds one log entry to Add Apple Pay and Google Pay with the update and its reason, moves the task out of blocked, and confirms it was saved."
+              "expected_behavior": "Adds one log entry to Add Apple Pay and Google Pay with the decision and its reason, and confirms it was saved. It doesn't change other tasks."
             },
             {
               "description": "Pick up a task where it was left off. The venom skill checks the user's mentions first, so list_mentions runs at the start.",
               "prompt": "Continue the single-page checkout layout task where it was left off.",
               "tools_triggered": "list_mentions, list_projects, read_project, read_task",
-              "expected_behavior": "Reads the task and its log, then reports where it stands first: contact and shipping sections are built behind the flag, and the payment and review sections are next."
+              "expected_behavior": "Reads the task and its log, then reports where it stands before doing anything else: contact and shipping sections are built behind the flag, and the payment and review sections are next."
             },
             {
               "description": "Check whether anyone mentioned the user.",
               "prompt": "Did anyone mention me in Venom?",
               "tools_triggered": "list_mentions",
-              "expected_behavior": "Lists the open request on Submit 3.0 to the App Store and Google Play: review the 3.0 store screenshots before upload."
+              "expected_behavior": "Lists the user's open mentions: the request on Submit 3.0 to the App Store and Google Play to review the 3.0 store screenshots before upload. If that request has since been answered, says there are no open mentions."
             }
           ],
           "negative": [
