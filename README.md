@@ -238,9 +238,12 @@ One install brings everything Devin can take: the Venom MCP server, the
 `venom` skill, an always-on Venom rule, and Venom's hooks for Devin, which
 Devin installs with it from
 [venom-full](https://github.com/venomlabs-dev/venom-full/tree/main/devin).
-Devin keeps the plugin in your Devin account, so it also loads in Devin
-Desktop (the Devin Local agent) and in Devin cloud sessions. Add `--local` to
-install it on this machine only.
+Devin also saves the plugin to your Devin account for your cloud sessions,
+and Devin's docs say Devin Desktop's agent (Devin Local) shares the CLI's
+plugins; we haven't tried either yet. Add `--local` to install it on this
+machine only. If the install ends with "installed locally but not synced",
+Venom works on this machine, but Devin didn't save it to your account. Update
+with `devin plugins update`.
 
 Sign in to Venom with `devin mcp login venom`, or when Devin asks on first use.
 Then sign the hooks in once per machine, so each session starts with your
@@ -253,9 +256,12 @@ sh ~/.venom-full/shared/venom-hook.sh login
 
 Installing plugins needs a Devin sign-in (`devin auth login`). Windsurf's
 classic Cascade agent doesn't load plugins; see [Other apps](#other-apps).
-New in 0.9.6: the manifest was checked against Devin CLI 3000.14's plugin
-parser, and a signed-in install is still to be run. If it doesn't install, use
-Devin's row in [Other apps](#other-apps).
+
+Tested live on 23 November 2026 in Devin CLI 3000.14, signed in to Devin and
+Venom: one install brought the server, the skill, the rule and the hooks;
+Venom's tools worked; and the session-start note (projects and mentions) and
+the commit note reached the model. Not run in Devin Desktop. Cloud sessions
+weren't checked, because Devin didn't sync the plugin to our test account.
 
 ## Apps that read Claude plugins
 
