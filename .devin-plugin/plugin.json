@@ -1,6 +1,6 @@
 {
   "name": "venom",
-  "version": "0.9.8",
+  "version": "0.9.9",
   "displayName": "Venom",
   "description": "Share projects, tasks, decisions and skills between Devin and your teammates' agents, so any agent picks up where another left off",
   "shortDescription": "Multiplayer AI for your team",
@@ -38,7 +38,7 @@
       "source": "git-subdir",
       "url": "https://github.com/venomlabs-dev/venom-full.git",
       "path": "devin",
-      "ref": "main"
+      "sha": "347e0ce050eec42c853b22b2291a28d552100b91"
     }
   ]
 }
