@@ -344,7 +344,12 @@ on Linux with the OpenHands SDK 1.63.1 and a stand-in model: the plugin loads
 into a conversation, the skill, the session-start note and the stop question
 reach the model, and the agent server's MCP OAuth route returns Venom's
 sign-in link (stand-in server). Not run: the Agent Canvas screens, OpenHands
-Cloud, a real sign-in. The pip `openhands` CLI (1.16, May 2026) has no plugins.
+Cloud, a real sign-in.
+
+The pip `openhands` CLI (1.16, May 2026) has no plugins. Its docs add the
+server with `openhands mcp add venom --transport http --auth oauth
+https://mcp.venomlabs.dev` (not run); then append [VENOM.md](VENOM.md) to the
+repository's `AGENTS.md`.
 
 ## Other apps
 

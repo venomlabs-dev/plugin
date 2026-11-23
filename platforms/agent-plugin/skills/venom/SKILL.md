@@ -29,7 +29,7 @@ If you have no Venom tools such as `list_mentions`, or a Venom call fails becaus
    - GitHub Copilot CLI: run `/mcp` and authenticate `venom`
    - Mistral Vibe: run `/mcp status`, then `/mcp login` with the server whose name ends in `_venom`
    - Goose: open this link to add the Venom extension: goose://extension?url=https%3A%2F%2Fmcp.venomlabs.dev&type=streamable_http&id=venom&name=Venom&description=Your%20team%27s%20projects%2C%20tasks%20and%20decisions (or in the Goose CLI, `goose configure`, Add Extension, Remote Extension (Streamable HTTP), name `venom`, URL `https://mcp.venomlabs.dev`), then start a new session and sign in when Goose asks
-   - OpenHands: in Agent Canvas, open Settings, then MCP, choose Add custom server, SHTTP, URL `https://mcp.venomlabs.dev`, Authentication OAuth, and sign in
+   - OpenHands: in Agent Canvas, open Settings, then MCP, choose Add custom server, SHTTP, URL `https://mcp.venomlabs.dev`, Authentication OAuth, and sign in (in the OpenHands CLI: `openhands mcp add venom --transport http --auth oauth https://mcp.venomlabs.dev`)
    - Any other app: open its MCP settings and sign in to the `venom` server
 3. Then carry on with the request. Don't retry Venom in this turn.
 
