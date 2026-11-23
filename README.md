@@ -381,6 +381,11 @@ run `/mcp`; in Mistral Vibe, run `/mcp status`, then `/mcp login` with the
 server whose name ends in `_venom`. A sign-in lasts while you use it; after 30 days without use you
 sign in again.
 
+## Upgrading to 0.9.8
+
+- Devin's plugin was tested live in Devin CLI, signed in. Its manifest now has
+  the `displayName` and `shortDescription` that Devin's marketplace cards show.
+
 ## Upgrading to 0.9.7
 
 - GitHub Copilot gets Venom Full in one plugin: `copilot plugin install
