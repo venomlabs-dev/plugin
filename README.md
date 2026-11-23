@@ -47,8 +47,10 @@ only to your organization's workspace.
 | Amp | MCP, skill and the Venom plugin for Amp | [Amp](#amp) |
 | Devin CLI, Devin Desktop and Devin cloud sessions | One plugin install: MCP, rule, skill and Venom's hooks for Devin | [Devin](#devin-cli-desktop-and-cloud) |
 | Augment (Auggie) | Venom Full for Auggie: one plugin from venom-full with the server, skill, rule and hooks | [Apps that read Claude plugins](#apps-that-read-claude-plugins) |
-| Antigravity CLI, Grok Build, Qwen Code, Factory Droid, JetBrains Junie, Mistral Vibe, Pi, OpenClaw, Muse Code, Goose | This repository as a plugin, plus the app's Venom Full hooks where it has them | [Apps that read Claude plugins](#apps-that-read-claude-plugins) |
-| Kiro, OpenHands and other Agent Plugins apps | The Agent Plugins package in `platforms/agent-plugin` | [Kiro](#kiro), [Agent Plugins](#agent-plugins-apps) |
+| Antigravity CLI, Grok Build, Qwen Code, Factory Droid, JetBrains Junie, Mistral Vibe, Pi, OpenClaw, Muse Code | This repository as a plugin, plus the app's Venom Full hooks where it has them | [Apps that read Claude plugins](#apps-that-read-claude-plugins) |
+| Goose | This repository as a plugin (the skill), plus the Venom extension link (the server) | [Apps that read Claude plugins](#apps-that-read-claude-plugins) |
+| OpenHands (Agent Canvas, OpenHands Cloud, SDK) | Venom Full for OpenHands: one plugin from venom-full with the skill and hooks; the server goes in OpenHands' MCP settings | [OpenHands](#openhands) |
+| Kiro and other Agent Plugins apps | The Agent Plugins package in `platforms/agent-plugin` | [Kiro](#kiro), [Agent Plugins](#agent-plugins-apps) |
 | Cline, Hermes, Kilo Code, Windsurf (classic Cascade), Zed, Warp, Crush, Continue and others | MCP config and a rules file or skill | [Other apps](#other-apps) |
 
 T3 Code runs Claude Code, Codex, OpenCode and Cursor with their own
@@ -284,7 +286,7 @@ doesn't work, use the app's row in [Other apps](#other-apps).
 | OpenClaw | `git clone https://github.com/venomlabs-dev/plugin ~/.venom-plugin`, then `openclaw plugins install ~/.venom-plugin --accept-capabilities` | Yes, 2026.11.5: skill and server from the plugin |
 | Muse Code | `git clone https://github.com/venomlabs-dev/plugin ~/.venom-plugin`, `muse plugins install ~/.venom-plugin/platforms/agent-plugin`, then `muse mcp add venom --url https://mcp.venomlabs.dev --user` | Yes, 1.4.23: skill and server listed |
 | Augment (Auggie) | Venom Full in one plugin, from venom-full: `auggie plugin marketplace add venomlabs-dev/venom-full`, then enable `venom-full` in `/plugins` and sign in from `/mcp`. Its [README](https://github.com/venomlabs-dev/venom-full/tree/main/auggie) adds the session-start notes (an extension) | Partly, 1.2.2: one plugin brings the server and the skill (listed); not run with a model, which needs an Augment account |
-| Goose | `goose plugin install https://github.com/venomlabs-dev/plugin` adds the skill; add the server with the Goose link in [Other apps](#other-apps) | Partly, 1.60.1: skill listed; the server was added by hand and is listed, the link wasn't tried |
+| Goose | Two steps. The skill: `goose plugin install https://github.com/venomlabs-dev/plugin`. The server: open `goose://extension?url=https%3A%2F%2Fmcp.venomlabs.dev&type=streamable_http&id=venom&name=Venom&description=Your%20team%27s%20projects%2C%20tasks%20and%20decisions`, which adds Venom to Goose as a native extension (Streamable HTTP, OAuth); in the CLI, `goose configure` → Add Extension → Remote Extension (Streamable HTTP), name `venom`, URL `https://mcp.venomlabs.dev`. Goose opens Venom's sign-in when the next session starts | Yes, 1.60.2 in [venom-full's CI](https://github.com/venomlabs-dev/venom-full/blob/main/test/live/goose.sh) on Linux with a stand-in model: the install imports the `venom` skill and its description reaches the model; with the extension entry the link writes (its URL pointed at a stand-in for Venom's sign-in), Goose registers and prints the sign-in link. Not run: Goose Desktop opening the link, a real sign-in. A Goose plugin can carry only local (stdio) servers, so the install can't bring the server, and Goose hooks can't add text the model sees, so there's no Venom Full for Goose |
 
 For hooks in these apps (session start and milestone reminders), add the
 app's package from [venom-full](https://github.com/venomlabs-dev/venom-full#other-agents)
@@ -314,19 +316,40 @@ import, merge [mcp.json](platforms/kiro/mcp.json) into `.kiro/settings/mcp.json`
 [platforms/agent-plugin](platforms/agent-plugin) is Venom as an
 [Agent Plugins](https://agent-plugins.org) 1.0 package (`plugin.json`,
 `mcp.json`, `skills/`), for apps that load that format (VS Code, GitHub
-Copilot, Kiro, OpenHands and others). Install that folder with the app's own
+Copilot, Kiro and others; not OpenHands, see [OpenHands](#openhands)). Install that folder with the app's own
 plugin command to get the Venom MCP server and the `venom` skill, then add the
 app's always-on rules and hooks from its own section when it has one. It isn't
 at the repository root because Codex would then read it instead of
 `.codex-plugin/plugin.json`.
 
-OpenHands, from its docs (not run yet):
+## OpenHands
 
-```bash
-openhands mcp add venom --transport http --auth oauth https://mcp.venomlabs.dev
-```
+Venom Full for OpenHands (Agent Canvas, OpenHands Cloud and SDK scripts) is
+one plugin in venom-full's [openhands](https://github.com/venomlabs-dev/venom-full/tree/main/openhands)
+folder: the `venom` skill, plus hooks that bring Venom's guidance (and, signed
+in, your projects and mentions) before the first prompt and ask once to log
+after a merge, release or deploy. It has no server: per OpenHands' source, a
+plugin's server gets no OAuth sign-in and replaces a signed-in server of the
+same name. So don't use `platforms/agent-plugin` in OpenHands.
 
-Then append [VENOM.md](VENOM.md) to the repository's `AGENTS.md`.
+1. In Agent Canvas, open Settings, then MCP, choose **Add custom server**,
+   **SHTTP**, URL `https://mcp.venomlabs.dev`, name `venom`, Authentication
+   **OAuth**, and approve the sign-in.
+2. In Plugins, install from source `github:venomlabs-dev/venom-full`, path
+   `openhands`. On a local backend you can instead copy that folder to
+   `~/.openhands/plugins/venom-full`.
+
+Checked in [venom-full's CI](https://github.com/venomlabs-dev/venom-full/blob/main/openhands/test/live/run.sh)
+on Linux with the OpenHands SDK 1.63.1 and a stand-in model: the plugin loads
+into a conversation, the skill, the session-start note and the stop question
+reach the model, and the agent server's MCP OAuth route returns Venom's
+sign-in link (stand-in server). Not run: the Agent Canvas screens, OpenHands
+Cloud, a real sign-in.
+
+The pip `openhands` CLI (1.16, May 2026) has no plugins. Its docs add the
+server with `openhands mcp add venom --transport http --auth oauth
+https://mcp.venomlabs.dev` (not run); then append [VENOM.md](VENOM.md) to the
+repository's `AGENTS.md`.
 
 ## Other apps
 
@@ -352,7 +375,7 @@ Add the instruction file alongside existing rules. Where an app reads
 | Amp (if the plugin doesn't install) | Merge [settings.json](platforms/amp/settings.json) into `~/.config/amp/settings.json` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
 | Crush | Merge [crush.json](platforms/crush/crush.json) into `crush.json` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
 | Warp | Add a remote MCP server named `venom` at `https://mcp.venomlabs.dev` in **Settings → MCP Servers** | Append [VENOM.md](VENOM.md) to `AGENTS.md`, and copy [skills/venom](skills/venom) into `.agents/skills/` so Warp loads the skill |
-| Goose | Click `goose://extension?url=https%3A%2F%2Fmcp.venomlabs.dev&type=streamable_http&id=venom&name=Venom&description=Your%20team%27s%20projects%2C%20tasks%20and%20decisions`, or `goose configure` → Add Extension → Remote (Streamable HTTP) | `goose plugin install https://github.com/venomlabs-dev/plugin`, or copy [skills/venom](skills/venom) into `~/.agents/skills/` |
+| Goose | Click `goose://extension?url=https%3A%2F%2Fmcp.venomlabs.dev&type=streamable_http&id=venom&name=Venom&description=Your%20team%27s%20projects%2C%20tasks%20and%20decisions`, or `goose configure` → Add Extension → Remote Extension (Streamable HTTP), name `venom` | `goose plugin install https://github.com/venomlabs-dev/plugin`, or copy [skills/venom](skills/venom) into `~/.agents/skills/` |
 | Continue | Add the `mcpServers` entry (below) to your Continue `config.yaml` | Copy [VENOM.md](VENOM.md) into `.continue/rules/` |
 | Kimi Code, Trae and any other MCP client | Add a remote MCP server (Streamable HTTP) named `venom` at `https://mcp.venomlabs.dev`, with OAuth and no API key | Add [VENOM.md](VENOM.md) to the app's rules file |
 
@@ -381,6 +404,15 @@ and Cowork. In Cursor, open **Cursor Settings → MCP**; in Gemini CLI, run
 run `/mcp`; in Mistral Vibe, run `/mcp status`, then `/mcp login` with the
 server whose name ends in `_venom`. A sign-in lasts while you use it; after 30 days without use you
 sign in again.
+
+## Upgrading to 0.9.10
+
+- The skill's sign-in steps cover Goose (the Venom extension link) and
+  OpenHands (Settings, then MCP). Its Venom Full steps cover OpenHands, which
+  gets its own plugin in venom-full 0.15.0.
+- Goose and OpenHands were tested live in venom-full's CI against a stand-in
+  model; see [Apps that read Claude plugins](#apps-that-read-claude-plugins)
+  and [OpenHands](#openhands).
 
 ## Upgrading to 0.9.9
 
