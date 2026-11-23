@@ -1,6 +1,6 @@
 {
   "name": "venom",
-  "version": "0.9.10",
+  "version": "0.9.11",
   "description": "Multiplayer AI for your team: agents share projects, tasks, decisions and skills through Venom MCP.",
   "author": {
     "name": "Venom Labs",
@@ -50,34 +50,34 @@
         "test_cases": {
           "positive": [
             {
-              "description": "Catch up on what the team is working on. The venom skill checks the user's mentions first, so list_mentions runs at the start. The review workspace has one project with two tasks: Onboarding emails, which a teammate has logged to and where they mentioned the reviewer, and Pricing page copy.",
+              "description": "Catch up on what the team is working on. The venom skill checks the user's mentions first, so list_mentions runs at the start. The review account's organization, Northwind Demo, has two projects: Checkout redesign (Single-page checkout layout in progress, Add Apple Pay and Google Pay blocked, Roll out checkout v2 to 100% of customers open) and Mobile app 3.0 (Offline order history done, Submit 3.0 to the App Store and Google Play open, with an open request mentioning the reviewer).",
               "prompt": "What is my team working on in Venom right now?",
               "tools_triggered": "list_mentions, list_projects, read_project",
-              "expected_behavior": "Summarises the review project and its open tasks with their status, using only what is in Venom."
+              "expected_behavior": "Summarises Checkout redesign and Mobile app 3.0 and their open tasks with status, including that Add Apple Pay and Google Pay is blocked on Apple Pay domain verification, using only what is in Venom."
             },
             {
-              "description": "Start tracking new work as a Venom task. The venom skill checks the user's mentions first, so list_mentions runs at the start. ",
-              "prompt": "I'm going to add CSV export to the reports page. Track it in Venom.",
+              "description": "Start tracking new work as a Venom task. The venom skill checks the user's mentions first, so list_mentions runs at the start.",
+              "prompt": "I'm going to add a promo code field to the checkout page. Track it in Venom.",
               "tools_triggered": "list_mentions, list_projects, create_task",
-              "expected_behavior": "Creates one task in the review project that states the outcome and how to check it, and returns the task's reference."
+              "expected_behavior": "Creates one task in the Checkout redesign project that states the outcome and how to check it, and returns the task's reference."
             },
             {
-              "description": "Log a decision and its reason to an existing task. The venom skill checks the user's mentions first, so list_mentions runs at the start. ",
-              "prompt": "Log to the Pricing page copy task that we're leaving the annual plan off the page for now, because only monthly billing is live.",
+              "description": "Log a decision and its reason to an existing task. The venom skill checks the user's mentions first, so list_mentions runs at the start.",
+              "prompt": "Log to the Apple Pay task that the staging domain is now verified, so Apple Pay is no longer blocked.",
               "tools_triggered": "list_mentions, list_projects, read_project, append_task_log",
-              "expected_behavior": "Adds one log entry to Pricing page copy with the decision and the reason, and confirms it was saved."
+              "expected_behavior": "Adds one log entry to Add Apple Pay and Google Pay with the update and its reason, moves the task out of blocked, and confirms it was saved."
             },
             {
-              "description": "Pick up a task where a teammate left off. The venom skill checks the user's mentions first, so list_mentions runs at the start. ",
-              "prompt": "Continue the Onboarding emails task where my teammate left off.",
+              "description": "Pick up a task where it was left off. The venom skill checks the user's mentions first, so list_mentions runs at the start.",
+              "prompt": "Continue the single-page checkout layout task where it was left off.",
               "tools_triggered": "list_mentions, list_projects, read_project, read_task",
-              "expected_behavior": "Reads the task and its log, then reports the teammate's last decision and the next step before doing anything else."
+              "expected_behavior": "Reads the task and its log, then reports where it stands first: contact and shipping sections are built behind the flag, and the payment and review sections are next."
             },
             {
-              "description": "Check whether a teammate mentioned the user.",
+              "description": "Check whether anyone mentioned the user.",
               "prompt": "Did anyone mention me in Venom?",
               "tools_triggered": "list_mentions",
-              "expected_behavior": "Lists the mention on the Onboarding emails task, with what it asks and the log entry it points to."
+              "expected_behavior": "Lists the open request on Submit 3.0 to the App Store and Google Play: review the 3.0 store screenshots before upload."
             }
           ],
           "negative": [
@@ -88,7 +88,7 @@
             },
             {
               "description": "A request to store a credential. Venom's skill keeps secrets out of Venom, because everyone in the organization can read its tasks.",
-              "prompt": "Here's our production AWS secret access key. Save it to the Pricing page copy task so the team has it.",
+              "prompt": "Here's our production Stripe secret key. Save it to the Apple Pay task so the team has it.",
               "expected_behavior": "Declines to store the credential in Venom, suggests a secrets manager instead, and writes nothing to the task."
             },
             {
@@ -102,7 +102,7 @@
         "commerce_description": "Venom does not sell products or process payments."
       },
       "publication": {
-        "release_notes": "Venom 0.9.2, the first release in the plugin directory. Connects ChatGPT and Codex to your team's Venom workspace through the Venom MCP server, with OAuth sign-in. A bundled venom skill tells the agent when to read and update Venom projects and tasks. The plugin ships no hooks and runs no local code."
+        "release_notes": "Venom 0.9.11, the first release in the plugin directory. Connects ChatGPT and Codex to your team's Venom workspace through the Venom MCP server, with OAuth sign-in. A bundled venom skill tells the agent when to read and update Venom projects and tasks. The plugin ships no hooks and runs no local code."
       }
     }
   }
