@@ -28,6 +28,8 @@ If you have no Venom tools such as `list_mentions`, or a Venom call fails becaus
    - OpenCode: run `opencode mcp auth venom` in a terminal
    - GitHub Copilot CLI: run `/mcp` and authenticate `venom`
    - Mistral Vibe: run `/mcp status`, then `/mcp login` with the server whose name ends in `_venom`
+   - Goose: open this link to add the Venom extension: goose://extension?url=https%3A%2F%2Fmcp.venomlabs.dev&type=streamable_http&id=venom&name=Venom&description=Your%20team%27s%20projects%2C%20tasks%20and%20decisions (or in the Goose CLI, `goose configure`, Add Extension, Remote Extension (Streamable HTTP), name `venom`, URL `https://mcp.venomlabs.dev`), then start a new session and sign in when Goose asks
+   - OpenHands: in Agent Canvas, open Settings, then MCP, choose Add custom server, SHTTP, URL `https://mcp.venomlabs.dev`, Authentication OAuth, and sign in
    - Any other app: open its MCP settings and sign in to the `venom` server
 3. Then carry on with the request. Don't retry Venom in this turn.
 
@@ -43,6 +45,7 @@ On a yes, follow that Venom reply's steps for your app. Where those steps use `~
 - GitHub Copilot: `copilot plugin marketplace update venom` (or `copilot plugin marketplace add venomlabs-dev/plugin` if that fails), then `copilot plugin install venom-full@venom`, which installs Venom Full for Copilot: the Venom server, this skill and the hooks in one plugin. If `copilot plugin list` shows `venom-hooks`, run `copilot plugin uninstall venom-hooks` first. Then the clone and the sign-in, and your user starts a new session.
 - Gemini CLI: after the clone, `gemini extensions install ~/.venom-full/gemini`, then the sign-in. Then your user restarts Gemini CLI.
 - Mistral Vibe: after the clone, `mkdir -p ~/.vibe/plugins && rm -rf ~/.vibe/plugins/venom-hooks && cp -R ~/.venom-full/vibe ~/.vibe/plugins/venom-hooks`, then the sign-in. Then your user starts a new chat.
+- OpenHands: after the clone, `mkdir -p ~/.openhands/plugins && rm -rf ~/.openhands/plugins/venom-full && cp -R ~/.venom-full/openhands ~/.openhands/plugins/venom-full`, then the sign-in. Then your user starts a new conversation. The Venom server is added separately, in Settings, then MCP (above).
 - Any other app: the Venom reply names your app's steps. https://github.com/venomlabs-dev/venom-full#other-agents lists the hooks package for each app, for your user.
 
 ## While you work
