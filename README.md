@@ -492,6 +492,13 @@ Codex keeps its hooks, now in `.codex-plugin/hooks.json`; trust them again via
 `/hooks`. Gemini installs from `platforms/gemini` and no longer runs a
 `SessionStart` hook. Refresh manually copied rules files from this release.
 
+## Privacy and support
+
+- Privacy Policy: https://venomlabs.dev/privacy
+- Terms: https://venomlabs.dev/terms
+- Security: https://venomlabs.dev/security
+- Support: support@venomlabs.dev
+
 ## Development
 
 The repository holds only Markdown, JSON and images, as the directory requires
