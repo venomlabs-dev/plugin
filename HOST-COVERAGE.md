@@ -1,4 +1,4 @@
-# Host coverage — 23 November 2026 (0.9.9, hooks: venom-full 0.13.0)
+# Host coverage — 23 November 2026 (0.9.9, hooks: venom-full 0.14.0)
 
 Every app below connects to the same Venom MCP server,
 `https://mcp.venomlabs.dev`, with OAuth and no API key. The guidance that tells
@@ -53,7 +53,7 @@ hooks, plugin + some hooks, plugin, MCP only.
 | Pi | Plugin + some hooks | `pi install git:github.com/venomlabs-dev/plugin`, `pi mcp add venom --url https://mcp.venomlabs.dev` | 1.5.2: `/skill:venom` present; `pi mcp list` shows `venom: needs sign-in`. `VENOM.md` isn't loaded |
 | OpenClaw | Plugin + some hooks | clone, then `openclaw plugins install <clone> --accept-capabilities` | 2026.11.5: plugin enabled (Codex bundle) with skill and server. The marketplace install fails on `venom-full`'s GitHub source; a `git:` install fails without `package.json` |
 | Muse Code | Plugin + some hooks | `muse plugins install <clone>/platforms/agent-plugin`, `muse mcp add venom --url https://mcp.venomlabs.dev --user` | 1.4.23: skill installs; the server from `muse mcp add` is listed (logged out); the plugin's own server waits for `muse plugins approve`. The repository root is refused because its `.mcp.json` server is HTTP |
-| Augment (Auggie) | Plugin + some hooks | `auggie install git:github.com/venomlabs-dev/plugin`, `auggie mcp add venom -t http -u https://mcp.venomlabs.dev` | 1.2.2: server listed, skill installed (the install brings the skill only) |
+| Augment (Auggie) | Plugin + some hooks, in one plugin | `auggie plugin marketplace add venomlabs-dev/venom-full`, enable `venom-full` (venom-full 0.14.0: server, skill, rule, milestone hook), plus the venom-full extension for the session-start notes | 1.2.2, not signed in: with `venom-full` enabled, `get_commands` lists `skill:venom` and `/mcp` lists `venom-full@venom-full/venom (auth required)`; startup check clean. Auggie only runs Augment's models, so nothing was seen reaching a model, and the rule's loading isn't confirmed |
 | Goose | Plugin | `goose plugin install https://github.com/venomlabs-dev/plugin`, plus the extension link | 1.60.1: skill listed; the install brings no server |
 | Cline | Plugin + some hooks | `cline skill add`, `cline mcp add`, `.clinerules/venom.md` | Cline CLI 3.0.74: server, rule and skill in `cline config`. The VS Code extension not tried |
 | Hermes Agent | Plugin + some hooks | skill from its raw URL, server in `config.yaml` | 0.23.2: skill enabled; `hermes mcp test venom` reaches OAuth. `hermes plugins install` refuses the repository (its scan flags README text) |

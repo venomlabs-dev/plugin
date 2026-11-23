@@ -46,7 +46,8 @@ only to your organization's workspace.
 | OpenCode | Venom plugin for OpenCode | [OpenCode](#opencode) |
 | Amp | MCP, skill and the Venom plugin for Amp | [Amp](#amp) |
 | Devin CLI, Devin Desktop and Devin cloud sessions | One plugin install: MCP, rule, skill and Venom's hooks for Devin | [Devin](#devin-cli-desktop-and-cloud) |
-| Antigravity CLI, Grok Build, Qwen Code, Factory Droid, JetBrains Junie, Mistral Vibe, Pi, OpenClaw, Muse Code, Auggie, Goose | This repository as a plugin, plus the app's Venom Full hooks where it has them | [Apps that read Claude plugins](#apps-that-read-claude-plugins) |
+| Augment (Auggie) | Venom Full for Auggie: one plugin from venom-full with the server, skill, rule and hooks | [Apps that read Claude plugins](#apps-that-read-claude-plugins) |
+| Antigravity CLI, Grok Build, Qwen Code, Factory Droid, JetBrains Junie, Mistral Vibe, Pi, OpenClaw, Muse Code, Goose | This repository as a plugin, plus the app's Venom Full hooks where it has them | [Apps that read Claude plugins](#apps-that-read-claude-plugins) |
 | Kiro, OpenHands and other Agent Plugins apps | The Agent Plugins package in `platforms/agent-plugin` | [Kiro](#kiro), [Agent Plugins](#agent-plugins-apps) |
 | Cline, Hermes, Kilo Code, Windsurf (classic Cascade), Zed, Warp, Crush, Continue and others | MCP config and a rules file or skill | [Other apps](#other-apps) |
 
@@ -282,7 +283,7 @@ doesn't work, use the app's row in [Other apps](#other-apps).
 | Pi | `pi install git:github.com/venomlabs-dev/plugin`, then `pi mcp add venom --url https://mcp.venomlabs.dev` | Yes, 1.5.2 |
 | OpenClaw | `git clone https://github.com/venomlabs-dev/plugin ~/.venom-plugin`, then `openclaw plugins install ~/.venom-plugin --accept-capabilities` | Yes, 2026.11.5: skill and server from the plugin |
 | Muse Code | `git clone https://github.com/venomlabs-dev/plugin ~/.venom-plugin`, `muse plugins install ~/.venom-plugin/platforms/agent-plugin`, then `muse mcp add venom --url https://mcp.venomlabs.dev --user` | Yes, 1.4.23: skill and server listed |
-| Augment (Auggie) | `auggie install git:github.com/venomlabs-dev/plugin`, then `auggie mcp add venom -t http -u https://mcp.venomlabs.dev` | Yes, 1.2.2 |
+| Augment (Auggie) | Venom Full in one plugin, from venom-full: `auggie plugin marketplace add venomlabs-dev/venom-full`, then enable `venom-full` in `/plugins` and sign in from `/mcp`. Its [README](https://github.com/venomlabs-dev/venom-full/tree/main/auggie) adds the session-start notes (an extension) | Partly, 1.2.2: one plugin brings the server and the skill (listed); not run with a model, which needs an Augment account |
 | Goose | `goose plugin install https://github.com/venomlabs-dev/plugin` adds the skill; add the server with the Goose link in [Other apps](#other-apps) | Partly, 1.60.1: skill listed; the server was added by hand and is listed, the link wasn't tried |
 
 For hooks in these apps (session start and milestone reminders), add the
