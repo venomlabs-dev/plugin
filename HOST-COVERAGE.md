@@ -1,4 +1,4 @@
-# Host coverage — 23 November 2026 (0.9.8, hooks: venom-full 0.13.0)
+# Host coverage — 23 November 2026 (0.9.9, hooks: venom-full 0.13.0)
 
 Every app below connects to the same Venom MCP server,
 `https://mcp.venomlabs.dev`, with OAuth and no API key. The guidance that tells

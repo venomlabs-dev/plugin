@@ -381,6 +381,13 @@ run `/mcp`; in Mistral Vibe, run `/mcp status`, then `/mcp login` with the
 server whose name ends in `_venom`. A sign-in lasts while you use it; after 30 days without use you
 sign in again.
 
+## Upgrading to 0.9.9
+
+- Devin's plugin pins Venom's Devin hooks to an exact venom-full commit
+  instead of its main branch, as Devin's marketplace asks: the commit Devin
+  reviews is the code it installs. Hooks changes for Devin now arrive with a
+  plugin release; run `devin plugins update`.
+
 ## Upgrading to 0.9.8
 
 - Devin's plugin was tested live in Devin CLI, signed in. Its manifest now has
