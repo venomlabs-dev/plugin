@@ -1,4 +1,4 @@
-# Host coverage — 22 November 2026 (0.9.7, hooks: venom-full 0.13.0)
+# Host coverage — 23 November 2026 (0.9.8, hooks: venom-full 0.13.0)
 
 Every app below connects to the same Venom MCP server,
 `https://mcp.venomlabs.dev`, with OAuth and no API key. The guidance that tells
@@ -57,7 +57,7 @@ hooks, plugin + some hooks, plugin, MCP only.
 | Goose | Plugin | `goose plugin install https://github.com/venomlabs-dev/plugin`, plus the extension link | 1.60.1: skill listed; the install brings no server |
 | Cline | Plugin + some hooks | `cline skill add`, `cline mcp add`, `.clinerules/venom.md` | Cline CLI 3.0.74: server, rule and skill in `cline config`. The VS Code extension not tried |
 | Hermes Agent | Plugin + some hooks | skill from its raw URL, server in `config.yaml` | 0.23.2: skill enabled; `hermes mcp test venom` reaches OAuth. `hermes plugins install` refuses the repository (its scan flags README text) |
-| Devin CLI, Devin Desktop (Devin Local) and Devin cloud | Plugin + some hooks, in one install | `devin plugins install venomlabs-dev/plugin` (`.devin-plugin/plugin.json`: server, skill, `rules/` with `trigger: always_on`, and venom-full's `devin/` hooks as a required plugin) | Devin CLI 3000.14.30821: every field of the manifest is in Devin's parser; the install needs `devin auth login`, so the live check is pending. Fallback: `.devin/mcp_config.json` + `AGENTS.md` (`devin mcp list` shows `venom`) |
+| Devin CLI, Devin Desktop (Devin Local) and Devin cloud | Plugin + some hooks, in one install | `devin plugins install venomlabs-dev/plugin` (`.devin-plugin/plugin.json`: server, skill, `rules/` with `trigger: always_on`, and venom-full's `devin/` hooks as a required plugin) | Live, 23 Nov, Devin CLI 3000.14.30821 signed in: `devin plugins info` lists the skill, the always-on rule, the `venom` server and the required `venom-hooks`; `devin mcp list` shows the plugin's `venom`; the first session opened the Venom sign-in by itself; `list_projects` worked; the session-start note (projects, mentions, session tag) and the commit note reached the model. Not run: Devin Desktop; cloud sessions (Devin's account sync answered "not synced" for both plugins we installed on our test account). Fallback: `.devin/mcp_config.json` + `AGENTS.md` |
 | Kilo Code | Plugin + some hooks | `kilo.jsonc` with `instructions` | Kilo CLI 7.8.27: server needs authentication, `VENOM.md` in instructions, skill listed. `kilo plugin github:venomlabs-dev/venom-full` installs, but its bundled skill is blocked and the plugin wasn't seen running |
 | Crush | MCP + some hooks | `crush.json` + `AGENTS.md` | 0.101.0: skill loads; the server answers "Unauthorized" with no sign-in prompt seen |
 | Continue | MCP only | `mcpServers` in `config.yaml` | CLI 1.5.47: reaches the server when the entry is in the config it loads; a separate `.continue/mcpServers/venom.yaml` wasn't read |
@@ -90,7 +90,8 @@ one. Signed in once per machine (`sh <package>/hooks/venom-hook.sh login`, venom
 | Kimi Code | `kimi/` | On a local test model, 2.6.3: session start |
 | Crush | `crush/` | On a local test model, 0.101.0: session start, milestone |
 | Mistral Vibe | `vibe/` | Live in the Vibe app 3.1.3, signed in: session start with projects and mentions |
-| Cursor, Gemini CLI, Factory Droid, Devin CLI and Desktop, Junie, Kiro, Auggie, Muse Code, OpenClaw, Hermes, Cline, VS Code | their folder | Not yet: built to each app's docs and unit-tested; Auggie loads the package |
+| Devin CLI | `devin/` (installed with the plugin) | Live, 3000.14, signed in: session start with projects and mentions, commit milestone |
+| Cursor, Gemini CLI, Factory Droid, Devin Desktop, Junie, Kiro, Auggie, Muse Code, OpenClaw, Hermes, Cline, VS Code | their folder | Not yet: built to each app's docs and unit-tested; Auggie loads the package |
 
 ## Stores
 
