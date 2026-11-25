@@ -35,7 +35,7 @@ hooks, plugin + some hooks, plugin, MCP only.
 | App | Level | Install | Checked |
 | --- | --- | --- | --- |
 | Claude Code | Plugin + hooks | `claude plugin marketplace add venomlabs-dev/plugin`, `claude plugin install venom-full@venom --scope user` | 2.1.311: `claude plugin validate` passes; installs 0.9.0. Used signed in every day |
-| Claude chat and Cowork | Plugin (Cowork runs hooks; chat ignores them) | Venom Full: Customize → Plugins → Add marketplace `venomlabs-dev/plugin`, add `venom-full` and `venom`, connect Venom on the Connectors tab | Not tried in the app. Directory listing of `venom` submitted |
+| Claude chat and Cowork | Plugin (Cowork runs hooks; chat ignores them) | Venom Full: Customize → Plugins → Add → Add marketplace `venomlabs-dev/plugin`, add `venom-full` and `venom`, connect Venom on the Connectors tab | Not tried in the app. Directory listing of `venom` submitted |
 | Codex | Plugin + hooks | Venom Full: `codex plugin marketplace add venomlabs-dev/plugin`, `codex plugin add venom@venom`, `codex plugin add venom-full@venom`, hooks trusted in `/hooks` | 0.155: installs; `codex mcp list` shows `venom` with OAuth; skill present. Used signed in every day |
 | Amp | Plugin + hooks | `amp mcp add`, `amp skill add`, `amp plugins add` | Plugin typechecked and unit-tested. 18 Nov: every Amp command except `mcp add` needs an Amp login, so not run |
 | OpenCode | Plugin + some hooks | `opencode plugin add github:venomlabs-dev/venom-full` | 1.19.5 and 2.3.0: plugin active, skill listed, server waits for sign-in. Hooks unit-tested only |

@@ -37,7 +37,7 @@ cp ~/.venom-full/kiro/hooks/venom-user.json ~/.kiro/hooks/venom.json
 sh ~/.venom-full/shared/venom-hook.sh login
 ```
 
-Restart Kiro. The Power alone is the store build and has no hooks.
+Restart Kiro. The Power alone has no hooks.
 
 ## Privacy and support
 

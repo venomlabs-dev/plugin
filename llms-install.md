@@ -80,9 +80,9 @@ cline skill add venomlabs-dev/plugin --skill venom -y
 
 Venom's Cline hooks remind the agent to find the Venom task at the start of a
 task and to record outcomes after commits, pull requests, merges and deploys.
-They write files to `~/Documents/Cline/Hooks`, so ask the user before
-writing into that folder; if a hook file already exists there, don't overwrite
-it. Install them unless the user says no. The steps are in
+They write files to `~/Documents/Cline/Hooks`, so ask the user once before
+writing into that folder, then install them unless they say no. If a hook file
+already exists there, don't overwrite it. The steps are in
 https://github.com/venomlabs-dev/venom-full/tree/main/cline.
 
 ## 5. Check
