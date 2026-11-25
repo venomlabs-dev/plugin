@@ -22,8 +22,22 @@ it is a Power:
   [plugin README](../../README.md#agent-plugins-apps).
 
 For always-on guidance in Kiro, also copy
-[venom.md](../kiro/venom.md) into `.kiro/steering/`. Venom's Kiro hooks are in
-[venom-full](https://github.com/venomlabs-dev/venom-full/tree/main/kiro).
+[venom.md](../kiro/venom.md) into `.kiro/steering/`.
+
+## Venom Full for Kiro
+
+Venom Full is this Power plus Venom's Kiro hooks. Install the Power first, then
+the hooks from [venom-full](https://github.com/venomlabs-dev/venom-full/tree/main/kiro):
+
+```bash
+git clone --depth 1 https://github.com/venomlabs-dev/venom-full ~/.venom-full
+mkdir -p ~/.kiro/hooks/venom
+cp ~/.venom-full/kiro/hooks/venom-hook.sh ~/.kiro/hooks/venom/
+cp ~/.venom-full/kiro/hooks/venom-user.json ~/.kiro/hooks/venom.json
+sh ~/.venom-full/shared/venom-hook.sh login
+```
+
+Restart Kiro. The Power alone is the store build and has no hooks.
 
 ## Privacy and support
 

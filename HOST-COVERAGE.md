@@ -34,9 +34,9 @@ hooks, plugin + some hooks, plugin, MCP only.
 
 | App | Level | Install | Checked |
 | --- | --- | --- | --- |
-| Claude Code | Plugin + hooks | `/plugin install venom-full@venom` | 2.1.311: `claude plugin validate` passes; installs 0.9.0. Used signed in every day |
-| Claude chat and Cowork | Plugin | `venom` from the Claude plugin directory | Directory listing submitted; not tried in the app |
-| Codex | Plugin + hooks | `codex plugin add venom@venom`, plus Venom Full | 0.155: installs; `codex mcp list` shows `venom` with OAuth; skill present. Used signed in every day |
+| Claude Code | Plugin + hooks | `claude plugin marketplace add venomlabs-dev/plugin`, `claude plugin install venom-full@venom --scope user` | 2.1.311: `claude plugin validate` passes; installs 0.9.0. Used signed in every day |
+| Claude chat and Cowork | Plugin (Cowork runs hooks; chat ignores them) | Venom Full: Customize → Plugins → Add marketplace `venomlabs-dev/plugin`, add `venom-full` and `venom`, connect Venom on the Connectors tab | Not tried in the app. Directory listing of `venom` submitted |
+| Codex | Plugin + hooks | Venom Full: `codex plugin marketplace add venomlabs-dev/plugin`, `codex plugin add venom@venom`, `codex plugin add venom-full@venom`, hooks trusted in `/hooks` | 0.155: installs; `codex mcp list` shows `venom` with OAuth; skill present. Used signed in every day |
 | Amp | Plugin + hooks | `amp mcp add`, `amp skill add`, `amp plugins add` | Plugin typechecked and unit-tested. 18 Nov: every Amp command except `mcp add` needs an Amp login, so not run |
 | OpenCode | Plugin + some hooks | `opencode plugin add github:venomlabs-dev/venom-full` | 1.19.5 and 2.3.0: plugin active, skill listed, server waits for sign-in. Hooks unit-tested only |
 | Cursor | Plugin + some hooks | Cursor Marketplace once listed; local clone into `~/.cursor/plugins/local/venom` | `validate-template.mjs` passes. Cursor CLI 2026.11.17: `~/.cursor/mcp.json` gives `venom: requires_authentication`; the CLI ignored a local plugin folder and needs a login for its marketplace. Cursor app not tried |

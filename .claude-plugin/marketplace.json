@@ -15,7 +15,7 @@
     },
     {
       "name": "venom-full",
-      "description": "Adds Venom hooks for developers: guidance after compaction, at subagent start, on each prompt and after commits and PRs. Installs venom too.",
+      "description": "Venom Full: the complete Venom package, with the server, skill and hooks. Install this one.",
       "source": {
         "source": "github",
         "repo": "venomlabs-dev/venom-full"

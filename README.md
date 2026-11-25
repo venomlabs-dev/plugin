@@ -13,78 +13,106 @@ decisions and skills, so any agent or teammate can pick up where another left
 off. Agents reach it through the host-managed MCP connection at
 `https://mcp.venomlabs.dev`.
 
-This repository is one package that many agent apps install directly: the
-Venom MCP connection, a `venom` skill, an always-on rule, and setup files for
-apps that take a config file instead. Connections remain authenticated and
-organization-scoped; the app manages OAuth and tool approval. Installing this
-plugin does not disable those controls.
+**Install Venom Full.** Venom Full is the complete Venom package for your app:
+the Venom MCP connection, the `venom` skill and Venom's hooks. The MCP server
+alone gives an agent Venom's tools; the skill and hooks tell it when to use
+them: read the project and task before acting, log what changed. Without them,
+agents rarely use Venom. Venom needs Venom Full, so find your app in
+[Pick your app](#pick-your-app) and follow its Venom Full steps.
 
-**Venom needs its plugin.** The MCP server alone gives an agent Venom's tools;
-the plugin tells it when to use them: read the project and task before acting,
-log what changed. Without the plugin, agents rarely use Venom. Add the MCP
-server by itself only in an app that can't load a plugin, and add Venom's rules
-file there (see [Other apps](#other-apps)).
+This repository holds the `venom` plugin (the server and the skill, with no
+hooks) and the marketplace that lists `venom-full`. The `venom` plugin alone is
+the build that Anthropic's and OpenAI's plugin directories list; it is not the
+setup we recommend. Some apps take a config file instead of a plugin: their
+steps add the MCP server and Venom's rules file (see [Other apps](#other-apps)).
+Connections remain authenticated and organization-scoped; the app manages OAuth
+and tool approval. Installing Venom Full does not disable those controls.
 
 ## What this plugin does
 
 Venom connects Claude to your team's Venom workspace through one remote MCP
 server, `https://mcp.venomlabs.dev`, which you sign in to with your Venom
-account. The plugin ships a `venom` skill that tells Claude when to read and
+account. The `venom` plugin ships a `venom` skill that tells Claude when to read and
 update Venom projects and tasks. It registers no hooks and runs no
-code on your machine. Claude sends data to Venom only through the Venom tools it calls, and
+code on your machine; Venom Full adds hooks that call the Venom server. Claude sends data to Venom only through the Venom tools it calls, and
 only to your organization's workspace.
 
 ## Pick your app
 
-| App | What you install | Section |
+| App | Install Venom Full | Section |
 | --- | --- | --- |
-| Claude Code, Claude chat, Cowork | `venom` plugin, plus Venom Full hooks for Claude Code | [Claude](#claude-chat-cowork-and-claude-code) |
-| Codex | `venom` plugin, plus Venom Full hooks | [Codex](#codex) |
+| Claude Code | `venom-full` plugin from this marketplace (installs `venom` too) | [Claude](#claude-chat-cowork-and-claude-code) |
+| Claude chat, Cowork | `venom-full` and `venom` from this marketplace on your Claude account | [Claude](#claude-chat-cowork-and-claude-code) |
+| Codex | `venom` and `venom-full` plugins, lifecycle hooks on, hooks trusted in `/hooks` | [Codex](#codex) |
 | Cursor | Venom Full: the Venom plugin (MCP, rule and skill) plus Venom's hooks for Cursor | [Cursor](#cursor) |
 | Gemini CLI | Venom Full: the Venom extension plus Venom's hooks extension | [Gemini CLI](#gemini-cli) |
 | GitHub Copilot CLI and VS Code | Venom Full for Copilot: one plugin with the server, skill and hooks | [GitHub Copilot](#github-copilot-cli-and-vs-code) |
-| OpenCode | Venom plugin for OpenCode | [OpenCode](#opencode) |
-| Amp | MCP, skill and the Venom plugin for Amp | [Amp](#amp) |
-| Devin CLI, Devin Desktop and Devin cloud sessions | One plugin install: MCP, rule, skill and Venom's hooks for Devin | [Devin](#devin-cli-desktop-and-cloud) |
+| OpenCode | Venom Full for OpenCode: the plugin from venom-full | [OpenCode](#opencode) |
+| Amp | Venom Full for Amp: MCP, skill and the plugin from venom-full | [Amp](#amp) |
+| Devin CLI, Devin Desktop and Devin cloud sessions | Venom Full: one plugin install with MCP, rule, skill and Venom's hooks for Devin | [Devin](#devin-cli-desktop-and-cloud) |
 | Augment (Auggie) | Venom Full for Auggie: one plugin from venom-full with the server, skill, rule and hooks | [Apps that read Claude plugins](#apps-that-read-claude-plugins) |
-| Antigravity CLI, Grok Build, Qwen Code, Factory Droid, JetBrains Junie, Mistral Vibe, Pi, OpenClaw, Muse Code | This repository as a plugin, plus the app's Venom Full hooks where it has them | [Apps that read Claude plugins](#apps-that-read-claude-plugins) |
-| Goose | This repository as a plugin (the skill), plus the Venom extension link (the server) | [Apps that read Claude plugins](#apps-that-read-claude-plugins) |
+| Factory Droid | Venom Full: the `venom` plugin plus `venom-hooks` from venom-full | [Apps that read Claude plugins](#apps-that-read-claude-plugins) |
+| Antigravity CLI, Grok Build, Qwen Code, JetBrains Junie, Mistral Vibe, Pi, OpenClaw, Muse Code | Venom Full: this repository as a plugin plus the app's folder from venom-full | [Apps that read Claude plugins](#apps-that-read-claude-plugins) |
+| Goose | The Venom plugin (the skill) plus the Venom extension link (the server). Goose has no Venom Full package: its hooks can't add text the model sees | [Apps that read Claude plugins](#apps-that-read-claude-plugins) |
 | OpenHands (Agent Canvas, OpenHands Cloud, SDK) | Venom Full for OpenHands: one plugin from venom-full with the skill and hooks; the server goes in OpenHands' MCP settings | [OpenHands](#openhands) |
-| Kiro and other Agent Plugins apps | The Agent Plugins package in `platforms/agent-plugin` | [Kiro](#kiro), [Agent Plugins](#agent-plugins-apps) |
-| Cline, Hermes, Kilo Code, Windsurf (classic Cascade), Zed, Warp, Crush, Continue and others | MCP config and a rules file or skill | [Other apps](#other-apps) |
+| Kiro | Venom Full: the Venom Power plus Venom's Kiro hooks | [Kiro](#kiro), [Agent Plugins](#agent-plugins-apps) |
+| Cline, Crush, Hermes, Kilo Code, Kimi Code | Venom Full: MCP config, rules file or skill, plus the app's hooks from venom-full | [Other apps](#other-apps) |
+| Windsurf (classic Cascade), Zed, Warp, JetBrains AI Assistant, Continue, Trae and other MCP-only apps | MCP config and a rules file or skill. No Venom Full package exists for these apps | [Other apps](#other-apps) |
+
+Venom Full steps for each app are below. The hooks come from one clone of
+[venom-full](https://github.com/venomlabs-dev/venom-full) at `~/.venom-full`.
 
 T3 Code runs Claude Code, Codex, OpenCode and Cursor with their own
 configuration, so install Venom for those and T3 Code uses it.
 
 ## Claude (chat, Cowork and Claude Code)
 
-Add Venom from the plugin directory on claude.ai, or in Claude Code:
+Install Venom Full. In Claude Code:
 
-```text
-/plugin marketplace add venomlabs-dev/plugin
-/plugin install venom@venom
+```bash
+claude plugin marketplace add venomlabs-dev/plugin
+claude plugin install venom-full@venom --scope user
 ```
 
-Authorize Venom when prompted. In chat and Cowork, connect Venom on the
-plugin's **Connectors** tab. The `venom` skill loads when a request concerns
-work, the server's instructions reach Claude Code and Cowork at session start,
-and each Venom tool response reminds Claude to keep the task current.
+Or in a session: `/plugin marketplace add venomlabs-dev/plugin`, then
+`/plugin install venom-full@venom`. Venom Full installs `venom` (the server and
+the skill) as a dependency. Authorize Venom when prompted: run `/mcp`, choose
+`venom` and authenticate.
+
+In Claude chat and Cowork, on your Claude account open **Customize → Plugins →
+Add → Add marketplace** and enter `venomlabs-dev/plugin`. Add `venom-full` and
+`venom`, then connect Venom on the **Connectors** tab. Cowork runs plugin
+hooks; chat ignores hooks, so there the skill and the server's instructions do
+the work. We haven't tried these steps in the Claude app yet.
+
+The `venom` skill loads when a request concerns work, the server's instructions
+reach Claude Code and Cowork at session start, and Venom's hooks bring guidance
+after compaction, at subagent start, on each prompt and after commits and
+merges. Each Venom tool response also reminds Claude to keep the task current
+until the hooks are active.
 
 ## Codex
+
+Install Venom Full: both plugins, then lifecycle hooks.
 
 ```bash
 codex plugin marketplace add venomlabs-dev/plugin
 codex plugin add venom@venom
+codex plugin add venom-full@venom
 ```
 
-Start a new task and authorize Venom. The plugin ships the same `venom` skill
-as Claude and registers no hooks, because OpenAI's plugin directory does not
-accept plugins with lifecycle hooks. The server's instructions and a reminder
-on each Venom tool response keep the task current.
+Turn on lifecycle hooks, start a new task, trust the Venom hooks once in
+`/hooks`, and authorize Venom (`codex mcp login venom`). The `venom` plugin
+ships the same skill as Claude. Venom Full adds the hooks, which call the Venom
+server's guidance after compaction, when a subagent starts, on each prompt and
+after commits and pull requests. OpenAI's plugin directory lists only `venom`,
+because it does not accept plugins with lifecycle hooks; that is why Venom Full
+comes from this marketplace.
 
-The plugin's server entry (`platforms/codex/mcp.json`) approves Venom's own
-write tools (`create_task`, `append_task_log` and the others listed there) one
-by one, so they run without an approval prompt. Without it, with
+The `venom` plugin's server entry (`platforms/codex/mcp.json`) approves Venom's
+own write tools (`create_task`, `append_task_log` and the others listed there)
+one by one, so they run without an approval prompt in a Venom Full install too.
+Without it, with
 `approval_policy = "never"` in a sandboxed session (the default for
 `codex exec`), Codex refuses each unapproved MCP write with "MCP tool call
 requires approval, but approval policy is never"; with `danger-full-access` it
@@ -107,32 +135,21 @@ tools that lack `readOnlyHint` (`services/mcp` in the Venom monorepo). A new
 Venom tool prompts, or is refused in a sandboxed `never` session, until it is
 added. Checked on Codex 0.155.
 
-## Venom Full (for developers)
+## Venom Full
 
-`venom-full` adds hooks to `venom`. Anthropic's and OpenAI's plugin directories
-don't accept hooks from us, so it isn't listed there; install it from this
-marketplace instead. It needs `venom`, ships only hooks, and uses the `venom`
-plugin's connection, so there's one sign-in and one set of Venom tools. Its
-files live in [venomlabs-dev/venom-full](https://github.com/venomlabs-dev/venom-full);
-the marketplace fetches them for you. It is for Claude Code and Codex only;
-the same repository holds the OpenCode and Amp plugins.
+`venom-full` is the complete Venom package: the server, the skill and the
+hooks. It is the recommended install for every app, and the steps for each app
+are in [Pick your app](#pick-your-app). Anthropic's and OpenAI's plugin
+directories don't accept hooks from us, so they list only the `venom` plugin;
+install Venom Full from this marketplace instead. Its files live in
+[venomlabs-dev/venom-full](https://github.com/venomlabs-dev/venom-full); the
+marketplace fetches them for you, and the same repository holds the hooks
+packages for the other apps.
 
-Claude Code installs `venom` with it:
-
-```text
-/plugin marketplace add venomlabs-dev/plugin
-/plugin install venom-full@venom
-```
-
-Codex needs both plugins and lifecycle hooks turned on:
-
-```bash
-codex plugin marketplace add venomlabs-dev/plugin
-codex plugin add venom@venom
-codex plugin add venom-full@venom
-```
-
-Then trust the Venom hooks once in `/hooks`.
+In Claude Code and Codex it ships only hooks and uses the `venom` plugin's
+connection, so there's one sign-in and one set of Venom tools. Claude Code
+installs `venom` with it; Codex needs both plugins (see [Claude](#claude-chat-cowork-and-claude-code)
+and [Codex](#codex)).
 
 The hooks are `mcp_tool` hooks that call the Venom server's `get_guidance`
 tool after compaction, before compaction (Claude Code), when a subagent starts,
@@ -142,9 +159,9 @@ stops adding reminder lines to Venom tool responses.
 
 ## Cursor
 
-The Venom plugin for Cursor adds the Venom MCP server, an always-applied rule
-and the `venom` skill. Once it's listed in the Cursor Marketplace, install it
-from there. Until then, install it locally:
+Venom Full for Cursor is the Venom plugin (the MCP server, an always-applied
+rule and the `venom` skill) plus Venom's hooks. Install the plugin locally
+(the Cursor Marketplace listing isn't live yet):
 
 ```bash
 git clone https://github.com/venomlabs-dev/plugin ~/.cursor/plugins/local/venom
@@ -153,9 +170,8 @@ git clone https://github.com/venomlabs-dev/plugin ~/.cursor/plugins/local/venom
 On Windows, run it in PowerShell with `"$HOME\.cursor\plugins\local\venom"` as
 the folder.
 
-Then add Venom's hooks for Cursor, which make this Venom Full: projects and
-mentions at the start of each session, and a reminder to log after merges and
-deploys.
+Then add Venom's hooks for Cursor: projects and mentions at the start of each
+session, and a reminder to log after merges and deploys.
 
 ```bash
 git clone --depth 1 https://github.com/venomlabs-dev/venom-full ~/.venom-full
@@ -165,10 +181,12 @@ cp -R ~/.venom-full/cursor ~/.cursor/plugins/local/venom-hooks
 Run **Developer: Reload Window**, then open **Cursor Settings → MCP** and connect
 `venom`. Once Venom is connected, sign the hooks in with
 `sh ~/.venom-full/shared/venom-hook.sh login`: open the link it prints and
-approve it. Install Venom Full, not only the MCP server: the rule and skill
+approve it. Don't stop at the MCP server: the rule and skill
 tell Cursor's agent when to use Venom, and the hooks keep it doing so.
 
 ## Gemini CLI
+
+Venom Full for Gemini is the Venom extension plus Venom's hooks extension.
 
 ```bash
 gemini extensions install https://github.com/venomlabs-dev/plugin --ref main
@@ -180,7 +198,7 @@ authorize Venom (`/mcp auth venom`). The extension adds the
 Venom MCP server, loads [VENOM.md](VENOM.md) as a context file in every
 session, and adds the `venom` skill. Update with `gemini extensions update venom`.
 
-Then add Venom's hooks extension, which makes this Venom Full:
+Then add Venom's hooks extension, the second half of Venom Full:
 
 ```bash
 git clone --depth 1 https://github.com/venomlabs-dev/venom-full ~/.venom-full
@@ -216,8 +234,8 @@ The plugin's files live in
 [venom-full/copilot](https://github.com/venomlabs-dev/venom-full/tree/main/copilot);
 this repository's Copilot marketplace (`.github/plugin/marketplace.json`)
 points at them; if you added this marketplace before 0.9.7, run
-`copilot plugin marketplace update venom` first. `venom@venom` is the server
-and skill without hooks. If you
+`copilot plugin marketplace update venom` first. Don't install `venom@venom`
+alongside `venom-full`: `venom-full` already has the server and the skill. If you
 installed Venom's hooks as `venom-hooks` before 0.9.7, run
 `copilot plugin uninstall venom-hooks` first so they don't run twice.
 
@@ -231,7 +249,7 @@ append [copilot-instructions.md](platforms/copilot/copilot-instructions.md) to
 
 ## OpenCode
 
-The Venom plugin for OpenCode adds the MCP server and the `venom` skill, and
+Venom Full for OpenCode is one plugin. It adds the MCP server and the `venom` skill, and
 guides the agent at compaction, in subagents and after commits and pull
 requests. It lives in [venom-full](https://github.com/venomlabs-dev/venom-full#opencode):
 
@@ -242,6 +260,8 @@ opencode mcp auth venom
 ```
 
 ## Amp
+
+Venom Full for Amp is the server, the skill and the Venom plugin for Amp:
 
 ```bash
 amp mcp add venom https://mcp.venomlabs.dev
@@ -257,6 +277,8 @@ append [VENOM.md](VENOM.md) to your `AGENTS.md`. These commands follow Amp's doc
 haven't been run in Amp yet.
 
 ## Devin (CLI, Desktop and cloud)
+
+Venom Full for Devin is one install:
 
 ```bash
 devin plugins install venomlabs-dev/plugin
@@ -293,41 +315,43 @@ weren't checked, because Devin didn't sync the plugin to our test account.
 
 ## Apps that read Claude plugins
 
-These apps install this repository as their own plugin format. "Checked" means
-installed on macOS in a clean config on 18 Nov 2026 (Qwen Code on 16 Nov) and
-the app's own listing showed Venom's server and skill; "Partly" says what
-wasn't confirmed. Sign-in needs a person, so it wasn't part of the check. If one
-doesn't work, use the app's row in [Other apps](#other-apps).
+These apps install this repository as their own plugin format, which gives
+them the server and the skill. Venom Full adds the app's hooks package from
+[venom-full](https://github.com/venomlabs-dev/venom-full#other-agents). Each row
+below is the Venom Full steps for that app: the install, then the hooks from one
+clone (`git clone --depth 1 https://github.com/venomlabs-dev/venom-full ~/.venom-full`), then `sh ~/.venom-full/shared/venom-hook.sh login` (open the link it prints and approve it).
+"Checked" means installed on macOS in a clean config on 18 Nov 2026 (Qwen Code
+on 16 Nov) and the app's own listing showed Venom's server and skill; "Partly"
+says what wasn't confirmed. Sign-in needs a person, so it wasn't part of the
+check. If one doesn't work, use the app's row in [Other apps](#other-apps).
 
-| App | Install | Checked |
+| App | Venom Full steps | Checked |
 | --- | --- | --- |
-| Antigravity CLI | `git clone https://github.com/venomlabs-dev/plugin ~/.venom-plugin`, then `agy plugin install ~/.venom-plugin`; sign in to Venom with `/plugin` | Yes, 1.5.11: skill, rule and server |
-| Grok Build | `grok plugin install venomlabs-dev/plugin --trust`; sign in with `/mcps`, select `venom`, press `i`. Grok Build also picks up Venom from Claude Code | Yes, 1.0.89 |
-| Qwen Code | `qwen extensions install venomlabs-dev/plugin`, then pick `venom` | Yes, 0.27.4 |
-| Factory Droid | `droid plugin marketplace add venomlabs-dev/plugin`, then `droid plugin install venom@plugin --scope user`. If `/mcp` doesn't list `venom` afterwards, add it with `droid mcp add venom https://mcp.venomlabs.dev --type http` | Partly, 1.14.0: Droid rejected the plugin's server, so `droid mcp add` was needed. 0.9.6 fixes that the way Factory's docs describe (Droid reads `.mcp.json` when `mcp.json` declares the Agent Plugins schema); not re-run, because Droid's CLI uses the macOS keychain |
-| JetBrains Junie | `/extensions marketplace add venomlabs-dev/plugin`, then `/extensions install venom` | No: Junie CLI 26.9.7 didn't start on the test machine |
-| Mistral Vibe | `git clone https://github.com/venomlabs-dev/plugin ~/.vibe/plugins/venom`, plus the [Vibe hooks](https://github.com/venomlabs-dev/venom-full/tree/main/vibe) in `~/.vibe/plugins/venom-hooks`. Then, in a new chat, `/mcp status` and `/mcp login` with the server whose name ends in `_venom`: Vibe names the plugin's server `plugin_<id>_venom` and doesn't start its sign-in by itself. Don't add a server named `venom`, which would be a second Venom server | Yes, Vibe app 3.1.3: skill, server and hooks in a real chat. The sign-in was done with `vibe mcp add <that name> --url https://mcp.venomlabs.dev/ --transport streamable-http` (Vibe CLI 3.1.4); `/mcp login` is Vibe's own command for the same step, not tried yet |
-| Pi | `pi install git:github.com/venomlabs-dev/plugin`, then `pi mcp add venom --url https://mcp.venomlabs.dev` | Yes, 1.5.2 |
-| OpenClaw | `git clone https://github.com/venomlabs-dev/plugin ~/.venom-plugin`, then `openclaw plugins install ~/.venom-plugin --accept-capabilities` | Yes, 2026.11.5: skill and server from the plugin |
-| Muse Code | `git clone https://github.com/venomlabs-dev/plugin ~/.venom-plugin`, `muse plugins install ~/.venom-plugin/platforms/agent-plugin`, then `muse mcp add venom --url https://mcp.venomlabs.dev --user` | Yes, 1.4.23: skill and server listed |
+| Antigravity CLI | Venom Full: `git clone https://github.com/venomlabs-dev/plugin ~/.venom-plugin`, `agy plugin install ~/.venom-plugin`, then the hooks: `agy plugin install ~/.venom-full/antigravity`; sign in to Venom with `/plugin` | Yes, 1.5.11: skill, rule and server |
+| Grok Build | Venom Full: `grok plugin install venomlabs-dev/plugin --trust`, then the hooks: `grok plugin install ~/.venom-full/grok --trust`; sign in with `/mcps`, select `venom`, press `i`. Grok Build also picks up Venom from Claude Code | Yes, 1.0.89 |
+| Qwen Code | Venom Full: `qwen extensions install venomlabs-dev/plugin`, then pick `venom`, then the hooks: `qwen extensions install ~/.venom-full/qwen` | Yes, 0.27.4 |
+| Factory Droid | Venom Full: `droid plugin marketplace add venomlabs-dev/plugin`, `droid plugin install venom@plugin --scope user`, `droid plugin marketplace add venomlabs-dev/venom-full`, `droid plugin install venom-hooks@venom-full --scope user`. If `/mcp` doesn't list `venom` afterwards, add it with `droid mcp add venom https://mcp.venomlabs.dev --type http` | Partly, 1.14.0: Droid rejected the plugin's server, so `droid mcp add` was needed. 0.9.6 fixes that the way Factory's docs describe (Droid reads `.mcp.json` when `mcp.json` declares the Agent Plugins schema); not re-run, because Droid's CLI uses the macOS keychain |
+| JetBrains Junie | Venom Full: `/extensions marketplace add venomlabs-dev/plugin`, `/extensions install venom`, then the hooks: `/extensions marketplace add ~/.venom-full/junie`, `/extensions install venom-hooks` | No: Junie CLI 26.9.7 didn't start on the test machine |
+| Mistral Vibe | Venom Full: `git clone https://github.com/venomlabs-dev/plugin ~/.vibe/plugins/venom`, plus the [Vibe hooks](https://github.com/venomlabs-dev/venom-full/tree/main/vibe): `mkdir -p ~/.vibe/plugins && cp -R ~/.venom-full/vibe ~/.vibe/plugins/venom-hooks`. Then, in a new chat, `/mcp status` and `/mcp login` with the server whose name ends in `_venom`: Vibe names the plugin's server `plugin_<id>_venom` and doesn't start its sign-in by itself. Don't add a server named `venom`, which would be a second Venom server | Yes, Vibe app 3.1.3: skill, server and hooks in a real chat. The sign-in was done with `vibe mcp add <that name> --url https://mcp.venomlabs.dev/ --transport streamable-http` (Vibe CLI 3.1.4); `/mcp login` is Vibe's own command for the same step, not tried yet |
+| Pi | Venom Full: `pi install git:github.com/venomlabs-dev/plugin`, `pi mcp add venom --url https://mcp.venomlabs.dev`, then the hooks: `pi install ~/.venom-full/pi` | Yes, 1.5.2 |
+| OpenClaw | Venom Full: `openclaw plugins install ~/.venom-full/openclaw --accept-capabilities` (venom-full's OpenClaw plugin ships the server and skill too). Or the repository alone: `git clone https://github.com/venomlabs-dev/plugin ~/.venom-plugin`, then `openclaw plugins install ~/.venom-plugin --accept-capabilities` | Yes, 2026.11.5: skill and server from the plugin |
+| Muse Code | Venom Full: `git clone https://github.com/venomlabs-dev/plugin ~/.venom-plugin`, `muse plugins install ~/.venom-plugin/platforms/agent-plugin`, `muse mcp add venom --url https://mcp.venomlabs.dev --user`, then the hooks: `muse plugins install ~/.venom-full/muse` and `muse plugins approve venom-hooks` | Yes, 1.4.23: skill and server listed |
 | Augment (Auggie) | Venom Full in one plugin, from venom-full: `auggie plugin marketplace add venomlabs-dev/venom-full`, then enable `venom-full` in `/plugins` and sign in from `/mcp`. Its [README](https://github.com/venomlabs-dev/venom-full/tree/main/auggie) adds the session-start notes (an extension) | Partly, 1.2.2: one plugin brings the server and the skill (listed); not run with a model, which needs an Augment account |
 | Goose | Two steps. The skill: `goose plugin install https://github.com/venomlabs-dev/plugin`. The server: open `goose://extension?url=https%3A%2F%2Fmcp.venomlabs.dev&type=streamable_http&id=venom&name=Venom&description=Your%20team%27s%20projects%2C%20tasks%20and%20decisions`, which adds Venom to Goose as a native extension (Streamable HTTP, OAuth); in the CLI, `goose configure` → Add Extension → Remote Extension (Streamable HTTP), name `venom`, URL `https://mcp.venomlabs.dev`. Goose opens Venom's sign-in when the next session starts | Yes, 1.60.2 in [venom-full's CI](https://github.com/venomlabs-dev/venom-full/blob/main/test/live/goose.sh) on Linux with a stand-in model: the install imports the `venom` skill and its description reaches the model; with the extension entry the link writes (its URL pointed at a stand-in for Venom's sign-in), Goose registers and prints the sign-in link. Not run: Goose Desktop opening the link, a real sign-in. A Goose plugin can carry only local (stdio) servers, so the install can't bring the server, and Goose hooks can't add text the model sees, so there's no Venom Full for Goose |
-
-For hooks in these apps (session start and milestone reminders), add the
-app's package from [venom-full](https://github.com/venomlabs-dev/venom-full#other-agents)
-next to `venom`; its folder README has the steps.
 
 Droid names this marketplace `plugin`, after the repository, so the plugin is
 `venom@plugin` there. Grok Build skips the marketplace's `venom` entry, so
 install the repository directly as above. Muse Code and OpenClaw don't install
 the repository root from GitHub; use the commands above.
 
-Pick `venom`, not `venom-full`: Venom Full's hooks run only in Claude Code
-and Codex.
+Install Venom Full in each of these apps: the server and skill from this
+repository, then the app's hooks from venom-full. Each folder's README has the
+details.
 
 ## Kiro
 
-[platforms/agent-plugin](platforms/agent-plugin) is a Kiro Power with the Venom MCP
+Venom Full for Kiro is the Venom Power plus Venom's Kiro hooks.
+[platforms/agent-plugin](platforms/agent-plugin) is the Power: the Venom MCP
 server and the `venom` skill, in Kiro's current Power format (`plugin.json`,
 `mcp.json`, `skills/`). Kiro CLI 3.4.0 installs it with `kiro-cli powers install`
 (18 Nov); checking it further needs a Kiro login. In Kiro, open **Powers → Add Custom Power →
@@ -336,6 +360,21 @@ repository. For always-on guidance, copy [venom.md](platforms/kiro/venom.md)
 into `.kiro/steering/`; custom agents must include it as a resource. If the Power doesn't
 import, merge [mcp.json](platforms/kiro/mcp.json) into `.kiro/settings/mcp.json`.
 
+Then add the hooks, which bring Venom's guidance at session start, around
+compaction and after merges and deploys:
+
+```bash
+git clone --depth 1 https://github.com/venomlabs-dev/venom-full ~/.venom-full
+mkdir -p ~/.kiro/hooks/venom
+cp ~/.venom-full/kiro/hooks/venom-hook.sh ~/.kiro/hooks/venom/
+cp ~/.venom-full/kiro/hooks/venom-user.json ~/.kiro/hooks/venom.json
+sh ~/.venom-full/shared/venom-hook.sh login
+```
+
+Restart the Kiro session. The
+[Kiro folder](https://github.com/venomlabs-dev/venom-full/tree/main/kiro) has
+the per-project form.
+
 ## Agent Plugins apps
 
 [platforms/agent-plugin](platforms/agent-plugin) is Venom as an
@@ -343,7 +382,7 @@ import, merge [mcp.json](platforms/kiro/mcp.json) into `.kiro/settings/mcp.json`
 `mcp.json`, `skills/`), for apps that load that format (VS Code, GitHub
 Copilot, Kiro and others; not OpenHands, see [OpenHands](#openhands)). Install that folder with the app's own
 plugin command to get the Venom MCP server and the `venom` skill, then add the
-app's always-on rules and hooks from its own section when it has one. It isn't
+app's always-on rules and Venom Full hooks from its own section when it has one. It isn't
 at the repository root because Codex would then read it instead of
 `.codex-plugin/plugin.json`.
 
@@ -380,29 +419,34 @@ repository's `AGENTS.md`.
 
 These apps can't load a Venom plugin, or their plugin didn't install, so add
 both the MCP entry and the instructions file: the instructions are what tell the agent to use Venom.
+Where venom-full has a package for the app (marked below), add it too: that
+makes it Venom Full. Windsurf, Zed, Warp, JetBrains AI Assistant, Continue and
+Trae have no Venom Full package, so the MCP entry and instructions are the
+whole setup there.
 Merge MCP entries into existing configuration; never overwrite other servers.
 Add the instruction file alongside existing rules. Where an app reads
 `AGENTS.md`, append [VENOM.md](VENOM.md) to it.
 
 | App | MCP configuration | Instructions |
 | --- | --- | --- |
-| Cline CLI | `cline mcp add venom --transport streamable-http --yes https://mcp.venomlabs.dev` (checked, 3.0.74) | Copy [venom.md](platforms/cline/venom.md) into `.clinerules/`, and `cline skill add venomlabs-dev/plugin --skill venom -y` |
+| Cline CLI | `cline mcp add venom --transport streamable-http --yes https://mcp.venomlabs.dev` (checked, 3.0.74) | Copy [venom.md](platforms/cline/venom.md) into `.clinerules/`, and `cline skill add venomlabs-dev/plugin --skill venom -y`. Venom Full: then `sh ~/.venom-full/cline/install.sh` (steps in [venom-full/cline](https://github.com/venomlabs-dev/venom-full/tree/main/cline)) |
 | Cline (VS Code extension) | Merge [mcp.json](platforms/cline/mcp.json) through Cline's MCP settings | Copy [venom.md](platforms/cline/venom.md) into `.clinerules/` and enable it |
-| Hermes Agent | Add `venom` with `url: https://mcp.venomlabs.dev` and `auth: oauth` under `mcp_servers` in `~/.hermes/config.yaml` (checked, 0.23.2) | `hermes skills install https://raw.githubusercontent.com/venomlabs-dev/plugin/main/skills/venom/SKILL.md`. Hermes refuses this repository as a plugin |
-| Kilo Code | Merge [kilo.json](platforms/kilo/kilo.json) into `kilo.jsonc` | Copy [VENOM.md](VENOM.md) next to it (listed in `instructions`) |
+| Hermes Agent | Add `venom` with `url: https://mcp.venomlabs.dev` and `auth: oauth` under `mcp_servers` in `~/.hermes/config.yaml` (checked, 0.23.2) | `hermes skills install https://raw.githubusercontent.com/venomlabs-dev/plugin/main/skills/venom/SKILL.md`. Hermes refuses this repository as a plugin. Venom Full: then `hermes plugins install ~/.venom-full/hermes --enable` |
+| Kilo Code | Merge [kilo.json](platforms/kilo/kilo.json) into `kilo.jsonc` | Copy [VENOM.md](VENOM.md) next to it (listed in `instructions`). Venom Full: then `kilo plugin github:venomlabs-dev/venom-full` |
 | Windsurf (classic Cascade agent) | Merge [mcp_config.json](platforms/windsurf/mcp_config.json) into `~/.codeium/windsurf/mcp_config.json` | Copy [venom.md](platforms/windsurf/venom.md) into `.windsurf/rules/` |
-| Devin CLI / Desktop Local (if the plugin doesn't install) | Merge [mcp_config.json](platforms/devin/mcp_config.json) into `.devin/mcp_config.json`, then `devin mcp login venom` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
+| Devin CLI / Desktop Local (if Venom Full's plugin doesn't install) | Merge [mcp_config.json](platforms/devin/mcp_config.json) into `.devin/mcp_config.json`, then `devin mcp login venom` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
 | Zed | Merge [settings.json](platforms/zed/settings.json) into Zed's `settings.json` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
 | JetBrains Junie (if the plugin doesn't install) | Merge [mcp.json](platforms/junie/mcp.json) into `~/.junie/mcp/mcp.json`, then `/mcp` and Authorize | Append [VENOM.md](VENOM.md) to `.junie/AGENTS.md` |
 | JetBrains AI Assistant | Paste [mcp.json](platforms/junie/mcp.json) in **Settings → Tools → AI Assistant → MCP** | Add [VENOM.md](VENOM.md) to the project's rules |
 | Qwen Code (if the plugin doesn't install) | Merge [settings.json](platforms/qwen/settings.json) into `~/.qwen/settings.json` | Append [VENOM.md](VENOM.md) to `QWEN.md` |
 | Factory Droid (if the plugin doesn't install) | `droid mcp add venom https://mcp.venomlabs.dev --type http`, or merge [mcp.json](platforms/factory/mcp.json) | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
 | Amp (if the plugin doesn't install) | Merge [settings.json](platforms/amp/settings.json) into `~/.config/amp/settings.json` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
-| Crush | Merge [crush.json](platforms/crush/crush.json) into `crush.json` | Append [VENOM.md](VENOM.md) to `AGENTS.md` |
+| Crush | Merge [crush.json](platforms/crush/crush.json) into `crush.json` | Append [VENOM.md](VENOM.md) to `AGENTS.md`. Venom Full: then `sh ~/.venom-full/crush/install.sh --apply` |
 | Warp | Add a remote MCP server named `venom` at `https://mcp.venomlabs.dev` in **Settings → MCP Servers** | Append [VENOM.md](VENOM.md) to `AGENTS.md`, and copy [skills/venom](skills/venom) into `.agents/skills/` so Warp loads the skill |
 | Goose | Click `goose://extension?url=https%3A%2F%2Fmcp.venomlabs.dev&type=streamable_http&id=venom&name=Venom&description=Your%20team%27s%20projects%2C%20tasks%20and%20decisions`, or `goose configure` → Add Extension → Remote Extension (Streamable HTTP), name `venom` | `goose plugin install https://github.com/venomlabs-dev/plugin`, or copy [skills/venom](skills/venom) into `~/.agents/skills/` |
 | Continue | Add the `mcpServers` entry (below) to your Continue `config.yaml` | Copy [VENOM.md](VENOM.md) into `.continue/rules/` |
-| Kimi Code, Trae and any other MCP client | Add a remote MCP server (Streamable HTTP) named `venom` at `https://mcp.venomlabs.dev`, with OAuth and no API key | Add [VENOM.md](VENOM.md) to the app's rules file |
+| Kimi Code | Venom Full: `/plugins install ~/.venom-full/kimi`. It replaces the `venom` plugin in Kimi (server, skill and hooks): don't install both. Without it, add a remote MCP server (Streamable HTTP) named `venom` at `https://mcp.venomlabs.dev`, with OAuth | Append [VENOM.md](VENOM.md) to `AGENTS.md` if you skip the plugin |
+| Trae and any other MCP client | Add a remote MCP server (Streamable HTTP) named `venom` at `https://mcp.venomlabs.dev`, with OAuth and no API key | Add [VENOM.md](VENOM.md) to the app's rules file |
 
 Continue's `mcpServers` entry, in the `config.yaml` the CLI loads (Continue CLI
 1.5.47 didn't read a separate `.continue/mcpServers/venom.yaml`):
@@ -533,8 +577,8 @@ OpenAI's plugin directory. Nothing changes for users.
 
 ## Upgrading to 0.8.0
 
-The marketplace now also lists `venom-full`, hooks for developers: see
-[Venom Full](#venom-full-for-developers). The `venom` plugin is unchanged.
+The marketplace now also lists `venom-full`: see
+[Venom Full](#venom-full). The `venom` plugin is unchanged.
 
 ## Upgrading to 0.7.1
 
