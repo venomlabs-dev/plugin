@@ -1,0 +1,46 @@
+{
+  "mcpServers": {
+    "venom": {
+      "type": "http",
+      "url": "https://mcp.venomlabs.dev",
+      "tools": {
+        "append_project_log": {
+          "approval_mode": "approve"
+        },
+        "append_task_log": {
+          "approval_mode": "approve"
+        },
+        "create_project": {
+          "approval_mode": "approve"
+        },
+        "create_skill": {
+          "approval_mode": "approve"
+        },
+        "create_task": {
+          "approval_mode": "approve"
+        },
+        "edit_log_entry": {
+          "approval_mode": "approve"
+        },
+        "edit_skill": {
+          "approval_mode": "approve"
+        },
+        "save_artifact": {
+          "approval_mode": "approve"
+        },
+        "set_artifact_archived": {
+          "approval_mode": "approve"
+        },
+        "update_mention": {
+          "approval_mode": "approve"
+        },
+        "update_project": {
+          "approval_mode": "approve"
+        },
+        "use_project": {
+          "approval_mode": "approve"
+        }
+      }
+    }
+  }
+}

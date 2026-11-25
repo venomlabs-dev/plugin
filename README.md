@@ -82,6 +82,31 @@ as Claude and registers no hooks, because OpenAI's plugin directory does not
 accept plugins with lifecycle hooks. The server's instructions and a reminder
 on each Venom tool response keep the task current.
 
+The plugin's server entry (`platforms/codex/mcp.json`) approves Venom's own
+write tools (`create_task`, `append_task_log` and the others listed there) one
+by one, so they run without an approval prompt. Without it, with
+`approval_policy = "never"` in a sandboxed session (the default for
+`codex exec`), Codex refuses each unapproved MCP write with "MCP tool call
+requires approval, but approval policy is never"; with `danger-full-access` it
+approves such calls itself. Venom's organization admin tools
+(`update_organization_profile`, `invite_members`, `apply_directory_batch`) and
+tools from other servers that Venom proxies (named `<namespace>__<tool>`) keep
+Codex's normal approval. In a sandboxed `never` session they are refused until
+you approve them yourself, per tool, in `config.toml`:
+
+```toml
+[plugins."venom@venom".mcp_servers.venom.tools.sentry__create_issue]
+approval_mode = "approve"
+```
+
+Don't set `default_tools_approval_mode = "approve"` for the whole server: it
+would also approve every proxied tool without asking.
+
+Maintainers: the tool list in `platforms/codex/mcp.json` must track Venom's own
+tools that lack `readOnlyHint` (`services/mcp` in the Venom monorepo). A new
+Venom tool prompts, or is refused in a sandboxed `never` session, until it is
+added. Checked on Codex 0.155.
+
 ## Venom Full (for developers)
 
 `venom-full` adds hooks to `venom`. Anthropic's and OpenAI's plugin directories
@@ -404,6 +429,13 @@ and Cowork. In Cursor, open **Cursor Settings → MCP**; in Gemini CLI, run
 run `/mcp`; in Mistral Vibe, run `/mcp status`, then `/mcp login` with the
 server whose name ends in `_venom`. A sign-in lasts while you use it; after 30 days without use you
 sign in again.
+
+## Upgrading to 0.9.12
+
+- Codex: the plugin approves Venom's own write tools, so they work with
+  `approval_policy = "never"` in a sandboxed session instead of failing with "MCP tool call requires
+  approval". Tools from servers proxied through Venom keep Codex's normal
+  approval. Other apps are unchanged. See [Codex](#codex).
 
 ## Upgrading to 0.9.11
 
