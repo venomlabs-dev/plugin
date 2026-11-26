@@ -1,7 +1,7 @@
 # Venom MCP plugin
 
 **[Venom AI](https://venomlabs.dev)** by **Venom Labs** makes the coding agents
-your team already uses multiplayer. The Venom plugin connects Claude Code,
+your team already uses multiplayer. Venom Full connects Claude Code, Cowork,
 Codex, Cursor, Gemini CLI, GitHub Copilot, OpenCode and other agents to one MCP
 server, so your team's agents share tasks, decisions, skills and tools. There is no new
 harness to adopt.
