@@ -5,10 +5,13 @@ share projects, tasks, decisions and skills, so any agent picks up where
 another left off. It is one remote MCP server. There is nothing to clone,
 build or run locally.
 
-If your app can load a plugin, install Venom's plugin for it instead: see the
-[README](https://github.com/venomlabs-dev/plugin#pick-your-app). Cline can't, so it needs the server (step 1)
-and Venom's rule (step 3): the server gives the agent Venom's tools, and the
-rule tells it when to use them.
+Install Venom Full for your app, the complete package with the server, skill and
+hooks: find your app in the
+[README](https://github.com/venomlabs-dev/plugin#pick-your-app) and follow its
+Venom Full steps. Don't install only the `venom` plugin: that is the store
+build. Cline has a Venom Full setup made of the server (step 1), Venom's rule
+and skill (step 3) and Venom's hooks (step 4): the server gives the agent
+Venom's tools, and the rule and hooks tell it when to use them.
 
 ## 1. Add the MCP server (required)
 
@@ -73,12 +76,13 @@ Cline CLI only: add the `venom` skill with
 cline skill add venomlabs-dev/plugin --skill venom -y
 ```
 
-## 4. Venom Full: hooks (optional, ask the user first)
+## 4. Venom Full: hooks (do this by default)
 
 Venom's Cline hooks remind the agent to find the Venom task at the start of a
 task and to record outcomes after commits, pull requests, merges and deploys.
-They write files to `~/Documents/Cline/Hooks`, so ask the user before
-installing them. The steps are in
+They write files to `~/Documents/Cline/Hooks`, so ask the user once before
+writing into that folder, then install them unless they say no. If a hook file
+already exists there, don't overwrite it. The steps are in
 https://github.com/venomlabs-dev/venom-full/tree/main/cline.
 
 ## 5. Check
