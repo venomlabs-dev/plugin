@@ -85,7 +85,7 @@ Add → Add marketplace** and enter `venomlabs-dev/plugin`. Add `venom-full` and
 hooks; chat ignores hooks, so there the skill and the server's instructions do
 the work. We haven't tried these steps in the Claude app yet.
 
-The `venom` skill loads when a request concerns work, the server's instructions
+The `venom` skill loads for any request about your team's work, the server's instructions
 reach Claude Code and Cowork at session start, and Venom's hooks bring guidance
 after compaction, at subagent start, on each prompt and after commits and
 merges. Each Venom tool response also reminds Claude to keep the task current
@@ -473,6 +473,15 @@ and Cowork. In Cursor, open **Cursor Settings → MCP**; in Gemini CLI, run
 run `/mcp`; in Mistral Vibe, run `/mcp status`, then `/mcp login` with the
 server whose name ends in `_venom`. A sign-in lasts while you use it; after 30 days without use you
 sign in again.
+
+## Upgrading to 0.9.13
+
+- The `venom` skill no longer says questions need no task: for a question it
+  reads Venom first and creates nothing, and it finds the work a request
+  belongs to without an "if". The always-on rules files (`VENOM.md`,
+  `rules/venom.md` and the copies for Cline, Copilot, Cursor, Kiro and
+  Windsurf) follow the server's shorter instructions. Update the plugin as
+  usual; manually copied rules files need refreshing.
 
 ## Upgrading to 0.9.12
 
