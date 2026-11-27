@@ -1,6 +1,6 @@
 {
   "name": "venom",
-  "version": "0.9.12",
+  "version": "0.9.13",
   "description": "Multiplayer AI for your team: agents share projects, tasks, decisions and skills through Venom MCP.",
   "mcpServers": {
     "venom": {
